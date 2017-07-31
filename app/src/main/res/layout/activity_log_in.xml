@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:background="@color/md_white_1000"
+                android:focusableInTouchMode="true">
+    <include layout="@layout/toolbar"/>
+    <View
+        android:layout_width="130dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="65dp"
+        android:background="@mipmap/mcunost"/>
+    <TextView
+        android:id="@+id/txtHello"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:text="Приветствуем вас!"
+        android:textColor="@color/md_black_1000"
+        android:textSize="24dp"
+        android:gravity="center"/>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inpName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtHello"
+        android:layout_marginTop="40dp"
+        android:textColorHint="@color/colorDarkGrey"
+        android:focusableInTouchMode="true">
+        <EditText
+            android:theme="@style/InputText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textSize="24dp"
+            android:textColorHint="@color/colorDarkGrey"
+            android:textColor="@color/md_black_1000"
+            android:hint="Имя пользователя"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inpNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inpName"
+        android:textColorHint="@color/colorDarkGrey">
+        <EditText
+            android:theme="@style/InputText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textSize="24dp"
+            android:inputType="number"
+            android:textColor="@color/md_black_1000"
+            android:hint="Номер телефона"/>
+    </android.support.design.widget.TextInputLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inpNumber"
+        android:layout_marginTop="70dp">
+        <Button
+            android:id="@+id/butt_log_up"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:text="Зарегистрироваться"
+            android:background="@color/md_blue_600"/>
+        <View
+            android:id="@+id/sh_log_up"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@color/md_blue_grey_700"
+            android:alpha="0.1"
+            android:layout_below="@id/butt_log_up"/>
+    </RelativeLayout>
+</RelativeLayout>
