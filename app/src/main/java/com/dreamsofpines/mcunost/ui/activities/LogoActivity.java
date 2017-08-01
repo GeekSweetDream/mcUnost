@@ -17,7 +17,7 @@ public class LogoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
+        setTheme(R.style.AppTheme_NoActionBar_FullScreen);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo);
         ViewPager viewPager = (ViewPager) findViewById(R.id.vpager);
@@ -29,6 +29,16 @@ public class LogoActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 Intent intent = new Intent(LogoActivity.this, CategoriesActivity.class);
+                startActivity(intent);
+                return false;
+            }
+        });
+
+        TextView logIn = (TextView) findViewById(R.id.entertxt);
+        logIn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                Intent intent = new Intent(LogoActivity.this, LogInActivity.class);
                 startActivity(intent);
                 return false;
             }

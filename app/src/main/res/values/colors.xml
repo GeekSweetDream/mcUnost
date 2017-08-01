@@ -3,6 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="logoBack">#34C6CD</color>
+    <color name="logoBack">#1e88e5</color>
     <color name="colorLightGrey">#D6D6D6</color>
+    <color name="colorDarkGrey">#7E7E77</color>
 </resources>
