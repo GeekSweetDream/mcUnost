@@ -1,17 +1,39 @@
 package com.dreamsofpines.mcunost.ui.activities;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import com.dreamsofpines.mcunost.R;
+import com.dreamsofpines.mcunost.data.database.MyDataBase;
+import com.dreamsofpines.mcunost.data.storage.help.menu.InformExcursion;
 import com.dreamsofpines.mcunost.data.storage.help.menu.LeftMenu;
+import com.dreamsofpines.mcunost.ui.adapters.ViewAdapter;
+import com.dreamsofpines.mcunost.ui.fragments.CategoriesFragment;
+import com.dreamsofpines.mcunost.ui.fragments.PackExcursionFragment;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.R.attr.fragment;
 
 /**
  * Created by ThePupsick on 15.07.17.
  */
 
-public class CategoriesActivity extends AppCompatActivity {
+public class CategoriesActivity extends FragmentActivity {
+
+    private final FragmentManager fm = getSupportFragmentManager();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
@@ -19,5 +41,29 @@ public class CategoriesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_categories);
         LeftMenu leftMenu = new LeftMenu(this);
         leftMenu.build(this);
+        CategoriesFragment fragment = (CategoriesFragment) fm.findFragmentById(R.id.frame_layout);
+        if(fragment == null){
+            fragment = new CategoriesFragment();
+            fm.beginTransaction()
+                    .add(R.id.frame_layout,fragment)
+                    .commit();
+        }
+        fragment.setOnClickRecyclerListener(new CategoriesFragment.OnClickRecyclerListener(){
+            @Override
+            public void onClicked(Bundle bundle) {
+                changeFragment(bundle);
+            }
+        });
+
+    }
+
+    public void changeFragment(Bundle bundle){
+        PackExcursionFragment fr = new PackExcursionFragment();
+        fr.setArguments(bundle);
+        fm.beginTransaction()
+                .replace(R.id.frame_layout,fr)
+                .addToBackStack(null)
+                .commit();
+
     }
 }
