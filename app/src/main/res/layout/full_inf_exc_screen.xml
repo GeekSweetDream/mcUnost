@@ -14,6 +14,12 @@
         android:textAlignment="center"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="20dp"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/title_full"
+        android:background="@color/md_blue_600"
+        android:alpha="0.5"/>
 
     <ScrollView
             android:layout_width="match_parent"

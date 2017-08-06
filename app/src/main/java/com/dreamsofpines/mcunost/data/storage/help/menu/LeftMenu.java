@@ -40,7 +40,6 @@ public class LeftMenu {
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         Intent intent = new Intent(activity, CategoriesActivity.class);
                         activity.startActivity(intent);
-                        activity.finish();
                         return false;
                     }
                 });
@@ -53,7 +52,6 @@ public class LeftMenu {
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         Intent intent = new Intent(activity, StockActivity.class);
                         activity.startActivity(intent);
-                        activity.finish();
                         return false;
                     }
                 });
@@ -70,7 +68,6 @@ public class LeftMenu {
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         Intent intent = new Intent(activity, ContactActivity.class);
                         activity.startActivity(intent);
-                        activity.finish();
                         return false;
                     }
                 });

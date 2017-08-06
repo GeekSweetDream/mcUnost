@@ -18,7 +18,8 @@
         android:id="@+id/inf_about_exc"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_below="@id/img_exc_inf">
+        android:layout_below="@id/img_exc_inf"
+        android:background="@color/md_white_1000">
         <TextView
             android:id="@+id/title_exc_inf"
             android:layout_width="wrap_content"
@@ -34,9 +35,7 @@
         android:layout_height="1dp"
         android:layout_below="@id/inf_about_exc"
         android:background="@color/md_blue_800"
-        android:alpha="0.5"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"/>
+        android:alpha="0.5"/>
     <me.relex.circleindicator.CircleIndicator
         android:id="@+id/indicator"
         android:layout_width="match_parent"
