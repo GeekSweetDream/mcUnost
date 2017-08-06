@@ -9,28 +9,27 @@ import java.util.List;
 public class InformExcursion {
     private String tittle, description, city,count, day, nameImage;
 
-//    public InformExcursion(String tittle, String city) {
-//        this.tittle = tittle;
-//        this.city = city;
-//    }
+    public InformExcursion(String tittle, String nameImage) {
+        this.tittle = tittle;
+        this.nameImage = nameImage;
+    }
 
     public String getNameImage() {
         return nameImage;
     }
 
-    public InformExcursion(String tittle, String description, String city, String count, String day, String nameImage) {
+    public InformExcursion(String tittle, String count, String day,String description, String nameImage) {
         this.tittle = tittle;
         this.description = description;
-        this.city = city;
         this.count = count;
         this.day = day;
         this.nameImage = nameImage;
     }
 
-    public InformExcursion(String tittle, String count) {
-        this.tittle = tittle;
-        this.count = count;
-    }
+//    public InformExcursion(String tittle, String count) {
+//        this.tittle = tittle;
+//        this.count = count;
+//    }
 
 
     public String getTittle() {

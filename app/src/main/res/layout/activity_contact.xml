@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_color">
+    <TextView
+        android:id="@+id/contact_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Контакты"
+        android:textColor="@color/md_blue_grey_800"
+        android:textSize="24dp"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp"/>
+    <ImageView
+        android:id="@+id/line_contact"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/md_blue_800"
+        android:alpha="0.5"
+        android:layout_below="@id/contact_title"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"/>
+    <TextView
+        android:id="@+id/moscow_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="dffd"
+        android:textSize="20dp"
+        android:textColor="@color/md_blue_grey_800"
+        android:layout_below="@id/line_contact"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"/>
+
+</RelativeLayout>

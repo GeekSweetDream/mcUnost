@@ -7,21 +7,21 @@
         android:id="@+id/title_tour"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Туры"
+        android:text="Направление"
         android:textStyle="bold"
-        android:textColor="@color/md_blue_grey_600"
+        android:textColor="@color/md_grey_600"
         android:textSize="25dp"
         android:textAlignment="center"
         android:layout_marginTop="10dp"/>
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/md_blue_grey_600"
+        android:background="@color/md_blue_800"
         android:layout_below="@id/title_tour"
         android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
-        android:alpha="0.6"/>
+        android:alpha="0.5"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/category_recycler_view"
         android:layout_marginTop="10dp"

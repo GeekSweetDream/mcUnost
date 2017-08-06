@@ -1,14 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+
         <TextView
-            android:id="@+id/short_inf_txt"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="@color/md_blue_grey_600"
-            android:text="asdfsdf"
+            android:id="@+id/we"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/md_blue_800"
+            android:textSize="25dp"
+            android:text="Кол-во дней"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"/>
-</LinearLayout>
+        <TextView
+            android:id="@+id/dfdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/md_grey_800"
+            android:layout_below="@id/we"
+            android:layout_centerHorizontal="true"
+            android:textSize="25dp"
+            android:text="day"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
+
+
+        <TextView
+            android:id="@+id/dew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/md_blue_800"
+            android:textSize="25dp"
+            android:text="Стоимость"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:layout_below="@id/dfdd"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
+        <TextView
+            android:id="@+id/dfd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/md_grey_800"
+            android:layout_below="@id/dew"
+            android:layout_centerHorizontal="true"
+            android:textSize="25dp"
+            android:text="Cost"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
+
+</RelativeLayout>

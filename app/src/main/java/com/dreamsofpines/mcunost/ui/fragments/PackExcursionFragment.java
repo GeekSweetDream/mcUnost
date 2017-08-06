@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.dreamsofpines.mcunost.R;
@@ -29,6 +30,7 @@ public class PackExcursionFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private String packExcur;
     private ExcursionAdapter mAdapter;
+
     private MyDataBase db;
     public static OnClickRecyclerListener mListener;
 
@@ -67,6 +69,10 @@ public class PackExcursionFragment extends Fragment {
             public void onTouched(View itemView, int position) {
                 Bundle save = new Bundle();
                 save.putString("pack_exc",listExcur.get(position).getTittle());
+                save.putString("description",listExcur.get(position).getDescription());
+                save.putString("cost",listExcur.get(position).getCount());
+                save.putString("day",listExcur.get(position).getDay());
+                save.putString("img",listExcur.get(position).getNameImage());
                 if(mListener != null)
                     mListener.onClicked(save);
             }

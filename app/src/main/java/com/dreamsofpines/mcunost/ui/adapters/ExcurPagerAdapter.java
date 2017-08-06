@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.storage.models.InformExcModel;
@@ -16,30 +17,54 @@ import com.dreamsofpines.mcunost.data.storage.models.InformExcModel;
 
 public class ExcurPagerAdapter extends PagerAdapter {
     private Context mContext;
-    private View mCurrentView;
+    private TextView txt;
+    private String cost,day,fullText,listExc;
 
     public ExcurPagerAdapter(Context contex){
         mContext = contex;
+    }
+
+    public void setCost(String cost) {
+        this.cost = cost;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public void setFullText(String fullText) {
+        this.fullText = fullText;
+    }
+
+    public void setListExc(String listExc) {
+        this.listExc = listExc;
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         InformExcModel resourcesModel = InformExcModel.values()[position];
         LayoutInflater inflater = LayoutInflater.from(mContext);
-      //  ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.short_inf_exc_screen, container, false);
         ViewGroup layout = (ViewGroup) inflater.inflate(resourcesModel.getLayoutResourceId(), container, false);
+        if(position == 0) {
+            txt = (TextView) layout.findViewById(R.id.dfdd);
+            txt.setText(day);
+            txt = (TextView) layout.findViewById(R.id.dfd);
+            txt.setText("от "+cost+" \u20BD");
+        }else {
+            if (position == 1) {
+                txt = (TextView) layout.findViewById(R.id.name_exc_inf);
+                txt.setText(listExc);
+            }else{
+                    txt = (TextView) layout.findViewById(R.id.full_inf_screen);
+                    txt.setText(fullText);
+                }
+            }
+
         container.addView(layout);
         return layout;
     }
 
-    public View getCurrentView() {
-        return mCurrentView;
-    }
 
-    @Override
-    public void setPrimaryItem(ViewGroup container, int position, Object object) {
-        mCurrentView = (View)object;
-    }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {

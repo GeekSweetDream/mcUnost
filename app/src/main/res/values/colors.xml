@@ -7,4 +7,5 @@
     <color name="logoBack">#1e88e5</color>
     <color name="colorLightGrey">#D6D6D6</color>
     <color name="colorDarkGrey">#7E7E77</color>
+    <color name="transparent">#00000000</color>
 </resources>

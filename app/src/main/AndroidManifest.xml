@@ -12,7 +12,8 @@
         <activity
             android:name=".ui.activities.LogoActivity"
             android:theme="@style/SplashTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -29,7 +30,14 @@
             android:theme="@style/SplashTheme"
             android:screenOrientation="portrait">
         </activity>
-
+        <activity
+            android:name=".ui.activities.StockActivity"
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activities.ContactActivity"
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

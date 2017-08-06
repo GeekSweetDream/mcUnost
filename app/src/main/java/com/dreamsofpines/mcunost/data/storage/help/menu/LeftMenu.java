@@ -7,6 +7,9 @@ import android.view.View;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
+import com.dreamsofpines.mcunost.ui.activities.CategoriesActivity;
+import com.dreamsofpines.mcunost.ui.activities.ContactActivity;
+import com.dreamsofpines.mcunost.ui.activities.StockActivity;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -26,41 +29,69 @@ public class LeftMenu {
     private Person mPerson;
     private PrimaryDrawerItem item0, item1,item2,item3,item4;
 
-    public LeftMenu(Activity activity) {
+    public LeftMenu(final Activity activity) {
         mPerson = new Person(GlobalPreferences.getPrefUserName(activity), GlobalPreferences.getPrefUserNumber(activity));
         item0 = new PrimaryDrawerItem()
                 .withIdentifier(0)
                 .withName("Туры")
-                .withIcon(R.mipmap.ic_flight_takeoff_black_48dp);
+                .withIcon(R.mipmap.ic_flight_takeoff_black_48dp)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        Intent intent = new Intent(activity, CategoriesActivity.class);
+                        activity.startActivity(intent);
+                        activity.finish();
+                        return false;
+                    }
+                });
         item1 = new PrimaryDrawerItem()
                 .withIdentifier(1)
                 .withName("Акции")
-                .withIcon(R.mipmap.ic_star_rate_black_18dp);
-        item2 = new PrimaryDrawerItem()
-                .withIdentifier(2)
-                .withName("О нас")
-                .withIcon(R.mipmap.ic_info_outline_black_48dp);
+                .withIcon(R.mipmap.ic_star_rate_black_18dp)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        Intent intent = new Intent(activity, StockActivity.class);
+                        activity.startActivity(intent);
+                        activity.finish();
+                        return false;
+                    }
+                });
+//        item2 = new PrimaryDrawerItem()
+//                .withIdentifier(2)
+//                .withName("О нас")
+//                .withIcon(R.mipmap.ic_info_outline_black_48dp);
         item3 = new PrimaryDrawerItem()
                 .withIdentifier(3)
                 .withName("Контакты")
-                .withIcon(R.mipmap.ic_book_black_48dp);
+                .withIcon(R.mipmap.ic_book_black_48dp)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        Intent intent = new Intent(activity, ContactActivity.class);
+                        activity.startActivity(intent);
+                        activity.finish();
+                        return false;
+                    }
+                });
+
 
     }
 
     public void build(final Activity activity){
         AccountHeader accountHeader = new AccountHeaderBuilder()
                 .withActivity(activity)
-                .withCompactStyle(true)
+                .withCompactStyle(false)
                 .withProfileImagesClickable(false)
                 .withProfileImagesVisible(false)
-                .withHeaderBackground(R.color.material_drawer_dark_background)
+                .withHeaderBackground(R.mipmap.baykal)
                 .withSelectionListEnabledForSingleProfile(false)
                 .build();
 
         Drawer result = new DrawerBuilder()
                 .withActivity(activity)
                 .withAccountHeader(accountHeader)
-                .addDrawerItems(item0, item1,item2,item3,
+                .addDrawerItems(item0, item1,item3,
                         new DividerDrawerItem(),
                         new SecondaryDrawerItem()
                             .withName("Наши телефоны").withSelectable(false).withTextColor(activity.getResources().getColor(R.color.md_blue_grey_500)),
