@@ -30,7 +30,15 @@ public class PackExcursionFragment extends Fragment {
     private String packExcur;
     private ExcursionAdapter mAdapter;
     private MyDataBase db;
+    public static OnClickRecyclerListener mListener;
 
+    public interface OnClickRecyclerListener{
+        void onClicked(Bundle bundle);
+    }
+
+    public void setOnClickListener(OnClickRecyclerListener listener){
+        this.mListener = listener;
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +62,15 @@ public class PackExcursionFragment extends Fragment {
         Log.i("Myapp","Размер Массива: " + listExcur.size());
         mAdapter = new ExcursionAdapter(listExcur);
         mAdapter.setActivity(getActivity());
+        mAdapter.setOnTouchListener(new ExcursionAdapter.OnItemTouchListener() {
+            @Override
+            public void onTouched(View itemView, int position) {
+                Bundle save = new Bundle();
+                save.putString("pack_exc",listExcur.get(position).getTittle());
+                if(mListener != null)
+                    mListener.onClicked(save);
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
     }
 }

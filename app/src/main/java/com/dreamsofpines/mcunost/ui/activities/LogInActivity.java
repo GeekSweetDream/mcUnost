@@ -26,16 +26,6 @@ public class LogInActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
         final Activity act = this;
         final Button mLogUp = (Button) findViewById(R.id.butt_log_up);
         final View mShLogUp = (View) findViewById(R.id.sh_log_up);

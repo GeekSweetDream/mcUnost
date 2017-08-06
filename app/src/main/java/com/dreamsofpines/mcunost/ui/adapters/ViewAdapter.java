@@ -13,6 +13,7 @@ import com.dreamsofpines.mcunost.data.storage.help.menu.InformExcursion;
 import java.util.List;
 
 import static android.R.id.list;
+import static android.R.id.mask;
 import static android.media.CamcorderProfile.get;
 
 /**
@@ -52,6 +53,7 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         InformExcursion inf = mExcursionList.get(position);
+        holder.setContext(mActivity);
         holder.bindExcursion(inf);
     }
 

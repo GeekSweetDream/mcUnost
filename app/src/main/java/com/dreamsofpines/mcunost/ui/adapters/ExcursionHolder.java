@@ -16,10 +16,17 @@ public class ExcursionHolder extends RecyclerView.ViewHolder {
     public TextView cost;
     public InformExcursion mInformExcursion;
 
-    public ExcursionHolder(View itemView) {
+    public ExcursionHolder(final View itemView) {
         super(itemView);
         title = (TextView) itemView.findViewById(R.id.title_exc);
         cost = (TextView) itemView.findViewById(R.id.cost_exc);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(ExcursionAdapter.mListener != null)
+                    ExcursionAdapter.mListener.onTouched(itemView,getLayoutPosition());
+            }
+        });
     }
 
     public void bindExcursion(InformExcursion inf){

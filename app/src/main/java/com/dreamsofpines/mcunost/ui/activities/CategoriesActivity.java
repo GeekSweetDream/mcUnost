@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -19,6 +20,7 @@ import com.dreamsofpines.mcunost.data.storage.help.menu.InformExcursion;
 import com.dreamsofpines.mcunost.data.storage.help.menu.LeftMenu;
 import com.dreamsofpines.mcunost.ui.adapters.ViewAdapter;
 import com.dreamsofpines.mcunost.ui.fragments.CategoriesFragment;
+import com.dreamsofpines.mcunost.ui.fragments.InformExcursionFragment;
 import com.dreamsofpines.mcunost.ui.fragments.PackExcursionFragment;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ import static android.R.attr.fragment;
  * Created by ThePupsick on 15.07.17.
  */
 
-public class CategoriesActivity extends FragmentActivity {
+public class CategoriesActivity extends AppCompatActivity {
 
     private final FragmentManager fm = getSupportFragmentManager();
 
@@ -51,14 +53,30 @@ public class CategoriesActivity extends FragmentActivity {
         fragment.setOnClickRecyclerListener(new CategoriesFragment.OnClickRecyclerListener(){
             @Override
             public void onClicked(Bundle bundle) {
-                changeFragment(bundle);
-            }
+                    changeFragmentPackExc(bundle);
+                }
         });
 
     }
 
-    public void changeFragment(Bundle bundle){
+    public void changeFragmentPackExc(Bundle bundle){
         PackExcursionFragment fr = new PackExcursionFragment();
+        fr.setArguments(bundle);
+        fr.setOnClickListener(new PackExcursionFragment.OnClickRecyclerListener(){
+            @Override
+            public void onClicked(Bundle bundle) {
+                changeFragmentInfExc(bundle);
+            }
+        });
+        fm.beginTransaction()
+                .replace(R.id.frame_layout,fr)
+                .addToBackStack(null)
+                .commit();
+
+    }
+
+    public void changeFragmentInfExc(Bundle bundle){
+        InformExcursionFragment fr = new InformExcursionFragment();
         fr.setArguments(bundle);
         fm.beginTransaction()
                 .replace(R.id.frame_layout,fr)
@@ -66,4 +84,5 @@ public class CategoriesActivity extends FragmentActivity {
                 .commit();
 
     }
+
 }

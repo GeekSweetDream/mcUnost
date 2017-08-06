@@ -19,7 +19,15 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionHolder> {
 
     private Activity mActivity;
     private List<InformExcursion> mExcursionList;
+    public static OnItemTouchListener mListener;
 
+    public interface OnItemTouchListener{
+        void onTouched(View itemView,int position);
+    }
+
+    public void setOnTouchListener(OnItemTouchListener listener){
+        this.mListener = listener;
+    }
     public ExcursionAdapter(List<InformExcursion> excursionList) {
         mExcursionList = excursionList;
     }

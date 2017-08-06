@@ -11,6 +11,7 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 
 /**
  * Created by ThePupsick on 31.07.17.
@@ -39,10 +40,6 @@ public class LeftMenu {
                 .withIdentifier(3)
                 .withName("Контакты")
                 .withIcon(R.mipmap.ic_book_black_48dp);
-        item4 = new PrimaryDrawerItem()
-                .withIdentifier(4)
-                .withName("Настройки")
-                .withIcon(R.mipmap.ic_book_black_48dp);
 
     }
 
@@ -51,18 +48,25 @@ public class LeftMenu {
                 .withActivity(activity)
                 .withCompactStyle(true)
                 .withProfileImagesClickable(false)
+                .withProfileImagesVisible(false)
                 .withHeaderBackground(R.color.material_drawer_dark_background)
                 .withSelectionListEnabledForSingleProfile(false)
-                .addProfiles( new ProfileDrawerItem()
-                        .withName(mPerson.getName())
-                        .withEmail(mPerson.getNumb())
-                        .withIcon(R.mipmap.ic_account_circle_white_48dp))
                 .build();
 
         Drawer result = new DrawerBuilder()
                 .withActivity(activity)
                 .withAccountHeader(accountHeader)
-                .addDrawerItems(item0, item1,item2,item3, new DividerDrawerItem(),item4)
+                .addDrawerItems(item0, item1,item2,item3,
+                        new DividerDrawerItem(),
+                        new SecondaryDrawerItem()
+                            .withName("Наши телефоны").withTextColor(activity.getResources().getColor(R.color.md_blue_grey_500)),
+                        new PrimaryDrawerItem()
+                                .withIdentifier(4)
+                                .withName("8(495)349-56-91 (Москва)"),
+                        new PrimaryDrawerItem()
+                                .withIdentifier(5)
+                                .withName("8(812)656-86-72 (Санкт-Петербург)")
+                        )
                 .build();
     }
 }

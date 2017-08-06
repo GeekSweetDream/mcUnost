@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">mcUnost</string>
-
+    <string name="app_name">МЦ Юность</string>
+    <string name="short_info">Краткое описание</string>>
+    <string name="excursion">Экскурсии</string>
+    <string name="full_info">Полное описание</string>
     <string name="hello_page">Приветствие</string>
     <string name="moscow_page">Москва</string>
 

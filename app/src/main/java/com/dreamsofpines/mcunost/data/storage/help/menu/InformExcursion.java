@@ -7,13 +7,25 @@ import java.util.List;
  */
 
 public class InformExcursion {
-    private String tittle, description, city;
-    private String count, day;
+    private String tittle, description, city,count, day, nameImage;
 
 //    public InformExcursion(String tittle, String city) {
 //        this.tittle = tittle;
 //        this.city = city;
 //    }
+
+    public String getNameImage() {
+        return nameImage;
+    }
+
+    public InformExcursion(String tittle, String description, String city, String count, String day, String nameImage) {
+        this.tittle = tittle;
+        this.description = description;
+        this.city = city;
+        this.count = count;
+        this.day = day;
+        this.nameImage = nameImage;
+    }
 
     public InformExcursion(String tittle, String count) {
         this.tittle = tittle;
