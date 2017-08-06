@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/img_exc_inf"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@color/logoBack"
+        android:scaleType="centerCrop"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/img_exc_inf"
+        android:background="@color/md_blue_grey_600"
+        android:alpha="0.3"/>
+    <RelativeLayout
+        android:id="@+id/inf_about_exc"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@id/img_exc_inf">
+        <TextView
+            android:id="@+id/title_exc_inf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textAlignment="center"
+            android:text="Title"
+            android:textColor="@color/md_grey_800"
+            android:textSize="22dp"/>
+        </RelativeLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/inf_about_exc"
+        android:background="@color/md_blue_800"
+        android:alpha="0.5"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"/>
+    <me.relex.circleindicator.CircleIndicator
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/inf_about_exc"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/excure_view_pager"
+        android:layout_below="@id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+</RelativeLayout>

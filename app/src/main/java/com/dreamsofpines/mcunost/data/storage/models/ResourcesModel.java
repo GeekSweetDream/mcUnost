@@ -23,7 +23,4 @@ public enum ResourcesModel {
         return mLayoutResourceId;
     }
 
-    public int getTitleResourceId() {
-        return mTitleResourceId;
-    }
 }
