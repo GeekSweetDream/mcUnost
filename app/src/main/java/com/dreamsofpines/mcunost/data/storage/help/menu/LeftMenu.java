@@ -1,6 +1,9 @@
 package com.dreamsofpines.mcunost.data.storage.help.menu;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.view.View;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
@@ -12,6 +15,7 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 /**
  * Created by ThePupsick on 31.07.17.
@@ -43,7 +47,7 @@ public class LeftMenu {
 
     }
 
-    public void build(Activity activity){
+    public void build(final Activity activity){
         AccountHeader accountHeader = new AccountHeaderBuilder()
                 .withActivity(activity)
                 .withCompactStyle(true)
@@ -59,13 +63,29 @@ public class LeftMenu {
                 .addDrawerItems(item0, item1,item2,item3,
                         new DividerDrawerItem(),
                         new SecondaryDrawerItem()
-                            .withName("Наши телефоны").withTextColor(activity.getResources().getColor(R.color.md_blue_grey_500)),
+                            .withName("Наши телефоны").withSelectable(false).withTextColor(activity.getResources().getColor(R.color.md_blue_grey_500)),
                         new PrimaryDrawerItem()
                                 .withIdentifier(4)
-                                .withName("8(495)349-56-91 (Москва)"),
+                                .withName("8(495)349-56-91 (Москва)")
+                                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                                    @Override
+                                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:84953495691"));
+                                        activity.startActivity(intent);
+                                        return false;
+                                    }
+                                }),
                         new PrimaryDrawerItem()
                                 .withIdentifier(5)
                                 .withName("8(812)656-86-72 (Санкт-Петербург)")
+                                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                                    @Override
+                                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:88126568672"));
+                                        activity.startActivity(intent);
+                                        return false;
+                                    }
+                                })
                         )
                 .build();
     }

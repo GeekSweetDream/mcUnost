@@ -42,6 +42,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     public void bindExcursion(InformExcursion inf){
         mInformExcursion = inf;
         mTittle.setText(mInformExcursion.getTittle());
-        Picasso.with(mContext).load("file:///android_asset/"+mInformExcursion.getNameImage()).into(mImageView);
+        Picasso.with(mContext).load("file:///android_asset/moscow_small.png").into(mImageView);
+        //+mInformExcursion.getNameImage()
     }
 }

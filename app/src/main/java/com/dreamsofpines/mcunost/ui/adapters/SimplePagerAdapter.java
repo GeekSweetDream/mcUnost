@@ -16,6 +16,11 @@ import com.dreamsofpines.mcunost.data.storage.models.ResourcesModel;
 public class SimplePagerAdapter extends PagerAdapter {
 
     private Context mContext;
+    private View mCurrentScreen;
+
+    public View getCurrentScreen() {
+        return mCurrentScreen;
+    }
 
     public SimplePagerAdapter(Context contex){
         mContext = contex;
@@ -33,6 +38,11 @@ public class SimplePagerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         super.destroyItem(container, position, object);
+    }
+
+    @Override
+    public void setPrimaryItem(ViewGroup container, int position, Object object) {
+        mCurrentScreen = (View)object;
     }
 
     @Override

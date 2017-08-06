@@ -5,9 +5,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.ui.adapters.ExcurPagerAdapter;
@@ -28,7 +30,12 @@ public class InformExcursionFragment extends Fragment {
         CircleIndicator indicator = (CircleIndicator) view.findViewById(R.id.indicator);
         indicator.configureIndicator(-1,-1,-1,
                 R.animator.scale_with_alpha,0,R.drawable.circle_shape,R.drawable.circle_shape);
-        viewPager.setAdapter(new ExcurPagerAdapter(getActivity()));
+        ExcurPagerAdapter adapter = new ExcurPagerAdapter(getActivity());
+        viewPager.setAdapter(adapter);
+        View viewWithTag = adapter.getCurrentView();
+        Log.i("Myapp",""+(viewWithTag == null));
+//        TextView txt = (TextView) viewWithTag.findViewById(R.id.short_inf_txt);
+//        txt.setText("sdfaasdfsdafretwgfdsgdfsghhghghghhghdslafjhlasdfas");
         indicator.setViewPager(viewPager);
         return view;
     }
