@@ -39,6 +39,8 @@ public class InformExcursionFragment extends Fragment {
         CircleIndicator indicator = (CircleIndicator) view.findViewById(R.id.indicator);
         ImageView mImageView = (ImageView) view.findViewById(R.id.img_exc_inf);
         TextView title = (TextView) view.findViewById(R.id.title_exc_inf);
+        TextView titlebar = (TextView) getActivity().findViewById(R.id.title_tour);
+        titlebar.setText("Тур");
         indicator.configureIndicator(-1,-1,-1,
                 R.animator.scale_with_alpha,0,R.drawable.circle_shape,R.drawable.circle_shape);
         ExcurPagerAdapter adapter = new ExcurPagerAdapter(getActivity());

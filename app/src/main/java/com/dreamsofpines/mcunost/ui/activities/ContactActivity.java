@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.dreamsofpines.mcunost.R;
@@ -19,8 +21,15 @@ public class ContactActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
-        LeftMenu leftMenu = new LeftMenu(this);
-        leftMenu.build(this);
+        final LeftMenu leftMenu = new LeftMenu(this);
+        leftMenu.build(this,2);
+        Button button = (Button) findViewById(R.id.contact_button_menu);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                leftMenu.openMenu();
+            }
+        });
         TextView textView = (TextView) findViewById(R.id.moscow_contact);
         textView.setText("Москва\n" +
                 "Адрес: пр-д Батайский д. 31, оф. 375 \n" +

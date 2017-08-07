@@ -28,6 +28,7 @@ public class LeftMenu {
 
     private Person mPerson;
     private PrimaryDrawerItem item0, item1,item2,item3,item4;
+    private Drawer result;
 
     public LeftMenu(final Activity activity) {
         mPerson = new Person(GlobalPreferences.getPrefUserName(activity), GlobalPreferences.getPrefUserNumber(activity));
@@ -40,6 +41,7 @@ public class LeftMenu {
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         Intent intent = new Intent(activity, CategoriesActivity.class);
                         activity.startActivity(intent);
+                        activity.finish();
                         return false;
                     }
                 });
@@ -52,6 +54,7 @@ public class LeftMenu {
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         Intent intent = new Intent(activity, StockActivity.class);
                         activity.startActivity(intent);
+                        activity.finish();
                         return false;
                     }
                 });
@@ -60,7 +63,7 @@ public class LeftMenu {
 //                .withName("О нас")
 //                .withIcon(R.mipmap.ic_info_outline_black_48dp);
         item3 = new PrimaryDrawerItem()
-                .withIdentifier(3)
+                .withIdentifier(2)
                 .withName("Контакты")
                 .withIcon(R.mipmap.ic_book_black_48dp)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
@@ -68,6 +71,7 @@ public class LeftMenu {
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         Intent intent = new Intent(activity, ContactActivity.class);
                         activity.startActivity(intent);
+                        activity.finish();
                         return false;
                     }
                 });
@@ -75,7 +79,7 @@ public class LeftMenu {
 
     }
 
-    public void build(final Activity activity){
+    public void build(final Activity activity,int select){
         AccountHeader accountHeader = new AccountHeaderBuilder()
                 .withActivity(activity)
                 .withCompactStyle(false)
@@ -85,7 +89,7 @@ public class LeftMenu {
                 .withSelectionListEnabledForSingleProfile(false)
                 .build();
 
-        Drawer result = new DrawerBuilder()
+        result = new DrawerBuilder()
                 .withActivity(activity)
                 .withAccountHeader(accountHeader)
                 .addDrawerItems(item0, item1,item3,
@@ -116,5 +120,10 @@ public class LeftMenu {
                                 })
                         )
                 .build();
+    }
+
+    public void openMenu(){
+        if (result!=null)
+            result.openDrawer();
     }
 }

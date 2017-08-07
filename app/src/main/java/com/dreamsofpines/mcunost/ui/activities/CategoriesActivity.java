@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.dreamsofpines.mcunost.R;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.R.attr.fragment;
+import static android.R.attr.left;
 
 /**
  * Created by ThePupsick on 15.07.17.
@@ -41,8 +43,8 @@ public class CategoriesActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
-        LeftMenu leftMenu = new LeftMenu(this);
-        leftMenu.build(this);
+        final LeftMenu leftMenu = new LeftMenu(this);
+        leftMenu.build(this,0);
         CategoriesFragment fragment = (CategoriesFragment) fm.findFragmentById(R.id.frame_layout);
         if(fragment == null){
             fragment = new CategoriesFragment();
@@ -56,7 +58,13 @@ public class CategoriesActivity extends AppCompatActivity {
                     changeFragmentPackExc(bundle);
                 }
         });
-
+        Button button = (Button) findViewById(R.id.button_menu);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                leftMenu.openMenu();
+            }
+        });
     }
 
     public void changeFragmentPackExc(Bundle bundle){

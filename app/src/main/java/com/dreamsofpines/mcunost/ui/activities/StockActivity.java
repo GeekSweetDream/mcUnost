@@ -3,6 +3,8 @@ package com.dreamsofpines.mcunost.ui.activities;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.dreamsofpines.mcunost.R;
@@ -14,7 +16,7 @@ import com.dreamsofpines.mcunost.data.storage.help.menu.LeftMenu;
 
 public class StockActivity extends AppCompatActivity {
 
-    private String stockOne = "«ПРИГЛАСИ ДРУГА!»\n" +
+    private String stockOne = "\n«ПРИГЛАСИ ДРУГА!»\n" +
             "\n" +
             "Молодежному центру ЮНОСТЬ нужны такие руководители групп, как Вы!\n" +
             "\n" +
@@ -41,9 +43,16 @@ public class StockActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock);
-        LeftMenu leftMenu = new LeftMenu(this);
-        leftMenu.build(this);
+        final LeftMenu leftMenu = new LeftMenu(this);
+        leftMenu.build(this,1);
         TextView textView = (TextView) findViewById(R.id.txt_stock);
         textView.setText(stockOne+stockTwo);
+        Button button = (Button) findViewById(R.id.stock_button_menu);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                leftMenu.openMenu();
+            }
+        });
     }
 }

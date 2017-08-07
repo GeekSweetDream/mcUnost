@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dreamsofpines.mcunost.R;
@@ -55,6 +56,8 @@ public class PackExcursionFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.pack_exc_recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         updateUI(packExcur);
+        TextView title = (TextView) getActivity().findViewById(R.id.title_tour);
+        title.setText("Туры");
         return view;
     }
 
