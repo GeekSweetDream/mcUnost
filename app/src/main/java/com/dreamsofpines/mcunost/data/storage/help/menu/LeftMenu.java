@@ -29,6 +29,7 @@ public class LeftMenu {
     private Person mPerson;
     private PrimaryDrawerItem item0, item1,item2,item3,item4;
     private Drawer result;
+    private View stickyDraw;
 
     public LeftMenu(final Activity activity) {
         mPerson = new Person(GlobalPreferences.getPrefUserName(activity), GlobalPreferences.getPrefUserNumber(activity));
@@ -92,6 +93,7 @@ public class LeftMenu {
         result = new DrawerBuilder()
                 .withActivity(activity)
                 .withAccountHeader(accountHeader)
+                .withStickyFooter(R.layout.button_skype_call)
                 .addDrawerItems(item0, item1,item3,
                         new DividerDrawerItem(),
                         new SecondaryDrawerItem()

@@ -20,19 +20,19 @@
         android:layout_below="@id/title_full"
         android:background="@color/md_blue_600"
         android:alpha="0.5"/>
-
     <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_full">
+        <TextView
+            android:id="@+id/full_inf_screen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/title_full">
-            <TextView
-                android:id="@+id/full_inf_screen"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="dfdfasdf"
-                android:textColor="@color/md_grey_800"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="8dp"/>
-        </ScrollView>
+            android:text="dfdfasdf"
+            android:textColor="@color/md_grey_800"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="8dp"/>
+    </ScrollView>
+
 </RelativeLayout>

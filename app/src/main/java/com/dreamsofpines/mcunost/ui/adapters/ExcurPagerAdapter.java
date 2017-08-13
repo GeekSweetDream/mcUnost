@@ -64,6 +64,10 @@ public class ExcurPagerAdapter extends PagerAdapter {
         return layout;
     }
 
+    public void changeHeightText(float size){
+        txt.setMaxHeight((int)size);
+    }
+
 
 
     @Override
