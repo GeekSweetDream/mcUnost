@@ -15,7 +15,14 @@
         android:textStyle="bold"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="20dp"/>
-        <ScrollView
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/list_exc"
+        android:background="@color/md_blue_600"
+        android:alpha="0.5"/>
+
+    <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/list_exc"

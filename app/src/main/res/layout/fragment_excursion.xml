@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="@color/logoBack"
+        android:layout_marginTop="4dp"
         android:scaleType="centerCrop"/>
     <TextView
         android:id="@+id/title_exc"

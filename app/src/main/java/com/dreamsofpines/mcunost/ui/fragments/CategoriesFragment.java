@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.database.MyDataBase;
@@ -44,6 +46,8 @@ public class CategoriesFragment extends Fragment {
         categoryView = (RecyclerView) view.findViewById(R.id.category_recycler_view);
         categoryView.setLayoutManager(new LinearLayoutManager(getActivity()));
         updateUI();
+        TextView title = (TextView) getActivity().findViewById(R.id.title_tour);
+        title.setText("Направление");
         return view;
     }
 
