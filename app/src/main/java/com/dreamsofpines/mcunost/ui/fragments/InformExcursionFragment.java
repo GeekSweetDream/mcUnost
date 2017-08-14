@@ -81,58 +81,57 @@ public class InformExcursionFragment extends Fragment {
         adapter.setListExc(listExcursion);
         viewPager.setAdapter(adapter);
         indicator.setViewPager(viewPager);
-        final RelativeLayout rl = (RelativeLayout) view.findViewById(R.id.moveLayout);
-        final RelativeLayout rl3 = (RelativeLayout) view.findViewById(R.id.inf_about_exc);
-        final RelativeLayout rl2 = (RelativeLayout) getActivity().findViewById(R.id.titlebar);
-        final float rlH = rl.getHeight(),rl2H = rl2.getHeight(),rl2Y=rl2.getY();
-        float begi = rl.getY()+rlH;
-        viewPager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                float x = motionEvent.getX();
-                float y = motionEvent.getY();
-                switch(motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        downX = x;
-                        downY = y;
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        moveX = x;
-                        moveY = y;
-                        if(Math.abs(downX - moveX)>SWIPE_MAX_OFF_PATH) return false;
-                        float res =(moveY-downY);
-                        if(Math.abs(res)>SWIPE_MIN_OFF_PATH && res!=diff) {
-                            diff = res;
-                            float df = rl.getY();
-                            if(res<0) {
-                                if (df >= rl2H/2) {
-                                    rl.setY(df + res);
-                                }
-                                else
-                                    rl.setY(0);
-                            }else {
-                                float rlH1 = rl3.getHeight();
-                                float imH = mImageView.getY()+mImageView.getHeight();
-                                Log.i("Myapp",""+mImageView.getY()+" h" + mImageView.getHeight());
-                                if (df +rlH1/3 <= imH)
-                                    rl.setY(df + res);
-                                else {
-                                    rl.setY(imH);
-                                }
-                            }
-
-                            downY = moveY;
-                            return true;
-                        }
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        UpY = y;
-                        break;
-                }
-                return false;
-            }
-        });
-
+//        final RelativeLayout rl = (RelativeLayout) view.findViewById(R.id.moveLayout);
+//        final RelativeLayout rl3 = (RelativeLayout) view.findViewById(R.id.inf_about_exc);
+//        final RelativeLayout rl2 = (RelativeLayout) getActivity().findViewById(R.id.titlebar);
+//        final float rlH = rl.getHeight(),rl2H = rl2.getHeight(),rl2Y=rl2.getY();
+//        float begi = rl.getY()+rlH;
+//        viewPager.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                float x = motionEvent.getX();
+//                float y = motionEvent.getY();
+//                switch(motionEvent.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                        downX = x;
+//                        downY = y;
+//                        break;
+//                    case MotionEvent.ACTION_MOVE:
+//                        moveX = x;
+//                        moveY = y;
+//                        if(Math.abs(downX - moveX)>SWIPE_MAX_OFF_PATH) return false;
+//                        float res =(moveY-downY);
+//                        if(Math.abs(res)>SWIPE_MIN_OFF_PATH && res!=diff) {
+//                            diff = res;
+//                            float df = rl.getY();
+//                            if(res<0) {
+//                                if (df >= rl2H/2) {
+//                                    rl.setY(df + res);
+//                                }
+//                                else
+//                                    rl.setY(0);
+//                            }else {
+//                                float rlH1 = rl3.getHeight();
+//                                float imH = mImageView.getY()+mImageView.getHeight();
+//                                Log.i("Myapp",""+mImageView.getY()+" h" + mImageView.getHeight());
+//                                if (df +rlH1/3 <= imH)
+//                                    rl.setY(df + res);
+//                                else {
+//                                    rl.setY(imH);
+//                                }
+//                            }
+//
+//                            downY = moveY;
+//                            return true;
+//                        }
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                        UpY = y;
+//                        break;
+//                }
+//                return false;
+//            }
+//        });
         return view;
     }
     private String createStringListExcursion(List<String> list){

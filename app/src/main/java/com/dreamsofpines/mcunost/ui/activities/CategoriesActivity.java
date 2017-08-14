@@ -77,13 +77,13 @@ public class CategoriesActivity extends AppCompatActivity {
     private CategoriesFragment fragment;
     private Button button, butOk;
     private LeftMenu leftMenu;
-    private View chooseCity;
+    private View chooseCity, notification;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private LocationRequest mLocationRequest;
     private LocationCallback mLocationCallback;
     private Activity mActivity;
     private TextView cityName,city1,city2,city3;
-    private RelativeLayout rl,rl1, mess;
+    private RelativeLayout rl,rl1, mess, timerNotify;
 
 
 
@@ -123,9 +123,32 @@ public class CategoriesActivity extends AppCompatActivity {
         city1 = (TextView) chooseCity.findViewById(R.id.city1);
         city2 = (TextView) chooseCity.findViewById(R.id.city2);
         city3 = (TextView) chooseCity.findViewById(R.id.city3);
+        notification = (View) findViewById(R.id.order_notification);
+        timerNotify = (RelativeLayout) findViewById(R.id.timer_order);
     }
 
     private void settingView(){
+
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timerNotify.setVisibility(View.VISIBLE);
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        timerNotify.setVisibility(View.INVISIBLE);
+                    }
+                },5000);
+            }
+        });
+
+        timerNotify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //
+            }
+        });
 
         if(fragment == null){
             fragment = new CategoriesFragment();
@@ -137,6 +160,7 @@ public class CategoriesActivity extends AppCompatActivity {
         fragment.setOnClickRecyclerListener(new CategoriesFragment.OnClickRecyclerListener(){
             @Override
             public void onClicked(Bundle bundle) {
+                timerNotify.setVisibility(View.INVISIBLE);
                 changeFragmentPackExc(bundle);
             }
         });
