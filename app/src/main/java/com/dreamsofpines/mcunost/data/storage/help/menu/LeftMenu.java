@@ -30,8 +30,10 @@ public class LeftMenu {
     private PrimaryDrawerItem item0, item1,item2,item3,item4;
     private Drawer result;
     private View stickyDraw;
+    private Activity activity;
 
     public LeftMenu(final Activity activity) {
+        this.activity = activity;
         mPerson = new Person(GlobalPreferences.getPrefUserName(activity), GlobalPreferences.getPrefUserNumber(activity));
         item0 = new PrimaryDrawerItem()
                 .withIdentifier(0)
@@ -59,10 +61,9 @@ public class LeftMenu {
                         return false;
                     }
                 });
-//        item2 = new PrimaryDrawerItem()
-//                .withIdentifier(2)
-//                .withName("О нас")
-//                .withIcon(R.mipmap.ic_info_outline_black_48dp);
+        item2 = new PrimaryDrawerItem()
+                .withName("Ваш город: "+ GlobalPreferences.getPrefUserCity(activity));
+
         item3 = new PrimaryDrawerItem()
                 .withIdentifier(2)
                 .withName("Контакты")
@@ -81,6 +82,7 @@ public class LeftMenu {
     }
 
     public void build(final Activity activity,int select){
+        this.activity = activity;
         AccountHeader accountHeader = new AccountHeaderBuilder()
                 .withActivity(activity)
                 .withCompactStyle(false)
@@ -95,6 +97,8 @@ public class LeftMenu {
                 .withAccountHeader(accountHeader)
                 .withStickyFooter(R.layout.button_skype_call)
                 .addDrawerItems(item0, item1,item3,
+                        new DividerDrawerItem(),
+                        item2,
                         new DividerDrawerItem(),
                         new SecondaryDrawerItem()
                             .withName("Наши телефоны").withSelectable(false).withTextColor(activity.getResources().getColor(R.color.md_blue_grey_500)),
@@ -124,8 +128,17 @@ public class LeftMenu {
                 .build();
     }
 
+    public void updateCity(){
+        if (result!=null){
+            item2.withName("Ваш город: "+ GlobalPreferences.getPrefUserCity(activity));
+            result.updateItem(item2);
+        }
+
+    }
+
     public void openMenu(){
-        if (result!=null)
+        if (result!=null) {
             result.openDrawer();
+        }
     }
 }

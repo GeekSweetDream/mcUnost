@@ -12,6 +12,19 @@ public class GlobalPreferences {
     private static final String PREF_ADD_USER = "addUser";
     private static final String PREF_USER_NAME = "userName";
     private static final String PREF_USER_NUMBER = "userNumber";
+    private static final String PREF_USER_CITY = "userCity";
+
+    public static String getPrefUserCity(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(PREF_USER_CITY,"Не задан");
+    }
+
+    public static void setPrefUserCity(Context context,String city){
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putString(PREF_USER_CITY,city)
+                .apply();
+    }
 
     public static int getPrefAddUser(Context context){
         return PreferenceManager.getDefaultSharedPreferences(context)

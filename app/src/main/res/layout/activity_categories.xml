@@ -40,4 +40,8 @@
         android:layout_below="@id/titlebar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    <include
+        android:id="@+id/view_choose_city"
+        layout="@layout/view_choose_city"
+        android:visibility="invisible"/>
 </RelativeLayout>
