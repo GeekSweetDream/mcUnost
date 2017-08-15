@@ -30,14 +30,22 @@
             android:textColor="@color/md_white_1000"/>
         <TextView
             android:id="@+id/mycity"
-            android:layout_width="wrap_content"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:text="Москва"
             android:layout_toRightOf="@id/txt_city"
             android:textSize="20dp"
             android:layout_marginLeft="10dp"
+            android:maxLines="1"
             android:layout_centerVertical="true"
             android:textColor="@color/md_white_1000"/>
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="10dp"
+            android:background="@mipmap/down_white_"
+            android:layout_marginRight="8dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
 
     </RelativeLayout>
     <RelativeLayout

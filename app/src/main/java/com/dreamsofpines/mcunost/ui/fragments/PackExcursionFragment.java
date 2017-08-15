@@ -42,6 +42,7 @@ public class PackExcursionFragment extends Fragment {
     public void setOnClickListener(OnClickRecyclerListener listener){
         this.mListener = listener;
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +52,6 @@ public class PackExcursionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pack_exc,container,false);
-        if(savedInstanceState != null) {
-        }
         mRecyclerView = (RecyclerView) view.findViewById(R.id.pack_exc_recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         updateUI(packExcur);

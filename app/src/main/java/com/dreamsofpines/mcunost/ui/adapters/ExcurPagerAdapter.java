@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.dreamsofpines.mcunost.R;
@@ -19,6 +20,16 @@ public class ExcurPagerAdapter extends PagerAdapter {
     private Context mContext;
     private TextView txt;
     private String cost,day,fullText,listExc;
+    private Button mButton;
+    public static OnClickButton mListener;
+
+    public interface OnClickButton{
+        void onClicked();
+    }
+
+    public void setOnClickListenner(OnClickButton onClickButton){
+        mListener = onClickButton;
+    }
 
     public ExcurPagerAdapter(Context contex){
         mContext = contex;
@@ -46,10 +57,17 @@ public class ExcurPagerAdapter extends PagerAdapter {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         ViewGroup layout = (ViewGroup) inflater.inflate(resourcesModel.getLayoutResourceId(), container, false);
         if(position == 0) {
+            mButton = (Button) layout.findViewById(R.id.butt_order_tour);
+            mButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onClicked();
+                }
+            });
             txt = (TextView) layout.findViewById(R.id.dfdd);
             txt.setText(day);
-            txt = (TextView) layout.findViewById(R.id.dfd);
-            txt.setText("от "+cost+" \u20BD");
+//            txt = (TextView) layout.findViewById(R.id.dfd);
+//            txt.setText("от "+cost+" \u20BD");
         }else {
             if (position == 1) {
                 txt = (TextView) layout.findViewById(R.id.name_exc_inf);
@@ -59,7 +77,6 @@ public class ExcurPagerAdapter extends PagerAdapter {
                     txt.setText(fullText);
                 }
             }
-
         container.addView(layout);
         return layout;
     }

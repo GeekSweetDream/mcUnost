@@ -132,14 +132,18 @@ public class CategoriesActivity extends AppCompatActivity {
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                timerNotify.setVisibility(View.VISIBLE);
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        timerNotify.setVisibility(View.INVISIBLE);
-                    }
-                },5000);
+                if(timerNotify.getVisibility() != View.VISIBLE) {
+                    timerNotify.setVisibility(View.VISIBLE);
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            timerNotify.setVisibility(View.INVISIBLE);
+                        }
+                    }, 5000);
+                }else{
+                    timerNotify.setVisibility(View.INVISIBLE);
+                }
             }
         });
 
@@ -172,35 +176,38 @@ public class CategoriesActivity extends AppCompatActivity {
             }
         });
 
+        city1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cityName.setText(city1.getText().toString());
+                rl.setVisibility(View.INVISIBLE);
+                butOk.setVisibility(View.VISIBLE);
+            }
+        });
+
+        city2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cityName.setText(city2.getText().toString());
+                rl.setVisibility(View.INVISIBLE);
+                butOk.setVisibility(View.VISIBLE);
+            }
+        });
+
+        city3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cityName.setText(city3.getText().toString());
+                rl.setVisibility(View.INVISIBLE);
+                butOk.setVisibility(View.VISIBLE);
+            }
+        });
+
         rl1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rl.setVisibility(View.VISIBLE);
-                butOk.setVisibility(View.INVISIBLE);
-                city1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        cityName.setText(city1.getText().toString());
-                        rl.setVisibility(View.INVISIBLE);
-                        butOk.setVisibility(View.VISIBLE);
-                    }
-                });
-                city2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        cityName.setText(city2.getText().toString());
-                        rl.setVisibility(View.INVISIBLE);
-                        butOk.setVisibility(View.VISIBLE);
-                    }
-                });
-                city3.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        cityName.setText(city3.getText().toString());
-                        rl.setVisibility(View.INVISIBLE);
-                        butOk.setVisibility(View.VISIBLE);
-                    }
-                });
+                rl.setVisibility(rl.getVisibility() == View.VISIBLE ? View.INVISIBLE : View.VISIBLE);
+                butOk.setVisibility(butOk.getVisibility() == View.INVISIBLE ? View.VISIBLE : View.INVISIBLE);
             }
         });
 

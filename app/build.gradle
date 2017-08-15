@@ -34,6 +34,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-location:11.0.4'
     compile 'com.google.android.gms:play-services-base:11.0.4'
     compile 'com.google.android.gms:play-services-maps:11.0.4'
+    compile 'co.infinum:materialdatetimepicker-support:3.2.2'
     compile('com.mikepenz:materialdrawer:5.9.5@aar') {
         transitive = true
     }

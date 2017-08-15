@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/md_orange_400">
+<RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/txt_consider_cost_tour"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Цена за тур:"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:textColor="@color/md_white_1000"/>
+    <TextView
+        android:id="@+id/consider_cost_tour"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_consider_cost_tour"
+        android:layout_centerHorizontal="true"
+        android:text="14234 "
+        android:textStyle="bold"
+        android:textColor="@color/md_white_1000"
+        android:textAlignment="center"
+        android:textSize="32dp"/>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/data_tour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/consider_cost_tour"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/data_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Дата поездки"
+            android:inputType="numberDecimal"
+            android:maxLines="1"/>
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/count_pupil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/data_tour"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+        <android.support.v7.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Введите кол-во учеников"
+            android:inputType="numberDecimal"
+            android:maxLength="3"
+            android:maxLines="1"/>
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/count_teacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/count_pupil"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+        <android.support.v7.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Введите кол-во преподавателей"
+            android:inputType="numberDecimal"
+            android:maxLength="2"
+            android:maxLines="1"/>
+    </android.support.design.widget.TextInputLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/count_teacher"
+        android:layout_marginTop="15dp">
+        <Button
+            android:id="@+id/butt_cancel_book"
+            android:layout_width="160dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/md_red_400"
+            android:text="Отмена"/>
+
+        <Button
+            android:id="@+id/butt_book_tour"
+            android:layout_width="160dp"
+            android:layout_height="50dp"
+            android:background="@color/md_green_400"
+            android:text="Оставить заявку"/>
+    </LinearLayout>
+
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

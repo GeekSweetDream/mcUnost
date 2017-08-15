@@ -51,12 +51,6 @@ public class CategoriesFragment extends Fragment {
         return view;
     }
 
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        mListener = (OnClickRecyclerListener) context;
-//    }
-
     private void updateUI(){
         db = new MyDataBase(getActivity());
         final List<InformExcursion> excursions = db.getCategories();

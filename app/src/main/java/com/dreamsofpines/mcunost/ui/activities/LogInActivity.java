@@ -64,15 +64,15 @@ public class LogInActivity extends AppCompatActivity {
     // Изменить цвет editText, при пустых строках
     private boolean addUserData(Activity activity) {
         boolean fl = true;
-        EditText inpName = (EditText) findViewById(R.id.inputName);
-        EditText inpNumber = (EditText) findViewById(R.id.inputNumber);
-        if(inpName.getText().toString().equalsIgnoreCase("") || inpNumber.getText().toString().equalsIgnoreCase("")) {
-            fl = false;
-        }else{
-            GlobalPreferences.setPrefUserName(activity,inpName.getText().toString());
-            GlobalPreferences.setPrefUserNumber(activity,inpNumber.getText().toString());
-            GlobalPreferences.setPrefAddUser(activity);
-        }
+//        EditText inpName = (EditText) findViewById(R.id.inputName);
+//        EditText inpNumber = (EditText) findViewById(R.id.inputNumber);
+//        if(inpName.getText().toString().equalsIgnoreCase("") || inpNumber.getText().toString().equalsIgnoreCase("")) {
+//            fl = false;
+//        }else{
+//            GlobalPreferences.setPrefUserName(activity,inpName.getText().toString());
+//            GlobalPreferences.setPrefUserNumber(activity,inpNumber.getText().toString());
+//            GlobalPreferences.setPrefAddUser(activity);
+//        }
         return fl;
     }
 }

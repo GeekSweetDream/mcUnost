@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -15,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -26,11 +29,14 @@ import com.dreamsofpines.mcunost.ui.adapters.ExcurPagerAdapter;
 import com.dreamsofpines.mcunost.ui.adapters.ExcurPagerAdapter;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator;
 
+import static android.R.attr.background;
 import static android.R.attr.x;
 import static android.R.attr.y;
 import static android.R.transition.move;
@@ -44,43 +50,34 @@ import static com.dreamsofpines.mcunost.R.id.indicator;
 
 public class InformExcursionFragment extends Fragment {
 
-    public static final float SWIPE_MAX_OFF_PATH = 45;
-    public static final float SWIPE_MIN_OFF_PATH = 4;
-    private float downX,UpY=1;
-    private float downY,moveX = 0,moveY = 0,diff=0;
+//    public static final float SWIPE_MAX_OFF_PATH = 45;
+//    public static final float SWIPE_MIN_OFF_PATH = 4;
+//    private float downX,UpY=1;
+//    private float downY,moveX = 0,moveY = 0,diff=0;
 
-    private MyDataBase mMyDataBase;
+    private TextInformFragment mTextInformFragment;
+    private CalculatorInformFragment mCalculatorInformFragment;
+    private Bundle bundle;
+    private TextView cost, day;
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_inform_excursion,container,false);
-        final ViewPager viewPager = (ViewPager) view.findViewById(R.id.excure_view_pager);
-        CircleIndicator indicator = (CircleIndicator) view.findViewById(R.id.indicator);
+//        mCalculatorInformFragment = (CalculatorInformFragment) mFragmentManager.findFragmentById(R.id.frame_layout_tour);
+
+        bundle = getArguments();
         final ImageView mImageView = (ImageView) view.findViewById(R.id.img_exc_inf);
         TextView title = (TextView) view.findViewById(R.id.title_exc_inf);
         TextView titlebar = (TextView) getActivity().findViewById(R.id.title_tour);
         titlebar.setText("Тур");
-
-        indicator.configureIndicator(-1,-1,-1,
-                R.animator.scale_with_alpha,0,R.drawable.circle_shape,R.drawable.circle_shape);
-
-        final ExcurPagerAdapter adapter = new ExcurPagerAdapter(getActivity());
-        mMyDataBase = new MyDataBase(getActivity());
-        Bundle bundle = getArguments();
-        List<String> list = mMyDataBase.getListExcursion(bundle.getString("pack_exc"));
-        String listExcursion = createStringListExcursion(list);
-        if(listExcursion.equalsIgnoreCase("")) {
-            listExcursion = "Список экскурсий пуст";
-        }
-
+        cost = (TextView) view.findViewById(R.id.cost_tour);
+        day = (TextView) view.findViewById(R.id.we);
+        cost.setText(bundle.getString("cost"));
+        day.setText(bundle.getString("day")+" дней");
         Picasso.with(getActivity()).load("file:///android_asset/"+bundle.getString("img")+".png").into(mImageView);
         title.setText(bundle.getString("pack_exc"));
-        adapter.setDay(bundle.getString("day"));
-        adapter.setCost(bundle.getString("cost"));
-        adapter.setFullText(bundle.getString("description"));
-        adapter.setListExc(listExcursion);
-        viewPager.setAdapter(adapter);
-        indicator.setViewPager(viewPager);
 //        final RelativeLayout rl = (RelativeLayout) view.findViewById(R.id.moveLayout);
 //        final RelativeLayout rl3 = (RelativeLayout) view.findViewById(R.id.inf_about_exc);
 //        final RelativeLayout rl2 = (RelativeLayout) getActivity().findViewById(R.id.titlebar);
@@ -134,13 +131,35 @@ public class InformExcursionFragment extends Fragment {
 //        });
         return view;
     }
-    private String createStringListExcursion(List<String> list){
-        String result="";
-        for(int i = 0;i < list.size();++i ){
-            result += (i+1)+". "+list.get(i)+"\n";
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        final FragmentManager mFragmentManager = getChildFragmentManager();
+        if(null == mTextInformFragment){
+            mTextInformFragment = new TextInformFragment();
+            mTextInformFragment.setOnClickButtonListenner(new TextInformFragment.OnClickButtonBookTour() {
+                @Override
+                public void onClicked() {
+                    if(null == mCalculatorInformFragment) {
+                        mCalculatorInformFragment = new CalculatorInformFragment();
+                    }
+                    mCalculatorInformFragment.setClickCancelListenner(new CalculatorInformFragment.OnClickCancel() {
+                        @Override
+                        public void onClicked() {
+                            mFragmentManager.beginTransaction()
+                                    .replace(R.id.frame_layout_tour,mTextInformFragment)
+                                    .commit();
+                        }
+                    });
+                    mFragmentManager.beginTransaction()
+                            .replace(R.id.frame_layout_tour,mCalculatorInformFragment)
+                            .commit();
+                }
+            });
+            mTextInformFragment.setArguments(bundle);
+            mFragmentManager.beginTransaction()
+                    .add(R.id.frame_layout_tour,mTextInformFragment)
+                    .commit();
         }
-        return result;
     }
-
-
 }

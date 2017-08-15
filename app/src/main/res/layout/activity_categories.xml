@@ -12,9 +12,9 @@
             android:id="@+id/button_menu"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@mipmap/ic_menu_black_36dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="13dp"/>
+            android:layout_marginLeft="13dp"
+            android:background="@mipmap/ic_menu_white_36dp"/>
         <TextView
             android:id="@+id/title_tour"
             android:layout_width="wrap_content"
@@ -27,6 +27,7 @@
             android:layout_centerInParent="true"/>
         <include
             android:id="@+id/order_notification"
+            android:visibility="invisible"
             layout="@layout/view_notification_order"/>
     </RelativeLayout>
     <FrameLayout
