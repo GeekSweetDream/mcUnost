@@ -1,9 +1,7 @@
 package com.dreamsofpines.mcunost.ui.fragments;
 
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
@@ -13,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.dreamsofpines.mcunost.R;
+import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
@@ -24,9 +23,8 @@ import java.util.Locale;
 
 public class CalculatorInformFragment extends Fragment implements DatePickerDialog.OnDateSetListener{
 
-    private Button mButton;
-    private AppCompatEditText dateEdit;
-    private TextInputLayout mTextInputLayout;
+    private Button mButtonCancel,mButtonOk;
+    private AppCompatEditText dateEdit,countSchool,countTeacher;
     private Calendar calendar;
 
     public static OnClickCancel mListener;
@@ -47,7 +45,7 @@ public class CalculatorInformFragment extends Fragment implements DatePickerDial
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = (View) inflater.inflate(R.layout.fragment_inform_calculator,container,false);
 
         calendar = Calendar.getInstance();
@@ -58,15 +56,17 @@ public class CalculatorInformFragment extends Fragment implements DatePickerDial
                 calendar.get(Calendar.DAY_OF_MONTH));
         dpd.setVersion(DatePickerDialog.Version.VERSION_1);
 
-        mButton = (Button) view.findViewById(R.id.butt_cancel_book);
-        mButton.setOnClickListener(new View.OnClickListener() {
+        countSchool = (AppCompatEditText) view.findViewById(R.id.count_pupil_edit);
+        countTeacher = (AppCompatEditText) view.findViewById(R.id.count_teacher_edit);
+
+        mButtonCancel = (Button) view.findViewById(R.id.butt_cancel_book);
+        mButtonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mListener.onClicked();
             }
         });
         dateEdit = (AppCompatEditText) view.findViewById(R.id.data_edit);
-        mTextInputLayout = (TextInputLayout) view.findViewById(R.id.data_tour);
         dateEdit.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -75,6 +75,32 @@ public class CalculatorInformFragment extends Fragment implements DatePickerDial
                         dpd.show(getFragmentManager(),"DatePickerDialog");
                 }
                 return false;
+            }
+        });
+        mButtonOk = (Button) view.findViewById(R.id.butt_book_tour);
+        mButtonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean allFill = true;
+                if(dateEdit.getText().toString().equalsIgnoreCase("")){
+                    allFill = false;
+                    dateEdit.setError("Выберите дату тура");
+                }
+                if(countSchool.getText().toString().equalsIgnoreCase("")){
+                    allFill = false;
+                    countSchool.setError("Введите кол-во школьников");
+                }
+                if(countTeacher.getText().toString().equalsIgnoreCase("")){
+                    allFill = false;
+                    countTeacher.setError("Введите кол-во преподавателей");
+                }
+                if(allFill){
+                    if(1 == GlobalPreferences.getPrefAddUser(getActivity())){
+                        //do something
+                    }else{
+
+                    }
+                }
             }
         });
         return view;

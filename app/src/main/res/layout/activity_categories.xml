@@ -27,7 +27,7 @@
             android:layout_centerInParent="true"/>
         <include
             android:id="@+id/order_notification"
-            android:visibility="invisible"
+            android:visibility="visible"
             layout="@layout/view_notification_order"/>
     </RelativeLayout>
     <FrameLayout

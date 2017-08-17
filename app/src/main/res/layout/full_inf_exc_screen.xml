@@ -3,32 +3,34 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/title_full"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/md_blue_800"
-        android:textSize="19dp"
-        android:text="Подробная информация"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="20dp"/>
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/title_full"
-        android:background="@color/md_blue_600"
-        android:alpha="0.5"/>
-    <TextView
-        android:id="@+id/full_inf_screen"
-        android:layout_width="match_parent"
-        android:layout_height="700dp"
-        android:text="dfdfasdf"
-        android:textColor="@color/md_grey_800"
-        android:layout_below="@id/title_full"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="8dp"/>
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/title_full"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/md_blue_800"
+            android:textSize="25dp"
+            android:text="Подробная информация"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"/>
+        <TextView
+            android:id="@+id/full_inf_screen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="dfdfasdf"
+            android:textColor="@color/md_grey_800"
+            android:layout_below="@id/title_full"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="8dp"/>
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 </RelativeLayout>

@@ -65,7 +65,7 @@ public class ExcurPagerAdapter extends PagerAdapter {
                 }
             });
             txt = (TextView) layout.findViewById(R.id.dfdd);
-            txt.setText(day);
+            txt.setText(fullText);
 //            txt = (TextView) layout.findViewById(R.id.dfd);
 //            txt.setText("от "+cost+" \u20BD");
         }else {

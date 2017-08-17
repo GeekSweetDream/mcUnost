@@ -41,6 +41,7 @@ import static android.R.attr.x;
 import static android.R.attr.y;
 import static android.R.transition.move;
 import static android.os.Build.VERSION_CODES.M;
+import static com.dreamsofpines.mcunost.R.id.dfdd;
 import static com.dreamsofpines.mcunost.R.id.fill;
 import static com.dreamsofpines.mcunost.R.id.indicator;
 
