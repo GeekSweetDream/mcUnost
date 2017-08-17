@@ -93,8 +93,7 @@
             android:layout_width="160dp"
             android:layout_height="50dp"
             android:background="@color/md_green_400"
-            android:text="Оставить заявку"/>
+            android:text="Заказать тур"/>
     </LinearLayout>
-
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

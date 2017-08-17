@@ -1,9 +1,12 @@
-package com.dreamsofpines.mcunost.ui.activities;
+package com.dreamsofpines.mcunost.ui.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -14,7 +17,7 @@ import com.dreamsofpines.mcunost.data.storage.help.menu.LeftMenu;
  * Created by ThePupsick on 07.08.17.
  */
 
-public class StockActivity extends AppCompatActivity {
+public class StockFragment extends Fragment {
 
     private String stockOne = "\n«ПРИГЛАСИ ДРУГА!»\n" +
             "\n" +
@@ -38,21 +41,17 @@ public class StockActivity extends AppCompatActivity {
             "Информацию о конкретном начислении Вы получите в виде смс-сообщения.\n" +
             "\n" +
             "Счастливых Вам поездок!\n";
+
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stock);
-        final LeftMenu leftMenu = new LeftMenu(this);
-        leftMenu.build(this,1);
-        TextView textView = (TextView) findViewById(R.id.txt_stock);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_stock,container,false);
+
+        TextView textView = (TextView) view.findViewById(R.id.txt_stock);
         textView.setText(stockOne+stockTwo);
-        Button button = (Button) findViewById(R.id.stock_button_menu);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                leftMenu.openMenu();
-            }
-        });
+
+        textView = (TextView) getActivity().findViewById(R.id.title_tour);
+        textView.setText("Акция");
+        return view;
     }
 }

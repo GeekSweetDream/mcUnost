@@ -3,7 +3,6 @@ package com.dreamsofpines.mcunost.ui.activities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -15,8 +14,6 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -94,7 +91,7 @@ public class CategoriesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_categories);
         bindView();
         settingView();
-        leftMenu  = new LeftMenu(this);
+        leftMenu  = new LeftMenu(this,fm);
         leftMenu.build(this,0);
         mActivity = this;
         if(GlobalPreferences.getPrefUserCity(mActivity).equalsIgnoreCase("Не задан")) {

@@ -3,20 +3,20 @@ package com.dreamsofpines.mcunost.data.storage.help.menu;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
 import com.dreamsofpines.mcunost.ui.activities.CategoriesActivity;
-import com.dreamsofpines.mcunost.ui.activities.ContactActivity;
-import com.dreamsofpines.mcunost.ui.activities.StockActivity;
+import com.dreamsofpines.mcunost.ui.fragments.ContactFragment;
+import com.dreamsofpines.mcunost.ui.fragments.StockFragment;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
@@ -31,8 +31,11 @@ public class LeftMenu {
     private Drawer result;
     private View stickyDraw;
     private Activity activity;
+    private ContactFragment contact;
+    private StockFragment stock;
 
-    public LeftMenu(final Activity activity) {
+
+    public LeftMenu(final Activity activity, final FragmentManager fm) {
         this.activity = activity;
         mPerson = new Person(GlobalPreferences.getPrefUserName(activity), GlobalPreferences.getPrefUserNumber(activity));
         item0 = new PrimaryDrawerItem()
@@ -55,9 +58,15 @@ public class LeftMenu {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        Intent intent = new Intent(activity, StockActivity.class);
-                        activity.startActivity(intent);
-                        activity.finish();
+                        if(null == stock){
+                            stock = new StockFragment();
+                        }
+                        fm.beginTransaction()
+                                .replace(R.id.frame_layout,stock)
+                                .commit();
+//                        Intent intent = new Intent(activity, StockFragment.class);
+//                        activity.startActivity(intent);
+//                        activity.finish();
                         return false;
                     }
                 });
@@ -71,9 +80,16 @@ public class LeftMenu {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        Intent intent = new Intent(activity, ContactActivity.class);
-                        activity.startActivity(intent);
-                        activity.finish();
+                        if(null == contact){
+                            contact = new ContactFragment();
+                        }
+                        fm.beginTransaction()
+                                .replace(R.id.frame_layout,contact)
+                                .commit();
+
+//                        Intent intent = new Intent(activity, ContactFragment.class);
+//                        activity.startActivity(intent);
+//                        activity.finish();
                         return false;
                     }
                 });

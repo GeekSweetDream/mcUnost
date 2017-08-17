@@ -2,40 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/gradient_color">
-    <RelativeLayout
-        android:id="@+id/contact_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/contact_button_menu"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@mipmap/ic_menu_black_36dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="13dp"/>
-        <TextView
-            android:id="@+id/contact_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Контакты"
-            android:textColor="@color/md_blue_grey_800"
-            android:textSize="24dp"
-            android:textAlignment="center"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"/>
-        <ImageView
-            android:id="@+id/line_contact"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/md_blue_800"
-            android:alpha="0.5"
-            android:layout_below="@id/contact_title"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"/>
-
-    </RelativeLayout>
+                android:background="@color/md_white_1000">
     <TextView
         android:id="@+id/moscow_contact"
         android:layout_width="match_parent"
@@ -43,7 +10,7 @@
         android:text="dffd"
         android:textSize="20dp"
         android:textColor="@color/md_blue_grey_800"
-        android:layout_below="@id/contact_bar"
+        android:layout_below="@id/titlebar"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"/>

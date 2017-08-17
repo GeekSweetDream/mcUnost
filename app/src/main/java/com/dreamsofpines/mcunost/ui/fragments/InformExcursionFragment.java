@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.database.MyDataBase;
@@ -60,14 +61,13 @@ public class InformExcursionFragment extends Fragment {
     private CalculatorInformFragment mCalculatorInformFragment;
     private Bundle bundle;
     private TextView cost, day;
-
+    private View viewReg;
+    private Button mAutoInt, mRegistr;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_inform_excursion,container,false);
-//        mCalculatorInformFragment = (CalculatorInformFragment) mFragmentManager.findFragmentById(R.id.frame_layout_tour);
-
         bundle = getArguments();
         final ImageView mImageView = (ImageView) view.findViewById(R.id.img_exc_inf);
         TextView title = (TextView) view.findViewById(R.id.title_exc_inf);
@@ -79,6 +79,31 @@ public class InformExcursionFragment extends Fragment {
         day.setText(bundle.getString("day")+" дней");
         Picasso.with(getActivity()).load("file:///android_asset/"+bundle.getString("img")+".png").into(mImageView);
         title.setText(bundle.getString("pack_exc"));
+        viewReg = (View) view.findViewById(R.id.view_registr);
+        viewReg.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return true;
+            }
+        });
+
+        mAutoInt = (Button) viewReg.findViewById(R.id.butt_autoriz);
+        mAutoInt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(),"Данный функционал еще не добавлен! :)",Toast.LENGTH_SHORT)
+                        .show();
+                viewReg.setVisibility(View.INVISIBLE);
+            }
+        });
+        mRegistr = (Button) viewReg.findViewById(R.id.butt_registr);
+        mRegistr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //do something
+                viewReg.setVisibility(View.INVISIBLE);
+            }
+        });
 //        final RelativeLayout rl = (RelativeLayout) view.findViewById(R.id.moveLayout);
 //        final RelativeLayout rl3 = (RelativeLayout) view.findViewById(R.id.inf_about_exc);
 //        final RelativeLayout rl2 = (RelativeLayout) getActivity().findViewById(R.id.titlebar);
@@ -144,6 +169,12 @@ public class InformExcursionFragment extends Fragment {
                     if(null == mCalculatorInformFragment) {
                         mCalculatorInformFragment = new CalculatorInformFragment();
                     }
+                    mCalculatorInformFragment.setClickOkListenner(new CalculatorInformFragment.OnClickOk() {
+                        @Override
+                        public void onClicked() {
+                            viewReg.setVisibility(View.VISIBLE);
+                        }
+                    });
                     mCalculatorInformFragment.setClickCancelListenner(new CalculatorInformFragment.OnClickCancel() {
                         @Override
                         public void onClicked() {

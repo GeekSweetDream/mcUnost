@@ -117,4 +117,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
     </LinearLayout>
+    <include
+        android:id="@+id/view_registr"
+        layout="@layout/view_registration"
+        android:visibility="invisible"/>
 </RelativeLayout>

@@ -29,18 +29,25 @@ public class CalculatorInformFragment extends Fragment implements DatePickerDial
 
     public static OnClickCancel mListener;
 
+    public interface  OnClickCancel{
+        void onClicked();
+    }
+    public void setClickCancelListenner(OnClickCancel listener){
+        mListener = listener;
+    }
+
+    public static OnClickOk sOnClickOk;
+
+    public interface OnClickOk{
+        void onClicked();
+    }
+
+    public void setClickOkListenner(OnClickOk listenner){ sOnClickOk = listenner;}
+
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         calendar.set(Calendar.MONTH,monthOfYear);
         dateEdit.setText(dayOfMonth+" "+ calendar.getDisplayName(Calendar.MONTH,Calendar.SHORT, Locale.getDefault())+" "+year);
-    }
-
-    public interface  OnClickCancel{
-        void onClicked();
-    }
-
-    public void setClickCancelListenner(OnClickCancel listener){
-        mListener = listener;
     }
 
     @Nullable
@@ -98,7 +105,7 @@ public class CalculatorInformFragment extends Fragment implements DatePickerDial
                     if(1 == GlobalPreferences.getPrefAddUser(getActivity())){
                         //do something
                     }else{
-
+                        sOnClickOk.onClicked();
                     }
                 }
             }
