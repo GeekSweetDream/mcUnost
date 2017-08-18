@@ -1,6 +1,7 @@
 package com.dreamsofpines.mcunost.ui.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -61,8 +62,19 @@ public class InformExcursionFragment extends Fragment {
     private CalculatorInformFragment mCalculatorInformFragment;
     private Bundle bundle;
     private TextView cost, day;
-    private View viewReg;
-    private Button mAutoInt, mRegistr;
+    private View viewReg, viewSuccses;
+    private Button mAutoInt, mRegistr, mCancel;
+    private boolean showView;
+
+    public static OnClickRegListener mListener;
+
+    public interface  OnClickRegListener{
+        void onClickedRegButt();
+    }
+
+    public void setOnClickRegListener(OnClickRegListener listener){
+        mListener = listener;
+    }
 
     @Nullable
     @Override
@@ -79,6 +91,7 @@ public class InformExcursionFragment extends Fragment {
         day.setText(bundle.getString("day")+" дней");
         Picasso.with(getActivity()).load("file:///android_asset/"+bundle.getString("img")+".png").into(mImageView);
         title.setText(bundle.getString("pack_exc"));
+        viewSuccses = (View) view.findViewById(R.id.view_succsesful);
         viewReg = (View) view.findViewById(R.id.view_registr);
         viewReg.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -87,6 +100,13 @@ public class InformExcursionFragment extends Fragment {
             }
         });
 
+        mCancel = (Button) viewReg.findViewById(R.id.butt_registr_cancel);
+        mCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewReg.setVisibility(View.INVISIBLE);
+            }
+        });
         mAutoInt = (Button) viewReg.findViewById(R.id.butt_autoriz);
         mAutoInt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +120,7 @@ public class InformExcursionFragment extends Fragment {
         mRegistr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //do something
+                mListener.onClickedRegButt();
                 viewReg.setVisibility(View.INVISIBLE);
             }
         });
@@ -171,8 +191,12 @@ public class InformExcursionFragment extends Fragment {
                     }
                     mCalculatorInformFragment.setClickOkListenner(new CalculatorInformFragment.OnClickOk() {
                         @Override
-                        public void onClicked() {
-                            viewReg.setVisibility(View.VISIBLE);
+                        public void onClicked(boolean isLogin) {
+                            if(isLogin){
+                                showSuccsesView();
+                            }else {
+                                viewReg.setVisibility(View.VISIBLE);
+                            }
                         }
                     });
                     mCalculatorInformFragment.setClickCancelListenner(new CalculatorInformFragment.OnClickCancel() {
@@ -194,4 +218,30 @@ public class InformExcursionFragment extends Fragment {
                     .commit();
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(showView){
+            showSuccsesView();
+            showView = false;
+        }
+
+    }
+
+    public void setShowView(boolean showView) {
+        this.showView = showView;
+    }
+
+    public void showSuccsesView(){
+        viewSuccses.setVisibility(View.VISIBLE);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                viewSuccses.setVisibility(View.INVISIBLE);
+            }
+        },3000);
+    }
 }
+

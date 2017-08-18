@@ -39,7 +39,7 @@ public class CalculatorInformFragment extends Fragment implements DatePickerDial
     public static OnClickOk sOnClickOk;
 
     public interface OnClickOk{
-        void onClicked();
+        void onClicked(boolean isLogin);
     }
 
     public void setClickOkListenner(OnClickOk listenner){ sOnClickOk = listenner;}
@@ -103,9 +103,9 @@ public class CalculatorInformFragment extends Fragment implements DatePickerDial
                 }
                 if(allFill){
                     if(1 == GlobalPreferences.getPrefAddUser(getActivity())){
-                        //do something
+                        sOnClickOk.onClicked(true);
                     }else{
-                        sOnClickOk.onClicked();
+                        sOnClickOk.onClicked(false);
                     }
                 }
             }

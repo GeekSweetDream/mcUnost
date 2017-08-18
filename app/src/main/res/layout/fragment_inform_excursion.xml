@@ -121,4 +121,8 @@
         android:id="@+id/view_registr"
         layout="@layout/view_registration"
         android:visibility="invisible"/>
+    <include
+        android:id="@+id/view_succsesful"
+        layout="@layout/view_succsesful_book"
+        android:visibility="invisible"/>
 </RelativeLayout>

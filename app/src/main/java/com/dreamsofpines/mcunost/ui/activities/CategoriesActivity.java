@@ -39,6 +39,7 @@ import com.dreamsofpines.mcunost.ui.adapters.ViewAdapter;
 import com.dreamsofpines.mcunost.ui.fragments.CategoriesFragment;
 import com.dreamsofpines.mcunost.ui.fragments.InformExcursionFragment;
 import com.dreamsofpines.mcunost.ui.fragments.PackExcursionFragment;
+import com.dreamsofpines.mcunost.ui.fragments.RegistrFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -62,6 +63,7 @@ import static android.R.attr.left;
 import static com.dreamsofpines.mcunost.R.id.city1;
 import static com.dreamsofpines.mcunost.R.id.city3;
 
+
 /**
  * Created by ThePupsick on 15.07.17.
  */
@@ -81,6 +83,9 @@ public class CategoriesActivity extends AppCompatActivity {
     private Activity mActivity;
     private TextView cityName,city1,city2,city3;
     private RelativeLayout rl,rl1, mess, timerNotify;
+    private PackExcursionFragment fr;
+    private InformExcursionFragment iE;
+    private RegistrFragment rF;
 
 
 
@@ -318,7 +323,9 @@ public class CategoriesActivity extends AppCompatActivity {
     }
 
     public void changeFragmentPackExc(Bundle bundle){
-        PackExcursionFragment fr = new PackExcursionFragment();
+        if(null == fr) {
+            fr = new PackExcursionFragment();
+        }
         fr.setArguments(bundle);
         fr.setOnClickListener(new PackExcursionFragment.OnClickRecyclerListener(){
             @Override
@@ -334,13 +341,40 @@ public class CategoriesActivity extends AppCompatActivity {
     }
 
     public void changeFragmentInfExc(Bundle bundle){
-        InformExcursionFragment fr = new InformExcursionFragment();
-        fr.setArguments(bundle);
+        iE = new InformExcursionFragment();
+        iE.setOnClickRegListener(new InformExcursionFragment.OnClickRegListener() {
+            @Override
+            public void onClickedRegButt() {
+                changeFragmentRegistr();
+            }
+        });
+        iE.setArguments(bundle);
         fm.beginTransaction()
-                .replace(R.id.frame_layout,fr)
+                .replace(R.id.frame_layout,iE)
                 .addToBackStack(null)
                 .commit();
 
+    }
+
+    public void changeFragmentRegistr(){
+        if(null == rF){
+            rF = new RegistrFragment();
+        }
+
+        rF.setOnClickRegistrListener(new RegistrFragment.OnClickCancelListener() {
+            @Override
+            public void onClicked(boolean isLogUp) {
+                fm.popBackStack();
+                if(isLogUp) {
+                    iE.setShowView(true);
+                }
+            }
+        });
+
+        fm.beginTransaction()
+                .replace(R.id.frame_layout,rF)
+                .addToBackStack(null)
+                .commit();
     }
 
 //    private class MyLocationListener implements LocationListener{
