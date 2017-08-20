@@ -3,49 +3,24 @@ package com.dreamsofpines.mcunost.ui.fragments;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.GestureDetectorCompat;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
-import android.text.Layout;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.database.MyDataBase;
-import com.dreamsofpines.mcunost.ui.adapters.ExcurPagerAdapter;
-import com.dreamsofpines.mcunost.ui.adapters.ExcurPagerAdapter;
+import com.dreamsofpines.mcunost.data.storage.help.menu.Order;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import me.relex.circleindicator.CircleIndicator;
-
-import static android.R.attr.background;
-import static android.R.attr.x;
-import static android.R.attr.y;
-import static android.R.transition.move;
-import static android.os.Build.VERSION_CODES.M;
-import static com.dreamsofpines.mcunost.R.id.dfdd;
-import static com.dreamsofpines.mcunost.R.id.fill;
-import static com.dreamsofpines.mcunost.R.id.indicator;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by ThePupsick on 06.08.17.
@@ -53,18 +28,20 @@ import static com.dreamsofpines.mcunost.R.id.indicator;
 
 public class InformExcursionFragment extends Fragment {
 
-//    public static final float SWIPE_MAX_OFF_PATH = 45;
-//    public static final float SWIPE_MIN_OFF_PATH = 4;
-//    private float downX,UpY=1;
-//    private float downY,moveX = 0,moveY = 0,diff=0;
-
     private TextInformFragment mTextInformFragment;
     private CalculatorInformFragment mCalculatorInformFragment;
-    private Bundle bundle;
+    private Bundle bundle, mBundle;
     private TextView cost, day;
-    private View viewReg, viewSuccses;
+    private View viewReg, viewSuccses, viewOrder;
     private Button mAutoInt, mRegistr, mCancel;
     private boolean showView;
+    private Order mOrder;
+
+    public static OnBookTourListener mBookListener;
+    public interface OnBookTourListener{
+        void onBooked();
+    }
+    public void setmBookListener(OnBookTourListener listener){mBookListener = listener;}
 
     public static OnClickRegListener mListener;
 
@@ -81,6 +58,9 @@ public class InformExcursionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_inform_excursion,container,false);
         bundle = getArguments();
+        mBundle = new Bundle();
+        mBundle.putString("day",bundle.getString("day"));
+        mBundle.putString("pack_exc",bundle.getString("pack_exc"));
         final ImageView mImageView = (ImageView) view.findViewById(R.id.img_exc_inf);
         TextView title = (TextView) view.findViewById(R.id.title_exc_inf);
         TextView titlebar = (TextView) getActivity().findViewById(R.id.title_tour);
@@ -92,6 +72,7 @@ public class InformExcursionFragment extends Fragment {
         Picasso.with(getActivity()).load("file:///android_asset/"+bundle.getString("img")+".png").into(mImageView);
         title.setText(bundle.getString("pack_exc"));
         viewSuccses = (View) view.findViewById(R.id.view_succsesful);
+        viewOrder = (View) getActivity().findViewById(R.id.order_notification);
         viewReg = (View) view.findViewById(R.id.view_registr);
         viewReg.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -189,12 +170,27 @@ public class InformExcursionFragment extends Fragment {
                     if(null == mCalculatorInformFragment) {
                         mCalculatorInformFragment = new CalculatorInformFragment();
                     }
+                    mCalculatorInformFragment.setArguments(mBundle);
                     mCalculatorInformFragment.setClickOkListenner(new CalculatorInformFragment.OnClickOk() {
                         @Override
-                        public void onClicked(boolean isLogin) {
+                        public void onClicked(boolean isLogin, Order order) {
+                            mOrder = order;
                             if(isLogin){
+                                viewOrder = (View) getActivity().findViewById(R.id.order_notification);
+                                viewOrder.setVisibility(View.VISIBLE);
+                                insertOrderInDb(mOrder);
+                                mBookListener.onBooked();
+//                                try{
+//                                    File file = new File(getContext().getFilesDir(),"order");
+//                                    FileWriter fw = new FileWriter(getContext().getFilesDir()+"order");
+//                                    BufferedWriter bw = new BufferedWriter(fw);
+//                                    bw.write(getOrder(data,countPupil,countTeacher).toString());
+//                                    bw.close();
+//                                }catch (IOException e){
+//                                    Toast.makeText(getContext(),"Ошибка чтения",Toast.LENGTH_SHORT).show();
+//                                }
                                 showSuccsesView();
-                            }else {
+                            }else{
                                 viewReg.setVisibility(View.VISIBLE);
                             }
                         }
@@ -219,15 +215,37 @@ public class InformExcursionFragment extends Fragment {
         }
     }
 
+    private JSONObject getOrder(String data, String countPupil, String countTeacher){
+        JSONObject js=null;
+        try {
+            js = new JSONObject();
+            js.put("tour", bundle.getString("pack_exc"));
+            js.put("data", data);
+            js.put("pupil", countPupil);
+            js.put("teacher",countTeacher);
+        }catch(JSONException e){}
+
+        return js;
+    }
+
+    private void insertOrderInDb(Order order){
+        MyDataBase db = new MyDataBase(getActivity());
+        db.setNewOrderUser(order.getDate(),order.getCost(),order.getTeachers(),order.getPupils(),order.getTour());
+        db.close();
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         if(showView){
+            viewOrder.setVisibility(View.VISIBLE);
+            insertOrderInDb(mOrder);
             showSuccsesView();
             showView = false;
         }
 
     }
+
 
     public void setShowView(boolean showView) {
         this.showView = showView;
@@ -243,5 +261,6 @@ public class InformExcursionFragment extends Fragment {
             }
         },3000);
     }
+
 }
 

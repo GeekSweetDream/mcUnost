@@ -10,11 +10,13 @@ import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
 import com.dreamsofpines.mcunost.ui.activities.CategoriesActivity;
 import com.dreamsofpines.mcunost.ui.fragments.ContactFragment;
+import com.dreamsofpines.mcunost.ui.fragments.MyOrderFragment;
 import com.dreamsofpines.mcunost.ui.fragments.StockFragment;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.holder.BadgeStyle;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
@@ -33,6 +35,7 @@ public class LeftMenu {
     private Activity activity;
     private ContactFragment contact;
     private StockFragment stock;
+    private MyOrderFragment order;
 
 
     public LeftMenu(final Activity activity, final FragmentManager fm) {
@@ -63,6 +66,7 @@ public class LeftMenu {
                         }
                         fm.beginTransaction()
                                 .replace(R.id.frame_layout,stock)
+                                .addToBackStack(null)
                                 .commit();
 //                        Intent intent = new Intent(activity, StockFragment.class);
 //                        activity.startActivity(intent);
@@ -85,6 +89,7 @@ public class LeftMenu {
                         }
                         fm.beginTransaction()
                                 .replace(R.id.frame_layout,contact)
+                                .addToBackStack(null)
                                 .commit();
 
 //                        Intent intent = new Intent(activity, ContactFragment.class);
@@ -93,8 +98,22 @@ public class LeftMenu {
                         return false;
                     }
                 });
-
-
+        item4 = new PrimaryDrawerItem()
+                .withName("Мои заявки")
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        if(null == order){
+                            order = new MyOrderFragment();
+                        }
+                        updateDeleteOrder();
+                        fm.beginTransaction()
+                                .replace(R.id.frame_layout,order)
+                                .addToBackStack(null)
+                                .commit();
+                        return false;
+                    }
+                });
     }
 
     public void build(final Activity activity,int select){
@@ -112,12 +131,14 @@ public class LeftMenu {
                 .withActivity(activity)
                 .withAccountHeader(accountHeader)
                 .withStickyFooter(R.layout.button_skype_call)
-                .addDrawerItems(item0, item1,item3,
+                .addDrawerItems(item0, item1,item3, item4,
                         new DividerDrawerItem(),
                         item2,
                         new DividerDrawerItem(),
                         new SecondaryDrawerItem()
-                            .withName("Наши телефоны").withSelectable(false).withTextColor(activity.getResources().getColor(R.color.md_blue_grey_500)),
+                            .withName("Наши телефоны")
+                                .withSelectable(false)
+                                .withTextColor(activity.getResources().getColor(R.color.md_blue_grey_500)),
                         new PrimaryDrawerItem()
                                 .withIdentifier(4)
                                 .withName("8(495)349-56-91 (Москва)")
@@ -142,6 +163,23 @@ public class LeftMenu {
                                 })
                         )
                 .build();
+    }
+
+    public void updateNewOrder(){
+        if(result!=null){
+            item4.withBadge("1")
+                    .withBadgeStyle(new BadgeStyle()
+                            .withColorRes(R.color.md_red_400)
+                            .withTextColorRes(R.color.md_white_1000));
+            result.updateItem(item4);
+        }
+    }
+
+    public void updateDeleteOrder(){
+        if(result!=null){
+            item4.withBadge("").withBadgeStyle(new BadgeStyle().withColorRes(R.color.transparent));
+            result.updateItem(item4);
+        }
     }
 
     public void updateCity(){

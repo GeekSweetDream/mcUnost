@@ -1,25 +1,20 @@
 package com.dreamsofpines.mcunost.ui.fragments;
 
-import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.database.MyDataBase;
 import com.dreamsofpines.mcunost.data.storage.help.menu.InformExcursion;
-import com.dreamsofpines.mcunost.ui.adapters.ViewAdapter;
+import com.dreamsofpines.mcunost.ui.adapters.recyclerCategory.ViewAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

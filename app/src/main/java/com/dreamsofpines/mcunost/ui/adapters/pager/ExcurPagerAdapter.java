@@ -1,4 +1,4 @@
-package com.dreamsofpines.mcunost.ui.adapters;
+package com.dreamsofpines.mcunost.ui.adapters.pager;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -19,7 +19,7 @@ import com.dreamsofpines.mcunost.data.storage.models.InformExcModel;
 public class ExcurPagerAdapter extends PagerAdapter {
     private Context mContext;
     private TextView txt;
-    private String cost,day,fullText,listExc;
+    private String shDesc,day,fullText,listExc;
     private Button mButton;
     public static OnClickButton mListener;
 
@@ -35,8 +35,8 @@ public class ExcurPagerAdapter extends PagerAdapter {
         mContext = contex;
     }
 
-    public void setCost(String cost) {
-        this.cost = cost;
+    public void setShDesc(String shDesc) {
+        this.shDesc = shDesc;
     }
 
     public void setDay(String day) {
@@ -65,7 +65,7 @@ public class ExcurPagerAdapter extends PagerAdapter {
                 }
             });
             txt = (TextView) layout.findViewById(R.id.dfdd);
-            txt.setText(fullText);
+            txt.setText(shDesc);
 //            txt = (TextView) layout.findViewById(R.id.dfd);
 //            txt.setText("от "+cost+" \u20BD");
         }else {

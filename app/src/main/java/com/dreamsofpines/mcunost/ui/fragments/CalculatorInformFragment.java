@@ -1,20 +1,31 @@
 package com.dreamsofpines.mcunost.ui.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatEditText;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.dreamsofpines.mcunost.R;
+import com.dreamsofpines.mcunost.data.database.MyDataBase;
+import com.dreamsofpines.mcunost.data.storage.help.menu.Order;
 import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import org.json.JSONObject;
+
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -26,6 +37,8 @@ public class CalculatorInformFragment extends Fragment implements DatePickerDial
     private Button mButtonCancel,mButtonOk;
     private AppCompatEditText dateEdit,countSchool,countTeacher;
     private Calendar calendar;
+    private TextInputLayout data, school, teacher;
+    private Bundle bundle;
 
     public static OnClickCancel mListener;
 
@@ -39,7 +52,7 @@ public class CalculatorInformFragment extends Fragment implements DatePickerDial
     public static OnClickOk sOnClickOk;
 
     public interface OnClickOk{
-        void onClicked(boolean isLogin);
+        void onClicked(boolean isLogin,Order order);
     }
 
     public void setClickOkListenner(OnClickOk listenner){ sOnClickOk = listenner;}
@@ -47,7 +60,14 @@ public class CalculatorInformFragment extends Fragment implements DatePickerDial
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         calendar.set(Calendar.MONTH,monthOfYear);
-        dateEdit.setText(dayOfMonth+" "+ calendar.getDisplayName(Calendar.MONTH,Calendar.SHORT, Locale.getDefault())+" "+year);
+        int countDay = Integer.parseInt(bundle.getString("day"));
+        Calendar cl = Calendar.getInstance();
+        cl.set(Calendar.YEAR,year);
+        cl.set(Calendar.MONTH,monthOfYear);
+        cl.set(Calendar.DAY_OF_MONTH,dayOfMonth+countDay);
+        dateEdit.setText(dayOfMonth+" "+ calendar.getDisplayName(Calendar.MONTH,Calendar.SHORT, Locale.getDefault())+" "+year
+                +" - "+cl.get(Calendar.DAY_OF_MONTH) + " "+cl.getDisplayName(Calendar.MONTH,Calendar.SHORT,Locale.getDefault())+ " "+
+                cl.get(Calendar.YEAR) );
     }
 
     @Nullable
@@ -55,6 +75,7 @@ public class CalculatorInformFragment extends Fragment implements DatePickerDial
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = (View) inflater.inflate(R.layout.fragment_inform_calculator,container,false);
 
+        bundle = getArguments();
         calendar = Calendar.getInstance();
         final DatePickerDialog dpd = DatePickerDialog.newInstance(
                 CalculatorInformFragment.this,
@@ -63,6 +84,27 @@ public class CalculatorInformFragment extends Fragment implements DatePickerDial
                 calendar.get(Calendar.DAY_OF_MONTH));
         dpd.setVersion(DatePickerDialog.Version.VERSION_1);
 
+        data = (TextInputLayout) view.findViewById(R.id.data_tour);
+        data.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(!b) hideKeybord();
+            }
+        });
+        school = (TextInputLayout) view.findViewById(R.id.count_pupil);
+        school.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(!b) hideKeybord();
+            }
+        });
+        teacher = (TextInputLayout) view.findViewById(R.id.count_teacher);
+        teacher.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(!b) hideKeybord();
+            }
+        });
         countSchool = (AppCompatEditText) view.findViewById(R.id.count_pupil_edit);
         countTeacher = (AppCompatEditText) view.findViewById(R.id.count_teacher_edit);
 
@@ -102,14 +144,22 @@ public class CalculatorInformFragment extends Fragment implements DatePickerDial
                     countTeacher.setError("Введите кол-во преподавателей");
                 }
                 if(allFill){
+                    Order ord = new Order(bundle.getString("pack_exc"),dateEdit.getText().toString(),"21222",
+                            countSchool.getText().toString(),countTeacher.getText().toString());
                     if(1 == GlobalPreferences.getPrefAddUser(getActivity())){
-                        sOnClickOk.onClicked(true);
+                        sOnClickOk.onClicked(true,ord);
                     }else{
-                        sOnClickOk.onClicked(false);
+                        sOnClickOk.onClicked(false,ord);
                     }
                 }
             }
         });
         return view;
     }
+
+    public void hideKeybord(){
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(),0);
+    }
+
 }

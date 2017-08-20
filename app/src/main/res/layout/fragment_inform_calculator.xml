@@ -74,26 +74,31 @@
             android:maxLength="2"
             android:maxLines="1"/>
     </android.support.design.widget.TextInputLayout>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/count_teacher"
-        android:layout_marginTop="15dp">
-        <Button
-            android:id="@+id/butt_cancel_book"
-            android:layout_width="160dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/md_red_400"
-            android:text="Отмена"/>
-
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="20dp">
         <Button
             android:id="@+id/butt_book_tour"
             android:layout_width="160dp"
             android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
             android:background="@color/md_green_400"
             android:text="Заказать тур"/>
-    </LinearLayout>
+        <Button
+            android:id="@+id/butt_cancel_book"
+            android:layout_width="160dp"
+            android:layout_height="50dp"
+            android:layout_toLeftOf="@id/butt_book_tour"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="30dp"
+            android:background="@color/md_red_400"
+            android:text="Отмена"/>
+
+
+    </RelativeLayout>
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

@@ -61,7 +61,7 @@ public class RegistrFragment extends Fragment {
                     GlobalPreferences.setPrefUserName(getActivity(),name.getText().toString());
                     GlobalPreferences.setPrefUserNumber(getActivity(),number.getText().toString());
                     GlobalPreferences.setPrefUserEmail(getActivity(),email.getText().toString());
-                  //  GlobalPreferences.setPrefAddUser(getActivity());
+                    GlobalPreferences.setPrefAddUser(getActivity());
                     Toast.makeText(getActivity(), "Вы успешно зарегестрированы!", Toast.LENGTH_LONG)
                             .show();
                     mListener.onClicked(true);

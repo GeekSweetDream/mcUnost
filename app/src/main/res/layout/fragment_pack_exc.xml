@@ -6,5 +6,15 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/pack_exc_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:visibility="invisible"/>
+    <TextView
+        android:id="@+id/empty_pack_exc"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textSize="20dp"
+        android:textAlignment="center"
+        android:textColor="@color/colorBlueToolbar"
+        android:text="По данному направлению туры отсутствуют!"/>
 </RelativeLayout>

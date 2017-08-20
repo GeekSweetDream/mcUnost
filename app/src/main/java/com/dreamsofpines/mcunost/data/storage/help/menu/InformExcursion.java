@@ -7,21 +7,26 @@ import java.util.List;
  */
 
 public class InformExcursion {
-    private String tittle, description, city,count, day, nameImage;
+    private String tittle, description, shortDesc,city,count, day, nameImage;
 
     public InformExcursion(String tittle, String nameImage) {
         this.tittle = tittle;
         this.nameImage = nameImage;
     }
 
+    public String getShortDesc() {
+        return shortDesc;
+    }
+
     public String getNameImage() {
         return nameImage;
     }
 
-    public InformExcursion(String tittle, String count, String day,String description, String nameImage) {
+    public InformExcursion(String tittle, String count, String day,String description, String shortDesc, String nameImage) {
         this.tittle = tittle;
         this.description = description;
         this.count = count;
+        this.shortDesc = shortDesc;
         this.day = day;
         this.nameImage = nameImage;
     }

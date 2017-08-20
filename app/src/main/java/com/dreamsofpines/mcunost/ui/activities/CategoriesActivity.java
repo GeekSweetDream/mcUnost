@@ -1,7 +1,6 @@
 package com.dreamsofpines.mcunost.ui.activities;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -17,25 +16,16 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dreamsofpines.mcunost.Manifest;
 import com.dreamsofpines.mcunost.R;
-import com.dreamsofpines.mcunost.data.database.MyDataBase;
-import com.dreamsofpines.mcunost.data.storage.help.menu.InformExcursion;
 import com.dreamsofpines.mcunost.data.storage.help.menu.LeftMenu;
 import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
-import com.dreamsofpines.mcunost.ui.adapters.ViewAdapter;
 import com.dreamsofpines.mcunost.ui.fragments.CategoriesFragment;
 import com.dreamsofpines.mcunost.ui.fragments.InformExcursionFragment;
 import com.dreamsofpines.mcunost.ui.fragments.PackExcursionFragment;
@@ -43,25 +33,12 @@ import com.dreamsofpines.mcunost.ui.fragments.RegistrFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResponse;
-import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import static android.R.attr.button;
-import static android.R.attr.fragment;
-import static android.R.attr.left;
-import static com.dreamsofpines.mcunost.R.id.city1;
-import static com.dreamsofpines.mcunost.R.id.city3;
 
 
 /**
@@ -86,7 +63,6 @@ public class CategoriesActivity extends AppCompatActivity {
     private PackExcursionFragment fr;
     private InformExcursionFragment iE;
     private RegistrFragment rF;
-
 
 
     @Override
@@ -348,6 +324,12 @@ public class CategoriesActivity extends AppCompatActivity {
                 changeFragmentRegistr();
             }
         });
+        iE.setmBookListener(new InformExcursionFragment.OnBookTourListener() {
+            @Override
+            public void onBooked() {
+                setUpdateBadge();
+            }
+        });
         iE.setArguments(bundle);
         fm.beginTransaction()
                 .replace(R.id.frame_layout,iE)
@@ -405,5 +387,8 @@ public class CategoriesActivity extends AppCompatActivity {
 //        public void onProviderDisabled(String s) {}
 //    }
 
+    public void setUpdateBadge(){
+        leftMenu.updateNewOrder();
+    }
 
 }

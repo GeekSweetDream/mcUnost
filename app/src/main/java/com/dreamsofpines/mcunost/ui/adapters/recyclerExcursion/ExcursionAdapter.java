@@ -1,4 +1,4 @@
-package com.dreamsofpines.mcunost.ui.adapters;
+package com.dreamsofpines.mcunost.ui.adapters.recyclerExcursion;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +28,7 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionHolder> {
     public void setOnTouchListener(OnItemTouchListener listener){
         this.mListener = listener;
     }
+
     public ExcursionAdapter(List<InformExcursion> excursionList) {
         mExcursionList = excursionList;
     }

@@ -9,18 +9,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.database.MyDataBase;
 import com.dreamsofpines.mcunost.data.storage.help.menu.InformExcursion;
-import com.dreamsofpines.mcunost.ui.adapters.ExcursionAdapter;
+import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
+import com.dreamsofpines.mcunost.ui.adapters.recyclerExcursion.ExcursionAdapter;
 
 import java.util.List;
-
-import static android.R.id.list;
 
 /**
  * Created by ThePupsick on 05.08.17.
@@ -31,6 +28,7 @@ public class PackExcursionFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private String packExcur;
     private ExcursionAdapter mAdapter;
+    private TextView emptyRecycle;
 
     private MyDataBase db;
     public static OnClickRecyclerListener mListener;
@@ -52,33 +50,46 @@ public class PackExcursionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pack_exc,container,false);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.pack_exc_recycler);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        bindActivity(view);
+        mRecyclerView.setVisibility(View.INVISIBLE);
+        emptyRecycle.setVisibility(View.VISIBLE);
         updateUI(packExcur);
         TextView title = (TextView) getActivity().findViewById(R.id.title_tour);
         title.setText("Туры");
         return view;
     }
 
+    private void bindActivity(View view){
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.pack_exc_recycler);
+        emptyRecycle = (TextView) view.findViewById(R.id.empty_pack_exc);
+    }
+
+
     private void updateUI(String packExcur){
         db = new MyDataBase(getActivity());
-        final List<InformExcursion> listExcur = db.getPackExcursion(packExcur);
+        final List<InformExcursion> listExcur = db.getPackExcursion(packExcur, GlobalPreferences.getPrefUserCity(getContext()));
         Log.i("Myapp","Размер Массива: " + listExcur.size());
-        mAdapter = new ExcursionAdapter(listExcur);
-        mAdapter.setActivity(getActivity());
-        mAdapter.setOnTouchListener(new ExcursionAdapter.OnItemTouchListener() {
-            @Override
-            public void onTouched(View itemView, int position) {
-                Bundle save = new Bundle();
-                save.putString("pack_exc",listExcur.get(position).getTittle());
-                save.putString("description",listExcur.get(position).getDescription());
-                save.putString("cost",listExcur.get(position).getCount());
-                save.putString("day",listExcur.get(position).getDay());
-                save.putString("img",listExcur.get(position).getNameImage());
-                if(mListener != null)
-                    mListener.onClicked(save);
-            }
-        });
-        mRecyclerView.setAdapter(mAdapter);
+        if(listExcur.size()!=0) {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            emptyRecycle.setVisibility(View.INVISIBLE);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            mAdapter = new ExcursionAdapter(listExcur);
+            mAdapter.setActivity(getActivity());
+            mAdapter.setOnTouchListener(new ExcursionAdapter.OnItemTouchListener() {
+                @Override
+                public void onTouched(View itemView, int position) {
+                    Bundle save = new Bundle();
+                    save.putString("pack_exc", listExcur.get(position).getTittle());
+                    save.putString("sh_desc", listExcur.get(position).getShortDesc());
+                    save.putString("description", listExcur.get(position).getDescription());
+                    save.putString("cost", listExcur.get(position).getCount());
+                    save.putString("day", listExcur.get(position).getDay());
+                    save.putString("img", listExcur.get(position).getNameImage());
+                    if (mListener != null)
+                        mListener.onClicked(save);
+                }
+            });
+            mRecyclerView.setAdapter(mAdapter);
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.dreamsofpines.mcunost.ui.adapters;
+package com.dreamsofpines.mcunost.ui.adapters.pager;
 
 import android.content.Context;
 import android.support.v4.view.LayoutInflaterCompat;

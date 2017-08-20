@@ -1,19 +1,16 @@
-package com.dreamsofpines.mcunost.ui.adapters;
+package com.dreamsofpines.mcunost.ui.adapters.recyclerCategory;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.storage.help.menu.InformExcursion;
 
 import java.util.List;
 
-import static android.R.id.list;
-import static android.R.id.mask;
 import static android.media.CamcorderProfile.get;
 
 /**

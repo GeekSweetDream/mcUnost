@@ -11,14 +11,11 @@ import android.widget.Button;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.database.MyDataBase;
-import com.dreamsofpines.mcunost.ui.adapters.ExcurPagerAdapter;
-import com.squareup.picasso.Picasso;
+import com.dreamsofpines.mcunost.ui.adapters.pager.ExcurPagerAdapter;
 
 import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator;
-
-import static com.dreamsofpines.mcunost.R.id.indicator;
 
 /**
  * Created by ThePupsick on 14.08.17.
@@ -60,7 +57,7 @@ public class TextInformFragment extends Fragment {
         }
         adapter = new ExcurPagerAdapter(getActivity());
         adapter.setDay(bundle.getString("day"));
-        adapter.setCost(bundle.getString("cost"));
+        adapter.setShDesc(bundle.getString("sh_desc"));
         adapter.setFullText(bundle.getString("description"));
         adapter.setListExc(listExcursion);
         adapter.setOnClickListenner(new ExcurPagerAdapter.OnClickButton() {
