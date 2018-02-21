@@ -40,13 +40,16 @@ public class OrderHolder extends RecyclerView.ViewHolder {
         title.setText(order.getTour());
         date.setText(order.getDate());
         cost.setText(order.getCost()+" \u20BD");
-        Log.i("Myapp",order.getManager());
-
-        if(order.getManager().equalsIgnoreCase("null")){
-            status.setText("В обработке");
-        }else{
-            status.setText("Принята");
+        String st = order.getStatus();
+        if(st.equalsIgnoreCase("в обработке")){
+            status.setTextColor(activity.getResources().getColor(R.color.md_orange_400));
+        }else if(st.equalsIgnoreCase("заказан")){
+            status.setTextColor(activity.getResources().getColor(R.color.md_blue_400));
+        }else if(st.equalsIgnoreCase("Отменен")){
+            status.setTextColor(activity.getResources().getColor(R.color.md_red_600));
+        }else if(st.equalsIgnoreCase("выполнен")){
             status.setTextColor(activity.getResources().getColor(R.color.md_green_400));
         }
+        status.setText(st);
     }
 }

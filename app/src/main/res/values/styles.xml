@@ -17,11 +17,23 @@
         <item name="android:windowBackground">@drawable/splashscreen</item>
     </style>
 
-    <style name="Widget.Design.TextInputLayout" parent="AppTheme">
+    <style name="AlertDialogCustom" parent="@android:style/Theme.Dialog">
+        <item name="android:textColor">@color/md_blue_800</item>
+    </style>
+
+
+    <style name="MyTextInputLayout" parent="Widget.Design.TextInputLayout">
         <item name="hintTextAppearance">@style/AppTheme.TextFloatLabelAppearance</item>
         <item name="errorTextAppearance">@style/AppTheme.TextErrorAppearance</item>
-        <item name="counterTextAppearance">@style/TextAppearance.Design.Counter</item>
-        <item name="counterOverflowTextAppearance">@style/TextAppearance.Design.Counter.Overflow</item>
+        <item name="android:textColorHint">@color/md_white_1000</item>
+        <item name="android:colorControlNormal">@color/md_white_1000</item>
+        <item name="android:colorControlActivated">@color/md_white_1000</item>
+    </style>
+
+    <style name="MyColorGreyHint" parent="Widget.Design.TextInputLayout">
+        <item name="android:colorControlActivated">@color/md_blue_600</item>
+        <item name="android:textColorHint">@color/md_blue_grey_400</item>
+        <item name="android:colorControlNormal">@color/md_grey_400</item>
     </style>
 
     <style name="AppTheme.TextFloatLabelAppearance" parent="TextAppearance.Design.Hint">
@@ -36,5 +48,9 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="MyCheckBox" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/md_blue_600</item>
+        <item name="colorControlActivated">@color/md_blue_600</item>
+    </style>
 
 </resources>

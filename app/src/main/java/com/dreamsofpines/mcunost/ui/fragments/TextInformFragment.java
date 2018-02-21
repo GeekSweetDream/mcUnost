@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.database.MyDataBase;
@@ -16,6 +17,8 @@ import com.dreamsofpines.mcunost.ui.adapters.pager.ExcurPagerAdapter;
 import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator;
+
+import static android.R.id.list;
 
 /**
  * Created by ThePupsick on 14.08.17.
@@ -48,18 +51,13 @@ public class TextInformFragment extends Fragment {
         indicator.configureIndicator(-1,-1,-1,
                 R.animator.scale_with_alpha,0,R.drawable.circle_shape,R.drawable.circle_shape);
 
-        mMyDataBase = new MyDataBase(getActivity());
         Bundle bundle = getArguments();
-        List<String> list = mMyDataBase.getListExcursion(bundle.getString("pack_exc"));
-        String listExcursion = createStringListExcursion(list);
-        if(listExcursion.equalsIgnoreCase("")) {
-            listExcursion = "Список экскурсий пуст";
-        }
         adapter = new ExcurPagerAdapter(getActivity());
         adapter.setDay(bundle.getString("day"));
         adapter.setShDesc(bundle.getString("sh_desc"));
         adapter.setFullText(bundle.getString("description"));
-        adapter.setListExc(listExcursion);
+        adapter.setAddService(addDot(bundle.getString("addService"),true));
+        adapter.setInTour(addDot(bundle.getString("inTour"),false));
         adapter.setOnClickListenner(new ExcurPagerAdapter.OnClickButton() {
             @Override
             public void onClicked() {
@@ -77,10 +75,13 @@ public class TextInformFragment extends Fragment {
         indicator = (CircleIndicator) view.findViewById(R.id.indicator);
     }
 
-    private String createStringListExcursion(List<String> list){
+    private String addDot(String list, boolean isService){
         String result="";
-        for(int i = 0;i < list.size();++i ){
-            result += (i+1)+". "+list.get(i)+"\n";
+        String[] str = list.split("\n");
+
+//        char ch = isService? '✘':'✓';           //  ✘ и ✔ - не нашел их код, если найдете, будет неплохо
+        for(int i =0 ; i < str.length; ++i){
+            result += str[i]+"\n";
         }
         return result;
     }

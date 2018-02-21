@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <ImageView
-        android:id="@+id/img_back_info_order"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/md_black_1000"
-        android:alpha="0.6"/>
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="300dp"
-        android:layout_height="450dp"
+        android:layout_height="460dp"
         android:layout_centerInParent="true"
         android:background="@color/md_white_1000">
         <RelativeLayout
             android:id="@+id/title_bar_info_order"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="35dp"
             android:background="@color/colorBlueToolbar">
             <TextView
+                android:id="@+id/title_txt_info_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -32,7 +27,7 @@
         <RelativeLayout
             android:id="@+id/status_rl_info_order"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="35dp"
             android:layout_below="@id/title_bar_info_order">
             <TextView
                 android:id="@+id/status_info_order"
@@ -64,6 +59,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:id="@+id/number_ord_txt_info_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="№ заказа:"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlueToolbar"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:id="@+id/number_ord_info_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:textColor="@color/colorBlueToolbar"
+                    android:textSize="16dp"
+                    android:text=""/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+                <TextView
                     android:id="@+id/date_txt_info_order"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -77,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
                     android:textColor="@color/colorBlueToolbar"
-                    android:textSize="20dp"
+                    android:textSize="16dp"
                     android:text=""/>
             </LinearLayout>
             <LinearLayout
@@ -194,16 +211,17 @@
         <Button
             android:id="@+id/butt_chat_info_order"
             android:layout_width="200dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_centerHorizontal="true"
             android:text="Чат с менеджером"
             android:background="@color/md_orange_400"
             android:layout_below="@id/info_txt_order"
-            android:layout_marginTop="30dp"/>
+            android:layout_marginTop="13dp"/>
         <Button
             android:id="@+id/butt_close_info_order"
             android:layout_width="200dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
             android:background="@color/transparent"
             android:layout_below="@id/butt_chat_info_order"
             android:layout_centerHorizontal="true"

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@color/md_white_1000"
+                android:elevation="4dp">
+        <ImageView
+            android:id="@+id/img_exc"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:scaleType="centerCrop"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="80dp"
+            android:layout_below="@id/img_exc"
+            android:alpha="0.5"
+            android:background="@color/colorBlueToolbar"
+            android:elevation="3dp"/>
+        <TextView
+            android:id="@+id/title_chat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="Text"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlueToolbar"/>
+        <TextView
+            android:id="@+id/number_order_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:textColor="@color/md_blue_800"
+            android:text="№ заказа:"
+            android:textSize="18dp"/>
+
+        <TextView
+            android:id="@+id/date_order_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/number_order_chat"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold"
+            android:textColor="@color/md_blue_800"
+            android:text="Дата:"
+            android:textSize="18dp"/>
+
+        <ImageView
+            android:id="@+id/forward_chat"
+            android:layout_width="35dp"
+            android:layout_height="29dp"
+            android:background="@mipmap/ic_arrow_forward_black_36dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:alpha="0.5"
+            android:elevation="3dp"/>
+
+        <ImageView
+            android:id="@+id/notification_chat"
+            android:layout_width="32dp"
+            android:layout_height="30dp"
+            android:background="@mipmap/ic_notifications_or"
+            android:layout_marginTop="64dp"
+            android:layout_toLeftOf="@id/forward_chat"/>
+</RelativeLayout>

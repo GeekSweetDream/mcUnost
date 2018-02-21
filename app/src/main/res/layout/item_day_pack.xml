@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/md_white_1000">
+
+    <TextView
+        android:id="@+id/day_footer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/md_blue_800"
+        android:textSize="22dp"
+        android:text="1-дневные"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_centerInParent="true"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/day_footer"
+        android:background="@color/md_orange_700"
+        android:layout_marginLeft="10dp"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/day_footer"
+        android:background="@color/md_orange_700"
+        android:layout_marginRight="10dp"/>
+
+
+
+</RelativeLayout>

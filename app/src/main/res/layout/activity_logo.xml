@@ -12,9 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@mipmap/handb"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="100dp"/>
+        android:layout_marginTop="78dp"/>
     <ImageView
         android:id="@+id/logo_title"
         android:layout_width="wrap_content"
@@ -25,7 +25,8 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:id="@+id/relativeLayout">
         <View
             android:id="@+id/linelogo"
             android:layout_width="match_parent"

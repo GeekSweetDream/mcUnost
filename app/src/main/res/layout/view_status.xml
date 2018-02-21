@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/md_white_1000"
+                android:elevation="3dp">
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:theme="@style/MyCheckBox"
+        android:text="Активные"
+        android:textColor="@color/colorBlueToolbar"/>
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="127dp"
+        android:layout_height="wrap_content"
+        android:theme="@style/MyCheckBox"
+        android:text="Выполненные"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorBlueToolbar"/>
+    <CheckBox
+        android:id="@+id/checkBox3"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:theme="@style/MyCheckBox"
+        android:text="Все"
+        android:textColor="@color/colorBlueToolbar"
+        android:layout_alignParentRight="true"/>
+
+</RelativeLayout>

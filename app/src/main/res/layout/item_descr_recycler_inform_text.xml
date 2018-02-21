@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_white_1000">
+        <ImageView
+            android:id="@+id/icon_dot_item_inform"
+            android:layout_marginLeft="23dp"
+            android:layout_width="5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@mipmap/dot"/>
+        <RelativeLayout
+            android:id="@+id/title_item_inform_text"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <ImageView
+                android:id="@+id/icon_tour_text_inform"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@mipmap/ic_din"/>
+            <TextView
+                android:id="@+id/title_descr_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/icon_tour_text_inform"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:text="Название экскурсии"
+                android:textSize="14dp"
+                android:textColor="@color/colorBlueToolbar"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/descr_descr_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/icon_dot_item_inform"
+            android:layout_marginLeft="25dp"
+            android:layout_below="@id/title_item_inform_text"
+            android:layout_alignParentRight="true"
+            android:text="Описание экскурсии"
+            android:textColor="@color/md_grey_600"
+            android:textSize="12dp"/>
+    </RelativeLayout>
+</RelativeLayout>

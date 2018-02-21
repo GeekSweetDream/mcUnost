@@ -30,7 +30,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> {
         mListener = listener;
     }
 
-    public OrderAdapter(List<Order> orders) {mOrders = orders;}
+    public OrderAdapter(){};
+    public void setOrderList(List<Order> orders) {mOrders = orders;}
     public void setActivity(Activity activity) {mActivity = activity;}
 
     @Override

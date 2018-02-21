@@ -25,12 +25,11 @@ public class ContactFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View  view = inflater.inflate(R.layout.activity_contact,container,false);
         TextView textView = (TextView) view.findViewById(R.id.moscow_contact);
-        textView.setText("Москва\n" +
-                "Адрес: пр-д Батайский д. 31, оф. 375 \n" +
+        textView.setText("Адрес: пр-д Батайский д. 31, оф. 375 \n" +
                 "Тел: 8 (999) 840-70-28 \n" +
-                "E-mail: msk@mcunost.ru \n\n"+
-                "Санкт-Петербург\n" +
-                "Адрес: пр. Энтузиастов, д. 53/38, оф. 348 \n" +
+                "E-mail: msk@mcunost.ru");
+        textView = (TextView) view.findViewById(R.id.spb_contact);
+        textView.setText("Адрес: пр. Энтузиастов, д. 53/38, оф. 348 \n" +
                 "Тел/факс: 8 (812) 656-86-72 \n" +
                 "Тел: 8 (999) 245-81-52 \n" +
                 "E-mail: info@mcunost.ru ");

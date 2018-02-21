@@ -7,7 +7,8 @@
         android:id="@+id/titlebar"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/colorBlueToolbar">
+        android:background="@color/colorBlueToolbar"
+        android:elevation="3dp">
         <Button
             android:id="@+id/button_menu"
             android:layout_width="30dp"
@@ -25,10 +26,15 @@
             android:textSize="25dp"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"/>
-        <include
-            android:id="@+id/order_notification"
-            android:visibility="invisible"
-            layout="@layout/view_notification_order"/>
+        <ImageView
+            android:id="@+id/info_pattern"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@mipmap/ic_error_outline_white_36dp"
+            android:visibility="gone"/>
     </RelativeLayout>
     <FrameLayout
         android:id="@+id/frame_layout"
@@ -70,6 +76,6 @@
     </RelativeLayout>
     <include
         android:id="@+id/view_choose_city"
-        layout="@layout/view_choose_city"
+        layout="@layout/dialog_choose_city"
         android:visibility="invisible"/>
 </RelativeLayout>

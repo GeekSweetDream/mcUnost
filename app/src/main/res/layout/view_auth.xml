@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="270dp"
+    android:background="@color/md_white_1000">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/auth_email"
+            android:theme="@style/MyColorGreyHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title_registr">
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/auth_email_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:maxLines="1"
+                android:inputType="textEmailAddress"
+                android:hint="Введите ваш email"
+                android:textColor="@color/md_black_1000"/>
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/auth_phone"
+            android:theme="@style/MyColorGreyHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/auth_email">
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/auth_phone_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="Введите ваш телефон"
+                android:textColor="@color/md_black_1000"/>
+        </android.support.design.widget.TextInputLayout>
+        <Button
+            android:id="@+id/butt_auth_auth"
+            android:layout_width="200dp"
+            android:layout_height="55dp"
+            android:layout_below="@id/auth_phone"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:background="@color/md_blue_600"
+            android:text="Авторизоваться"
+            android:textColor="@color/md_white_1000"/>
+        <Button
+            android:id="@+id/butt_auth_cancel"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/butt_auth_auth"
+            android:layout_centerHorizontal="true"
+            android:background="@color/transparent"
+            android:text="назад"
+            android:textColor="@color/md_blue_600"/>
+    </RelativeLayout>
+</RelativeLayout>

@@ -6,7 +6,7 @@
     <RelativeLayout
         android:id="@+id/pack_img_inf_tour"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="180dp">
         <ImageView
             android:id="@+id/img_exc_inf"
             android:layout_width="match_parent"
@@ -14,20 +14,31 @@
             android:background="@color/logoBack"
             android:scaleType="centerCrop"/>
         <ImageView
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_centerInParent="true"
-            android:background="@color/md_orange_500"
-            android:alpha="0.8"/>
-        <TextView
-            android:id="@+id/title_exc_inf"
-            android:layout_width="280dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/md_black_1000"
+            android:alpha="0.4"/>
+        <RelativeLayout
+            android:id="@+id/title_name_tour"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textAlignment="center"
-            android:text="Title"
-            android:textColor="@color/md_white_1000"
-            android:textSize="22dp"/>
+            android:layout_alignParentBottom="true">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/md_orange_500"
+                android:alpha="0.8"/>
+            <TextView
+                android:id="@+id/title_exc_inf"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textAlignment="center"
+                android:text="Title"
+                android:textColor="@color/md_white_1000"
+                android:textSize="22dp"/>
+        </RelativeLayout>
     </RelativeLayout>
 
     <ImageView
@@ -36,13 +47,12 @@
         android:layout_below="@id/pack_img_inf_tour"
         android:background="@color/md_blue_grey_600"
         android:alpha="0.3"/>
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/moveLayout"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/pack_img_inf_tour">
-
             <RelativeLayout
                 android:id="@+id/inf_about_exc"
                 android:layout_width="match_parent"
@@ -104,25 +114,61 @@
                     android:layout_toLeftOf="@id/text_years"
                     android:layout_marginLeft="25dp"
                     android:background="@mipmap/ic_face_black_48dp"/>
-
             </RelativeLayout>
             <ImageView
                 android:id="@+id/line_stop"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/md_blue_800"
+                android:layout_below="@id/inf_about_exc"
                 android:alpha="0.5"/>
             <FrameLayout
                 android:id="@+id/frame_layout_tour"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-    </LinearLayout>
-    <include
-        android:id="@+id/view_registr"
-        layout="@layout/view_registration"
-        android:visibility="invisible"/>
+                android:layout_height="match_parent"
+                android:layout_below="@id/line_stop"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/line_stop">
+                <ImageView
+                    android:id="@+id/pouring_canvas"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="invisible"
+                    android:background="@color/md_orange_400"/>
+                <ImageView
+                    android:id="@+id/show_order_button"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="-5dp"
+                    android:layout_marginBottom="-5dp"
+                    android:background="@mipmap/but_calc"
+                    android:elevation="3dp"/>
+                <Button
+                    android:id="@+id/butt_order_tour"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="100dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="Рассчитать тур"
+                    android:background="@color/transparent"
+                    android:visibility="gone"
+                    android:elevation="1dp"/>
+            </RelativeLayout>
+
+    </RelativeLayout>
+    <!--<include-->
+        <!--android:id="@+id/view_registr"-->
+        <!--layout="@layout/view_registration"-->
+        <!--android:visibility="invisible"/>-->
     <include
         android:id="@+id/view_succsesful"
         layout="@layout/view_succsesful_book"
-        android:visibility="invisible"/>
+        android:visibility="gone"/>
 </RelativeLayout>

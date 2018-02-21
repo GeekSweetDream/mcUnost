@@ -70,13 +70,13 @@ public class MyDataBase extends SQLiteAssetHelper {
         cursor.moveToFirst();
         final List<InformExcursion> excursions = new ArrayList<>();
         boolean fl = true;
-        while(fl && cursor.getCount() !=0){
-            excursions.add(new InformExcursion(cursor.getString(cursor.getColumnIndex("name_excursion")),
-                    ""+cursor.getInt(cursor.getColumnIndex("cost")),""+cursor.getInt(cursor.getColumnIndex("day_count")),
-                    cursor.getString(cursor.getColumnIndex("description")),cursor.getString(cursor.getColumnIndex("short_description")),
-                    cursor.getString(cursor.getColumnIndex("path_image"))));
-            fl = cursor.moveToNext();
-        }
+//        while(fl && cursor.getCount() !=0){
+//            excursions.add(new InformExcursion(cursor.getString(cursor.getColumnIndex("name_excursion")),
+//                    ""+cursor.getInt(cursor.getColumnIndex("cost")),""+cursor.getInt(cursor.getColumnIndex("day_count")),
+//                    cursor.getString(cursor.getColumnIndex("description")),cursor.getString(cursor.getColumnIndex("short_description")),
+//                    cursor.getString(cursor.getColumnIndex("path_image"))));
+//            fl = cursor.moveToNext();
+//        }
         cursor.close();
         return excursions;
     }
@@ -145,11 +145,11 @@ public class MyDataBase extends SQLiteAssetHelper {
         List<Order> ords = new ArrayList<>();
         Log.i("Myapp","заказов : "+cursor.getCount());
         while(fl && cursor.getCount()!=0){
-            ords.add(new Order(cursor.getString(cursor.getColumnIndex("name_excursion")),cursor.getString(cursor.getColumnIndex("data")),
-                    ""+cursor.getInt(cursor.getColumnIndex("cost")),""+cursor.getInt(cursor.getColumnIndex("pupils")),
-                    ""+cursor.getInt(cursor.getColumnIndex("teachers")),""+cursor.getString(cursor.getColumnIndex("name")),
-                    ""+cursor.getString(cursor.getColumnIndex("phone"))));
-            fl = cursor.moveToNext();
+//            ords.add(new Order(cursor.getString(cursor.getColumnIndex("name_excursion")),cursor.getString(cursor.getColumnIndex("data")),
+//                    ""+cursor.getInt(cursor.getColumnIndex("cost")),""+cursor.getInt(cursor.getColumnIndex("pupils")),
+//                    ""+cursor.getInt(cursor.getColumnIndex("teachers")),""+cursor.getString(cursor.getColumnIndex("name")),
+//                    ""+cursor.getString(cursor.getColumnIndex("phone"))));
+//            fl = cursor.moveToNext();
         }
         cursor.close();
         return ords;

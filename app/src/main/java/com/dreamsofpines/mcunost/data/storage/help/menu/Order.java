@@ -5,9 +5,11 @@ package com.dreamsofpines.mcunost.data.storage.help.menu;
  */
 
 public class Order {
-    private String tour, date, cost, pupils, teachers, manager, phone;
+    private String tour, date, cost, pupils,
+            teachers, manager, phone, status,id;
+    private int numberOrder;
 
-    public Order(String tour, String date, String cost, String pupils, String teachers, String manager, String phone) {
+    public Order(String tour, String date, String cost, String pupils, String teachers, String status, String manager, String phone) {
         this.tour = tour;
         this.date = date;
         this.cost = cost;
@@ -15,6 +17,7 @@ public class Order {
         this.teachers = teachers;
         this.manager = manager;
         this.phone = phone;
+        this.status = status;
     }
 
     public Order(String tour, String date, String cost, String pupils, String teachers) {
@@ -26,6 +29,16 @@ public class Order {
         this.manager = "Неизвестно";
         this.phone = "Неизвестно";
     }
+
+    public Order(String tour, String date, String pupils, String teachers) {
+        this.tour = tour;
+        this.date = date;
+        this.pupils = pupils;
+        this.teachers = teachers;
+        this.manager = "Неизвестно";
+        this.phone = "Неизвестно";
+    }
+
 
     public String getTour() {
         return tour;
@@ -61,5 +74,49 @@ public class Order {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setTour(String tour) {
+        this.tour = tour;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setCost(String cost) {
+        this.cost = cost;
+    }
+
+    public void setPupils(String pupils) {
+        this.pupils = pupils;
+    }
+
+    public void setTeachers(String teachers) {
+        this.teachers = teachers;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getNumberOrder() {
+        return numberOrder;
+    }
+
+    public void setNumberOrder(int numberOrder) {
+        this.numberOrder = numberOrder;
     }
 }

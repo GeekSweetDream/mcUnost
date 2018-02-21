@@ -3,16 +3,52 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/md_white_1000">
-    <TextView
-        android:id="@+id/moscow_contact"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="dffd"
-        android:textSize="20dp"
-        android:textColor="@color/md_blue_grey_800"
-        android:layout_below="@id/titlebar"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Москва"
+            android:textSize="23dp"
+            android:textColor="@color/md_blue_600"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"/>
+        <TextView
+            android:id="@+id/moscow_contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Информация"
+            android:textSize="20dp"
+            android:textColor="@color/colorBlueToolbar"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Санкт-Петербруг"
+            android:textSize="23dp"
+            android:textColor="@color/md_blue_600"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"/>
+        <TextView
+            android:id="@+id/spb_contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Информация"
+            android:textSize="20dp"
+            android:textColor="@color/colorBlueToolbar"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"/>
 
+    </LinearLayout>
 </RelativeLayout>
