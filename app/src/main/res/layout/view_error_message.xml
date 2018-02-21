@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/md_orange_500">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/md_orange_400"/>
+        <TextView
+            android:id="@+id/txt_category_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ошибка сети!"
+            android:textSize="15dp"
+            android:textColor="@color/md_red_900"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"/>
+        <Button
+            android:id="@+id/category_resend_butt"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="25dp"
+            android:text="Повторить"
+            android:textStyle="bold"
+            android:background="@color/transparent"
+            android:textColor="@color/md_white_1000"/>
+</RelativeLayout>

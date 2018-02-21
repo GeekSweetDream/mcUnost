@@ -1,7 +1,11 @@
 package com.dreamsofpines.mcunost.data.storage.preference;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.widget.ProgressBar;
+
+import com.dreamsofpines.mcunost.data.storage.pattern.EventManager;
 
 /**
  * Created by ThePupsick on 31.07.17.
@@ -12,16 +16,60 @@ public class GlobalPreferences {
     private static final String PREF_ADD_USER = "addUser";
     private static final String PREF_USER_NAME = "userName";
     private static final String PREF_USER_NUMBER = "userNumber";
+    private static final String PREF_USER_EMAIL = "userEmail";
+    private static final String PREF_USER_CITY = "userCity";
+    private static final String PREF_ID_USER = "idUser";
+    private static final String PREF_QUANTITY_NEW_MESS = "messNew";
+    private static final String PREF_QUANTITY_NEW = "quantityNew";
+
+    public static EventManager events;
+
+    public static void setPrefIdUser(Context context,String id) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putString(PREF_ID_USER, id)
+                .apply();
+    }
+
+    public static String getPrefIdUser(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(PREF_ID_USER,"0");
+    }
+
+    public static void setPrefUserEmail(Context context, String email){
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putString(PREF_USER_EMAIL,email)
+                .apply();
+    }
+
+
+    public static  String getPrefUserEmail(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(PREF_USER_EMAIL,"Не задан");
+    }
+
+    public static String getPrefUserCity(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(PREF_USER_CITY,"Не задан");
+    }
+
+    public static void setPrefUserCity(Context context,String city){
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putString(PREF_USER_CITY,city)
+                .apply();
+    }
 
     public static int getPrefAddUser(Context context){
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getInt(PREF_ADD_USER,0);
     }
 
-    public static void setPrefAddUser(Context context){
+    public static void setPrefAddUser(Context context,int isAuth){
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
-                .putInt(PREF_ADD_USER,1)
+                .putInt(PREF_ADD_USER,isAuth)
                 .apply();
     }
 
@@ -49,6 +97,51 @@ public class GlobalPreferences {
                 .apply();
     }
 
+    public static void setPrefQuantityNew(Context context){
+        int count = getPrefQuantityNew(context);
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putInt(PREF_QUANTITY_NEW,++count)
+                .apply();
+    }
+
+    public static int getPrefQuantityNew(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                    .getInt(PREF_QUANTITY_NEW,0);
+    }
+
+    public static void setZeroPrefQuantityNew(Context context){
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putInt(PREF_QUANTITY_NEW,0)
+                .apply();
+    }
+
+    public static int getPrefQuantityNewMess(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt(PREF_QUANTITY_NEW_MESS,0);
+    }
+
+    public static void setPrefQuantityNewMess(Context context){
+        int count = getPrefQuantityNewMess(context);
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putInt(PREF_QUANTITY_NEW_MESS,++count)
+                .apply();
+        if(events != null) {
+            events.notify("update");
+        }
+    }
+
+    public static void setMinusOneQuantityNewMess(Context context){
+        int count = getPrefQuantityNewMess(context);
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putInt(PREF_QUANTITY_NEW_MESS,--count)
+                .apply();
+        if(events != null) {
+            events.notify("update");
+        }
+    }
 
 
 }

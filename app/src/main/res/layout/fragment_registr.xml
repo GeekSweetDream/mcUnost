@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/md_orange_400">
+        <TextView
+            android:id="@+id/title_registr"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="Заполните поля"
+            android:textColor="@color/md_white_1000"
+            android:textSize="26dp"
+            android:textStyle="bold"
+            android:textAlignment="center"/>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/registr_name"
+            android:theme="@style/MyTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title_registr">
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/registr_name_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:maxLines="1"
+                android:inputType="textPersonName"
+                android:hint="Введите ваше Имя"
+                android:textColor="@color/md_white_1000"/>
+        </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/registr_email"
+        android:theme="@style/MyTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/registr_name">
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/registr_email_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="Введите ваш Email"
+            android:textColor="@color/md_white_1000"/>
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/registr_number"
+        android:theme="@style/MyTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/registr_email">
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/registr_number_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:hint="Введите ваш номер телефона"
+            android:textColor="@color/md_white_1000"/>
+    </android.support.design.widget.TextInputLayout>
+    <Button
+        android:id="@+id/fr_butt_registr"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/registr_number"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/md_green_500"
+        android:text="Зарегистрироваться"/>
+
+    <Button
+        android:id="@+id/fr_butt_registr_cancel"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/fr_butt_registr"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/transparent"
+        android:text="Отменить"/>
+
+
+</RelativeLayout>

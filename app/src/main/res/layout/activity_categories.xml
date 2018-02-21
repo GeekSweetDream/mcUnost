@@ -2,42 +2,80 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/gradient_color">
+                android:background="@color/md_white_1000">
     <RelativeLayout
         android:id="@+id/titlebar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/colorBlueToolbar"
+        android:elevation="3dp">
         <Button
             android:id="@+id/button_menu"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@mipmap/ic_menu_black_36dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="13dp"/>
+            android:layout_marginLeft="13dp"
+            android:background="@mipmap/ic_menu_white_36dp"/>
         <TextView
             android:id="@+id/title_tour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Направление"
             android:textStyle="bold"
-            android:textColor="@color/md_grey_800"
+            android:textColor="@color/md_white_1000"
             android:textSize="25dp"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"/>
         <ImageView
-            android:id="@+id/line_cat"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/md_blue_800"
-            android:layout_below="@id/title_tour"
-            android:layout_marginTop="5dp"
+            android:id="@+id/info_pattern"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:alpha="0.5"/>
+            android:background="@mipmap/ic_error_outline_white_36dp"
+            android:visibility="gone"/>
     </RelativeLayout>
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_below="@id/titlebar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+    <ImageView
+        android:id="@+id/line_cat"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/md_blue_800"
+        android:layout_below="@id/titlebar"
+        android:alpha="0.5"/>
+    <RelativeLayout
+        android:id="@+id/timer_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/notification_order"
+        android:layout_below="@+id/titlebar"
+        android:layout_alignParentRight="true"
+        android:visibility="invisible">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Время ожидания ответа:"
+            android:textColor="@color/md_white_1000"
+            android:textSize="18dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="23:59:59"
+            android:textSize="36dp"
+            android:layout_marginTop="54dp"
+            android:textStyle="bold"
+            android:textColor="@color/md_white_1000"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+    <include
+        android:id="@+id/view_choose_city"
+        layout="@layout/dialog_choose_city"
+        android:visibility="invisible"/>
 </RelativeLayout>

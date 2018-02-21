@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/md_white_1000">
+    <ImageView
+        android:id="@+id/logo_reg"
+        android:layout_width="130dp"
+        android:layout_height="180dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="@mipmap/handb"/>
+    <Button
+        android:id="@+id/butt_reg_logIn"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/logo_reg"
+        android:background="@color/md_orange_400"
+        android:text="Авторизоваться"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+    <Button
+        android:id="@+id/butt_reg_logUp"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/butt_reg_logIn"
+        android:text="Зарегистрироваться"
+        android:background="@color/md_blue_600"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="Вы не авторизовались в приложении.\nЕсли вы новый пользователь, то зарегистрируйтесь!"
+        android:textColor="@color/colorBlueToolbar"
+        android:textSize="15dp"
+        android:layout_below="@id/butt_reg_logUp"
+        android:layout_marginTop="20dp"/>
+
+</RelativeLayout>

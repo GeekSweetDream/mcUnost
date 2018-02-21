@@ -3,56 +3,172 @@
                 android:id="@+id/inform_exc_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/pack_img_inf_tour"
+        android:layout_width="wrap_content"
+        android:layout_height="180dp">
+        <ImageView
+            android:id="@+id/img_exc_inf"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="@color/logoBack"
+            android:scaleType="centerCrop"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/md_black_1000"
+            android:alpha="0.4"/>
+        <RelativeLayout
+            android:id="@+id/title_name_tour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true">
             <ImageView
-                android:id="@+id/img_exc_inf"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:background="@color/logoBack"
-                android:layout_marginTop="5dp"
-                android:scaleType="centerCrop"/>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_below="@id/img_exc_inf"
-                android:background="@color/md_blue_grey_600"
-                android:alpha="0.3"/>
+                android:layout_height="60dp"
+                android:background="@color/md_orange_500"
+                android:alpha="0.8"/>
+            <TextView
+                android:id="@+id/title_exc_inf"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textAlignment="center"
+                android:text="Title"
+                android:textColor="@color/md_white_1000"
+                android:textSize="22dp"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/pack_img_inf_tour"
+        android:background="@color/md_blue_grey_600"
+        android:alpha="0.3"/>
     <RelativeLayout
         android:id="@+id/moveLayout"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/img_exc_inf">
+        android:layout_below="@id/pack_img_inf_tour">
             <RelativeLayout
                 android:id="@+id/inf_about_exc"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="40dp"
                 android:background="@color/md_white_1000">
+                <ImageView
+                    android:id="@+id/logo_calendar"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="@mipmap/ic_today_black_48dp"/>
                 <TextView
-                    android:id="@+id/title_exc_inf"
+                    android:id="@+id/we"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:textAlignment="center"
-                    android:text="Title"
-                    android:textColor="@color/md_grey_800"
-                    android:textSize="22dp"/>
+                    android:text="7 дней"
+                    android:textColor="@color/colorBlueToolbar"
+                    android:textSize="18dp"
+                    android:layout_toRightOf="@id/logo_calendar"
+                    android:layout_marginLeft="8dp"
+                    android:layout_centerVertical="true"/>
+                <TextView
+                    android:id="@+id/cost_tour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="25000"
+                    android:textColor="@color/colorBlueToolbar"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:layout_centerInParent="true"/>
+                <TextView
+                    android:id="@+id/logo_rubles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@id/cost_tour"
+                    android:text="\u20BD"
+                    android:textColor="@color/md_black_1000"
+                    android:textSize="27dp"/>
+
+                <TextView
+                    android:id="@+id/text_years"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="от 12 лет"
+                    android:textColor="@color/colorBlueToolbar"
+                    android:textSize="18dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_centerVertical="true"/>
+
+                <ImageView
+                    android:id="@+id/logo_years"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/text_years"
+                    android:layout_marginLeft="25dp"
+                    android:background="@mipmap/ic_face_black_48dp"/>
             </RelativeLayout>
             <ImageView
                 android:id="@+id/line_stop"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@id/inf_about_exc"
                 android:background="@color/md_blue_800"
+                android:layout_below="@id/inf_about_exc"
                 android:alpha="0.5"/>
-            <me.relex.circleindicator.CircleIndicator
-                android:id="@+id/indicator"
+            <FrameLayout
+                android:id="@+id/frame_layout_tour"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/inf_about_exc"/>
-            <android.support.v4.view.ViewPager
-                android:id="@+id/excure_view_pager"
-                android:layout_below="@id/indicator"
+                android:layout_height="match_parent"
+                android:layout_below="@id/line_stop"/>
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_below="@id/line_stop">
+                <ImageView
+                    android:id="@+id/pouring_canvas"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="invisible"
+                    android:background="@color/md_orange_400"/>
+                <ImageView
+                    android:id="@+id/show_order_button"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="-5dp"
+                    android:layout_marginBottom="-5dp"
+                    android:background="@mipmap/but_calc"
+                    android:elevation="3dp"/>
+                <Button
+                    android:id="@+id/butt_order_tour"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="100dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="Рассчитать тур"
+                    android:background="@color/transparent"
+                    android:visibility="gone"
+                    android:elevation="1dp"/>
+            </RelativeLayout>
+
     </RelativeLayout>
+    <!--<include-->
+        <!--android:id="@+id/view_registr"-->
+        <!--layout="@layout/view_registration"-->
+        <!--android:visibility="invisible"/>-->
+    <include
+        android:id="@+id/view_succsesful"
+        layout="@layout/view_succsesful_book"
+        android:visibility="gone"/>
 </RelativeLayout>

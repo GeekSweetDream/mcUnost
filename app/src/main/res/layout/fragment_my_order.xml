@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:background="@color/md_white_1000">
+    <include
+        android:id="@+id/status_bar"
+        layout="@layout/view_status"
+        android:visibility="gone"/>
+    <TextView
+        android:id="@+id/empty_orders"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="У вас нет заявок на туры!"
+        android:textColor="@color/colorBlueToolbar"
+        android:textStyle="bold"
+        android:textSize="23dp"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+        <include
+            android:id="@+id/error_message"
+            layout="@layout/view_error_message"
+            android:visibility="gone"/>
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_my_order"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/status_bar"/>
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/load_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="visible"
+        app:indicatorName="BallPulseIndicator"
+        app:indicatorColor="@color/md_blue_400"/>
+    <FrameLayout
+        android:id="@+id/frame_layout_my_order"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</RelativeLayout>

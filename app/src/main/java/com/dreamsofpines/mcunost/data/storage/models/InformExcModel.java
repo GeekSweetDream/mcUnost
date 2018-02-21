@@ -11,7 +11,6 @@ public enum InformExcModel {
     FIRST_SCREEN(R.string.short_info, R.layout.short_inf_exc_screen),
     SECOND_SCREEN(R.string.excursion, R.layout.excursion_list_inf_screen),
     THIRD_SCREEN(R.string.full_info, R.layout.full_inf_exc_screen);
-
     private int mLayoutResourceId;
     private int mTitleResourceId;
 
