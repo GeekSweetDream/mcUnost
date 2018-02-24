@@ -5,4 +5,11 @@
     <string name="full_info">Полное описание</string>
     <string name="hello_page">Приветствие</string>
     <string name="moscow_page">Москва</string>
+    <string name="day1">1 день</string>
+    <string name="day2">2 дня/1 ночь</string>
+    <string name="day3">3 дня/2 ночи</string>
+    <string name="day4">4 дня/3 ночи</string>
+    <string name="day5">5 дней/4 ночи</string>
+    <string name="day6">6 дней/5 ночей</string>
+    <string name="day7">7 дней/6 ночей</string>
 </resources>

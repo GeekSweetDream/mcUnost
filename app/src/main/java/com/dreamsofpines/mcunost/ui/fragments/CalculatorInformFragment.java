@@ -158,7 +158,7 @@ public class CalculatorInformFragment extends Fragment implements DatePickerDial
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()){
-                    case MotionEvent.ACTION_DOWN:
+                    case MotionEvent.ACTION_UP:
                         dpd.show(getFragmentManager(),"DatePickerDialog");
                 }
                 return false;

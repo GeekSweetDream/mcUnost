@@ -33,6 +33,7 @@ import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
 import com.dreamsofpines.mcunost.mcUnost;
 import com.dreamsofpines.mcunost.ui.dialog.ChooseCityDialogFragment;
 import com.dreamsofpines.mcunost.ui.fragments.CategoriesFragment;
+import com.dreamsofpines.mcunost.ui.fragments.ConstructorFragment;
 import com.dreamsofpines.mcunost.ui.fragments.InformExcursionFragment;
 import com.dreamsofpines.mcunost.ui.fragments.PackExcursionFragment;
 import com.dreamsofpines.mcunost.ui.fragments.RegistrFragment;
@@ -93,8 +94,6 @@ public class CategoriesActivity extends AppCompatActivity  {
         leftMenu.setOnCityChangedListener(new LeftMenu.OnCityChanged() {
             @Override
             public void onChanged(String city) {
-//                GlobalPreferences.setPrefUserCity(getBaseContext(),city);
-//                leftMenu.updateCity();
                 if(fragment!=null ) {
                     fm.beginTransaction()
                             .replace(R.id.frame_layout,fragment)
@@ -107,13 +106,17 @@ public class CategoriesActivity extends AppCompatActivity  {
         leftMenu.setGetPageList(new LeftMenu.getTourPage() {
             @Override
             public void getPage() {
-                if(fragment == null){
-                    fragment = new CategoriesFragment();
-                }
+                ConstructorFragment fr = new ConstructorFragment();
                 fm.beginTransaction()
-                        .replace(R.id.frame_layout,fragment)
-                        .addToBackStack(null)
+                        .replace(R.id.frame_layout,fr)
                         .commit();
+//                if(fragment == null){
+//                    fragment = new CategoriesFragment();
+//                }
+//                fm.beginTransaction()
+//                        .replace(R.id.frame_layout,fragment)
+//                        .addToBackStack(null)
+//                        .commit();
             }
         });
         settingView();
@@ -142,19 +145,26 @@ public class CategoriesActivity extends AppCompatActivity  {
     }
 
     private void settingView(){
-        if(fragment == null){
-            fragment = new CategoriesFragment();
+            ConstructorFragment fr = new ConstructorFragment();
+            fr.setFragmentManager(fm);
             fm.beginTransaction()
-                    .add(R.id.frame_layout,fragment)
+                    .add(R.id.frame_layout,fr)
+                    .addToBackStack(null)
                     .commit();
-        }
 
-        fragment.setOnClickRecyclerListener(new CategoriesFragment.OnClickRecyclerListener(){
-            @Override
-            public void onClicked(Bundle bundle) {
-                changeFragmentPackExc(bundle);
-            }
-        });
+//        if(fragment == null){
+//            fragment = new CategoriesFragment();
+//            fm.beginTransaction()
+//                    .add(R.id.frame_layout,fragment)
+//                    .commit();
+//        }
+//
+//        fragment.setOnClickRecyclerListener(new CategoriesFragment.OnClickRecyclerListener(){
+//            @Override
+//            public void onClicked(Bundle bundle) {
+//                changeFragmentPackExc(bundle);
+//            }
+//        });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
