@@ -48,14 +48,14 @@ public class CategoriesFragment extends Fragment {
     private Animation jumpOn, jumpOff;
     private AVLoadingIndicatorView avi;
     private List<InformExcursion> excursions, mCategory;
-    public static OnClickRecyclerListener mListener;
+    private OnClickRecyclerListener mListener;
 
     public interface OnClickRecyclerListener{
         void onClicked(Bundle bundle);
     }
 
-    public static void setOnClickRecyclerListener(OnClickRecyclerListener listener){
-        CategoriesFragment.mListener = listener;
+    public void setOnClickRecyclerListener(OnClickRecyclerListener listener){
+        this.mListener = listener;
     }
 
     @Override
@@ -124,7 +124,7 @@ public class CategoriesFragment extends Fragment {
         protected Boolean doInBackground(Void... voids) {
             Boolean success = true;
             categoryList = new ArrayList<>();
-            String response = RequestSender.GET(Constans.URL.TOUR.GET_CATEGORY_TOUR);
+            String response = RequestSender.GET(Constans.URL.TOUR.GET_CITY);
             try {
                 JSONObject js = new JSONObject(response);
                 String resultResponce = js.getString("result");
@@ -164,6 +164,7 @@ public class CategoriesFragment extends Fragment {
                 }
                 avi.hide();
                 categoryView.setVisibility(View.VISIBLE);
+                categoryView.setClickable(true);
                 excursions = categoryList;
                 updateUI(categoryList);
             }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -7,71 +8,93 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
         android:orientation="horizontal"
         android:gravity="center">
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@mipmap/ic_face_black_48dp"/>
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:text="Преподавателей"
-            android:textColor="@color/md_white_1000"
-            android:textStyle="bold"
-            android:textSize="15dp"
-            android:gravity="center"/>
-        <nl.dionsegijn.steppertouch.StepperTouch
-            android:id="@+id/stepperTouchTeacher"
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Преподавателей"
+                android:textColor="@color/md_white_1000"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:gravity="center"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@mipmap/ic_face_black_48dp"/>
+                <nl.dionsegijn.steppertouch.StepperTouch
+                    android:id="@+id/stepperTouchTeacher"
+                    app:stepperBackgroundColor="@color/colorBlueToolbar"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"/>
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:orientation="horizontal"
         android:gravity="center">
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@mipmap/ic_face_black_48dp"/>
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:text="Группа"
-            android:textColor="@color/md_white_1000"
-            android:textStyle="bold"
-            android:textSize="15dp"
-            android:gravity="center"/>
-
-        <nl.dionsegijn.steppertouch.StepperTouch
-            android:id="@+id/stepperTouchChildren"
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:layout_gravity=""
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="Группа"
+                android:textColor="@color/md_white_1000"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:gravity="center"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@mipmap/ic_face_black_48dp"/>
+                <nl.dionsegijn.steppertouch.StepperTouch
+                    android:id="@+id/stepperTouchChildren"
+                    app:stepperBackgroundColor="@color/colorBlueToolbar"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity=""
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"/>
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
     <Button
         android:id="@+id/quantity_accept"
         android:layout_width="250dp"
         android:layout_height="60dp"
-        android:background="@color/transparent"
-        android:layout_marginTop="20dp"
+        android:background="@drawable/border"
+        android:layout_marginTop="30dp"
         android:text="Принять"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:textStyle="bold"
+        android:textColor="@color/md_orange_400"
         android:layout_gravity="center"/>
     <Button
         android:id="@+id/quantity_cancel"

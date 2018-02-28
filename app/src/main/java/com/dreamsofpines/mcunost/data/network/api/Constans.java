@@ -36,6 +36,10 @@ public class Constans {
             private static final String TAG_TOUR = "tour/";
             public static final String GET_CATEGORY_TOUR = HOST + TAG_TOUR + "category/get";
             public static final String GET_PACK_EXCUR = HOST + TAG_TOUR +"package/{region}/{category}";
+            public static final String GET_HOTEL = HOST + TAG_TOUR +"hotel/{idCity}";
+            public static final String GET_CITY = HOST + TAG_TOUR +"city/get";
+
+
         }
 
         public static class PHONE_ORDER{

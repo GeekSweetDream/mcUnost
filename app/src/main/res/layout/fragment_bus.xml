@@ -60,10 +60,11 @@
         android:id="@+id/bus_accept"
         android:layout_width="250dp"
         android:layout_height="60dp"
-        android:background="@color/transparent"
+        android:background="@drawable/border"
         android:layout_marginTop="20dp"
         android:text="Принять"
-        android:textSize="20dp"
+        android:textSize="18dp"
+        android:textColor="@color/md_orange_400"
         android:textStyle="bold"
         android:layout_gravity="center"/>
     <Button

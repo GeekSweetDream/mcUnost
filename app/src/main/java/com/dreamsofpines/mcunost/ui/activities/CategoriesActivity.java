@@ -16,10 +16,12 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -35,6 +37,7 @@ import com.dreamsofpines.mcunost.ui.dialog.ChooseCityDialogFragment;
 import com.dreamsofpines.mcunost.ui.fragments.CategoriesFragment;
 import com.dreamsofpines.mcunost.ui.fragments.ConstructorFragment;
 import com.dreamsofpines.mcunost.ui.fragments.InformExcursionFragment;
+import com.dreamsofpines.mcunost.ui.fragments.MainLogoFragment;
 import com.dreamsofpines.mcunost.ui.fragments.PackExcursionFragment;
 import com.dreamsofpines.mcunost.ui.fragments.RegistrFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -121,7 +124,6 @@ public class CategoriesActivity extends AppCompatActivity  {
         });
         settingView();
 
-
         if (Build.VERSION.SDK_INT >= 23) {
             setLocationPremissions();
         } else {
@@ -151,6 +153,12 @@ public class CategoriesActivity extends AppCompatActivity  {
                     .add(R.id.frame_layout,fr)
                     .addToBackStack(null)
                     .commit();
+//            MainLogoFragment fr = new MainLogoFragment();
+//            fr.setFragmentManager(fm);
+//            fr.setContext(getBaseContext());
+//            fm.beginTransaction()
+//                    .add(R.id.frame_layout,fr)
+//                    .commit();
 
 //        if(fragment == null){
 //            fragment = new CategoriesFragment();
@@ -204,7 +212,6 @@ public class CategoriesActivity extends AppCompatActivity  {
                                                 leftMenu.updateCity();
                                             }
                                         }, GlobalPreferences.getPrefUserCity(getBaseContext()), true);
-                        dF.show(fm,"123");
                         Toast.makeText(getBaseContext(),"Город был неопределен, выберите город вручную!",Toast.LENGTH_LONG)
                                 .show();
                     }
@@ -241,74 +248,84 @@ public class CategoriesActivity extends AppCompatActivity  {
         }
     }
 
-    public void changeFragmentPackExc(Bundle bundle){
-        if(null == fr) {
-            fr = new PackExcursionFragment();
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if(event.getKeyCode() == KeyEvent.KEYCODE_BACK){
+            return true;
         }
-        fr.setArguments(bundle);
-        fr.setOnClickListener(new PackExcursionFragment.OnClickRecyclerListener(){
-            @Override
-            public void onClicked(Bundle bundle) {
-                changeFragmentInfExc(bundle);
-            }
-        });
-        fm.beginTransaction()
-                .replace(R.id.frame_layout,fr)
-                .addToBackStack(null)
-                .commit();
-
+        return super.dispatchKeyEvent(event);
     }
 
-    public void changeFragmentInfExc(Bundle bundle){
-        iE = new InformExcursionFragment();
-        iE.setOnClickRegListener(new InformExcursionFragment.OnClickRegListener() {
-            @Override
-            public void onClickedRegButt() {
-                changeFragmentRegistr();
-            }
-        });
-        iE.setOnSuccessAuthListener(new InformExcursionFragment.OnSuccessAuth() {
-            @Override
-            public void onSuccess() {
-                restartMenu();
-            }
-        });
-        iE.setmBookListener(new InformExcursionFragment.OnBookTourListener() {
-            @Override
-            public void onBooked() {
-                setUpdateBadge();
-            }
-        });
-        iE.setArguments(bundle);
-        fm.beginTransaction()
-                .replace(R.id.frame_layout,iE)
-                .addToBackStack(null)
-                .commit();
-
-    }
-
-    public void changeFragmentRegistr(){
-        if(null == rF){
-            rF = new RegistrFragment();
-        }
-
-        rF.setOnClickRegistrListener(new RegistrFragment.OnClickCancelListener() {
-            @Override
-            public void onClicked(boolean isLogUp) {
-                fm.popBackStack();
-                if(isLogUp) {
-                    iE.setShowView(true);
-                    restartMenu();
-                    leftMenu.updateNewOrder();
-                }
-            }
-        });
-
-        fm.beginTransaction()
-                .replace(R.id.frame_layout,rF)
-                .addToBackStack(null)
-                .commit();
-    }
+    //    public void changeFragmentPackExc(Bundle bundle){
+//        if(null == fr) {
+//            fr = new PackExcursionFragment();
+//        }
+//        fr.setArguments(bundle);
+//        fr.setOnClickListener(new PackExcursionFragment.OnClickRecyclerListener(){
+//            @Override
+//            public void onClicked(Bundle bundle) {
+//                changeFragmentInfExc(bundle);
+//            }
+//        });
+//        fm.beginTransaction()
+//                .replace(R.id.frame_layout,fr)
+//                .addToBackStack(null)
+//                .commit();
+//
+//    }
+//
+//    public void changeFragmentInfExc(Bundle bundle){
+//        iE = new InformExcursionFragment();
+//        iE.setOnClickRegListener(new InformExcursionFragment.OnClickRegListener() {
+//            @Override
+//            public void onClickedRegButt() {
+//                changeFragmentRegistr();
+//            }
+//        });
+//        iE.setOnSuccessAuthListener(new InformExcursionFragment.OnSuccessAuth() {
+//            @Override
+//            public void onSuccess() {
+//                restartMenu();
+//            }
+//        });
+//        iE.setmBookListener(new InformExcursionFragment.OnBookTourListener() {
+//            @Override
+//            public void onBooked() {
+//                setUpdateBadge();
+//            }
+//        });
+//        iE.setArguments(bundle);
+//        fm.beginTransaction()
+//                .replace(R.id.frame_layout,iE)
+//                .addToBackStack(null)
+//                .commit();
+//
+//    }
+//
+//    public void changeFragmentRegistr(){
+//        if(null == rF){
+//            rF = new RegistrFragment();
+//        }
+//
+//        rF.setOnClickRegistrListener(new RegistrFragment.OnClickCancelListener() {
+//            @Override
+//            public void onClicked(boolean isLogUp) {
+//                fm.popBackStack();
+//                if(isLogUp) {
+//                    iE.setShowView(true);
+//                    restartMenu();
+//                    leftMenu.updateNewOrder();
+//                }
+//            }
+//        });
+//
+//        fm.beginTransaction()
+//                .replace(R.id.frame_layout,rF)
+//                .addToBackStack(null)
+//                .commit();
+//    }
+//
+//
 
 //    private class MyLocationListener implements LocationListener{
 //        @Override

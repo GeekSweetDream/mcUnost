@@ -79,6 +79,18 @@ public class RequestSender{
         return response;
     }
 
+    public static String GetCity(String idCity){
+        RestTemplate template = new RestTemplate();
+        template.getMessageConverters().add(new StringHttpMessageConverter());
+        String response = "";
+        try {
+            response = template.getForObject(Constans.URL.TOUR.GET_HOTEL, String.class,idCity);
+        }catch (RestClientException e){
+            Log.i("RequestSender","Error GET_PACK_EXCUR send! Error message: "+e.getMessage());
+        }
+        return response;
+    }
+
 
     public static String GetAllOrdersByLogin(Context context){
         RestTemplate template = new RestTemplate();

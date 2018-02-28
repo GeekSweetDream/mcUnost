@@ -102,7 +102,7 @@ public class DayFragment extends Fragment {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onClick(true,"");
+                listener.onClick(false,null);
             }
         });
     }
