@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.dreamsofpines.mcunost.R;
+import com.dreamsofpines.mcunost.ui.customView.SimpleCounter;
 
 import nl.dionsegijn.steppertouch.StepperTouch;
 
@@ -21,14 +23,13 @@ public class QuantityGroupFragment extends Fragment {
 
     private View view;
     private Button accept, cancel;
-    private StepperTouch teacher, children;
+    private SimpleCounter teacher, children;
 
     public static OnClickListener listener;
 
     public interface OnClickListener{
         void OnClick(boolean accept,int countT, int countC);
     }
-
 
 
     public void setListener(OnClickListener listener){
@@ -44,13 +45,19 @@ public class QuantityGroupFragment extends Fragment {
         bindView();
         setListeners();
 
-        teacher.stepper.setMin(0);
-        teacher.stepper.setMax(5);
-        teacher.stepper.setValue(bundle.getInt("countT"));
+        teacher.setMinValue(0);
+        teacher.setMaxValue(5);
+        teacher.setValue(bundle.getInt("countT"));
 
-        children.stepper.setMin(0);
-        children.stepper.setMax(100);
-        children.stepper.setValue(bundle.getInt("countC"));
+        children.setMinValue(0);
+        children.setMaxValue(100);
+        children.setValue(bundle.getInt("countC"));
+        TextView title = (TextView) getActivity().findViewById(R.id.title_tour);
+        title.setText("Группа");
+        Button help = (Button) getActivity().findViewById(R.id.button_help);
+        help.setVisibility(View.GONE);
+
+
 
         return view;
     }
@@ -58,8 +65,8 @@ public class QuantityGroupFragment extends Fragment {
     private void bindView(){
         accept = (Button) view.findViewById(R.id.quantity_accept);
         cancel = (Button) view.findViewById(R.id.quantity_cancel);
-        teacher = (StepperTouch) view.findViewById(R.id.stepperTouchTeacher);
-        children = (StepperTouch) view.findViewById(R.id.stepperTouchChildren);
+        teacher = (SimpleCounter) view.findViewById(R.id.stepperTouchTeacher);
+        children = (SimpleCounter) view.findViewById(R.id.stepperTouchChildren);
     }
 
     private void setListeners(){
@@ -67,7 +74,7 @@ public class QuantityGroupFragment extends Fragment {
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.OnClick(true,teacher.stepper.getValue(),children.stepper.getValue());
+                listener.OnClick(true,teacher.getValue(),children.getValue());
             }
         });
 

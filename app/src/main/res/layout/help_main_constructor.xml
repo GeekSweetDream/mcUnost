@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_title_help_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.8"
+            android:background="@color/md_black_1000"/>
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:text="Приветствуем путешественников!\nНаше приложение предназначено для учителей и их учеников.\nВ нем вы сможете самостоятельно сконструировать тур для вашей группы!"
+            android:textColor="@color/md_white_1000"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:elevation="10dp"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_small_help_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.8"
+            android:background="@color/md_black_1000"/>
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:text="Сейчас вы находитесь на главной странице, где можете самостоятельно сконструировать свой тур"
+            android:textColor="@color/md_white_1000"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:elevation="10dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_menu_help_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.8"
+            android:background="@color/md_black_1000"/>
+
+
+        <ImageView
+            android:id="@+id/arrow_up_left_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ic_arrow_back_white_48dp"
+            android:rotation="90"
+            android:layout_marginLeft="5dp"/>
+
+
+        <ImageView
+            android:id="@+id/arrow_left_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ic_arrow_back_white_48dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"/>
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/arrow_up_left_menu"
+            android:text= "Дополнительная кнопка для открытия меню"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textColor="@color/md_white_1000"
+            android:layout_marginLeft="10dp"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/arrow_left_menu"
+            android:layout_centerInParent="true"
+            android:text="Здесь находится меню, для того, чтобы его открыть нужно сделать сдвиг слева направо"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textColor="@color/md_white_1000"
+            android:layout_marginLeft="10dp"/>
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_end_help_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.8"
+            android:background="@color/md_black_1000"/>
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:text="Желаем приятных путешествий!"
+            android:textColor="@color/md_white_1000"
+            android:textStyle="bold"
+            android:textSize="30dp"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:elevation="10dp"/>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

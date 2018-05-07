@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.network.api.Constans;
-import com.dreamsofpines.mcunost.data.storage.help.menu.InformExcursion;
+import com.dreamsofpines.mcunost.data.storage.models.InformExcursion;
 import com.squareup.picasso.Picasso;
 
 /**

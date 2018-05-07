@@ -3,16 +3,17 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/md_orange_400">
+              android:clickable="true"
+              android:background="@color/md_white_1000">
 
     <RelativeLayout
         android:id="@+id/rlbtn1"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:background="@drawable/border"
+        android:background="@mipmap/but_or"
         android:clickable="true"
         android:elevation="5dp">
         <TextView
@@ -20,18 +21,18 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/day1"
-            android:textColor="@color/md_blue_400"
+            android:textColor="@color/md_white_1000"
             android:textSize="20dp"
             android:textStyle="bold"/>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/rlbtn2"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:background="@drawable/border"
+        android:background="@mipmap/but_or"
         android:clickable="true"
         android:elevation="5dp">
         <TextView
@@ -39,18 +40,18 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/day2"
-            android:textColor="@color/md_blue_400"
+            android:textColor="@color/md_white_1000"
             android:textSize="20dp"
             android:textStyle="bold"/>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/rlbtn3"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:background="@drawable/border"
+        android:background="@mipmap/but_or"
         android:clickable="true"
         android:elevation="5dp">
         <TextView
@@ -58,18 +59,18 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/day3"
-            android:textColor="@color/md_blue_400"
+            android:textColor="@color/md_white_1000"
             android:textSize="20dp"
             android:textStyle="bold"/>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/rlbtn4"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:background="@drawable/border"
+        android:background="@mipmap/but_or"
         android:clickable="true"
         android:elevation="5dp">
         <TextView
@@ -77,18 +78,18 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/day4"
-            android:textColor="@color/md_blue_400"
+            android:textColor="@color/md_white_1000"
             android:textSize="20dp"
             android:textStyle="bold"/>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/rlbtn5"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:background="@drawable/border"
+        android:background="@mipmap/but_or"
         android:clickable="true"
         android:elevation="5dp">
         <TextView
@@ -96,18 +97,18 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/day5"
-            android:textColor="@color/md_blue_400"
+            android:textColor="@color/md_white_1000"
             android:textSize="20dp"
             android:textStyle="bold"/>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/rlbtn6"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:background="@drawable/border"
+        android:background="@mipmap/but_or"
         android:clickable="true"
         android:elevation="5dp">
         <TextView
@@ -115,18 +116,18 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/day6"
-            android:textColor="@color/md_blue_400"
+            android:textColor="@color/md_white_1000"
             android:textSize="20dp"
             android:textStyle="bold"/>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/rlbtn7"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:background="@drawable/border"
+        android:background="@mipmap/but_or"
         android:clickable="true"
         android:elevation="5dp">
         <TextView
@@ -134,7 +135,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/day7"
-            android:textColor="@color/md_blue_400"
+            android:textColor="@color/md_white_1000"
             android:textSize="20dp"
             android:textStyle="bold"/>
     </RelativeLayout>
@@ -146,6 +147,7 @@
         android:layout_marginTop="10dp"
         android:background="@color/transparent"
         android:text="Отмена"
+        android:textColor="@color/colorBlueToolbar"
         android:textStyle="bold"/>
 
 

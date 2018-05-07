@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/valueLabel"
+        android:layout_width="40dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textColor="@color/colorBlueToolbar"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_centerInParent="true" />
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/minusButton"
+        android:clickable="true"
+        android:src="@mipmap/but_minus_blue"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/valueLabel"
+        android:layout_marginRight="50dp"/>
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/plusButton"
+        android:clickable="true"
+        android:src="@mipmap/but_plus_blue"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/valueLabel"
+        android:layout_marginLeft="50dp"/>
+
+</merge>

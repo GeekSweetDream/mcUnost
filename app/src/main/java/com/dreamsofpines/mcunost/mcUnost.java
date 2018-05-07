@@ -2,11 +2,7 @@ package com.dreamsofpines.mcunost;
 
 import android.app.Application;
 
-import com.yandex.metrica.YandexMetrica;
-
-/**
- * Created by ThePupsick on 27.01.2018.
- */
+//import com.yandex.metrica.YandexMetrica;
 
 public class mcUnost extends Application {
 

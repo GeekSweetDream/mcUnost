@@ -1,6 +1,5 @@
 package com.dreamsofpines.mcunost.ui.fragments;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,27 +17,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dreamsofpines.mcunost.R;
-import com.dreamsofpines.mcunost.data.network.api.Constans;
 import com.dreamsofpines.mcunost.Parser.StringParser;
-import com.dreamsofpines.mcunost.data.database.MyDataBase;
 import com.dreamsofpines.mcunost.data.network.api.RequestSender;
-import com.dreamsofpines.mcunost.data.storage.help.menu.InformExcursion;
+import com.dreamsofpines.mcunost.data.storage.models.InformExcursion;
 import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
-import com.dreamsofpines.mcunost.ui.adapters.recyclerExcursion.ExcursionAdapter;
+import com.dreamsofpines.mcunost.ui.adapters.recyclerex.ExcursionAdapter;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.http.HttpAuthentication;
-import org.springframework.http.HttpBasicAuthentication;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Collections;

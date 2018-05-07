@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dreamsofpines.mcunost.R;
-import com.dreamsofpines.mcunost.data.storage.help.menu.Hotel;
-import com.dreamsofpines.mcunost.ui.adapters.recyclerOrder.OrderAdapter;
-import com.dreamsofpines.mcunost.ui.fragments.DinnerFragment;
+import com.dreamsofpines.mcunost.data.storage.models.Hotel;
 
 import java.util.List;
 
@@ -25,7 +23,7 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelHolder>{
     public static OnClickBoxListener boxListener;
 
     public interface OnClickBoxListener{
-        void onClicked(View itemView, int position);
+        void onClicked(boolean add, int position);
     }
 
     public void setOnClickBoxListener(OnClickBoxListener listener){

@@ -52,6 +52,9 @@ public class StockFragment extends Fragment {
 
         textView = (TextView) getActivity().findViewById(R.id.title_tour);
         textView.setText("Акции");
+        Button help = (Button) getActivity().findViewById(R.id.button_help);
+        help.setVisibility(View.GONE);
+
         return view;
     }
 }

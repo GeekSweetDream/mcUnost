@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -19,6 +20,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -34,6 +36,7 @@ import com.dreamsofpines.mcunost.data.storage.help.menu.LeftMenu;
 import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
 import com.dreamsofpines.mcunost.mcUnost;
 import com.dreamsofpines.mcunost.ui.dialog.ChooseCityDialogFragment;
+import com.dreamsofpines.mcunost.ui.dialog.CityDialogFragment;
 import com.dreamsofpines.mcunost.ui.fragments.CategoriesFragment;
 import com.dreamsofpines.mcunost.ui.fragments.ConstructorFragment;
 import com.dreamsofpines.mcunost.ui.fragments.InformExcursionFragment;
@@ -60,17 +63,16 @@ import java.util.Locale;
 public class CategoriesActivity extends AppCompatActivity  {
 
     private final FragmentManager fm = getSupportFragmentManager();
-    private LocationManager locationManager;
-    private LocationListener locationListener;
     private CategoriesFragment fragment;
     private Button button;
     private LeftMenu leftMenu;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private LocationRequest mLocationRequest;
-    private PackExcursionFragment fr;
     private InformExcursionFragment iE;
     private RegistrFragment rF;
     private FirebaseAnalytics mFirebaseAnalytics;
+    private ConstructorFragment fr;
+    private int fl = 0;
 
 
     @Override
@@ -91,35 +93,28 @@ public class CategoriesActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
         bindView();
+        fl = 0;
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         leftMenu  = new LeftMenu(this,fm,getBaseContext());
         leftMenu.build(this);
         leftMenu.setOnCityChangedListener(new LeftMenu.OnCityChanged() {
             @Override
             public void onChanged(String city) {
-                if(fragment!=null ) {
-                    fm.beginTransaction()
-                            .replace(R.id.frame_layout,fragment)
-                            .addToBackStack(null)
-                            .commit();
-                    fragment.updateAdapter();
+                if(fr != null){
+                    fr.updateCity();
                 }
             }
         });
         leftMenu.setGetPageList(new LeftMenu.getTourPage() {
             @Override
             public void getPage() {
-                ConstructorFragment fr = new ConstructorFragment();
+                if(fr == null) {
+                    fr = new ConstructorFragment();
+                    fr.setFragmentManager(fm);
+                }
                 fm.beginTransaction()
                         .replace(R.id.frame_layout,fr)
                         .commit();
-//                if(fragment == null){
-//                    fragment = new CategoriesFragment();
-//                }
-//                fm.beginTransaction()
-//                        .replace(R.id.frame_layout,fragment)
-//                        .addToBackStack(null)
-//                        .commit();
             }
         });
         settingView();
@@ -132,9 +127,6 @@ public class CategoriesActivity extends AppCompatActivity  {
 
     }
 
-    public void restartMenu(){
-        leftMenu.build(this);
-    }
 
     protected void createLocationRequest(){
         mLocationRequest = new LocationRequest();
@@ -147,33 +139,12 @@ public class CategoriesActivity extends AppCompatActivity  {
     }
 
     private void settingView(){
-            ConstructorFragment fr = new ConstructorFragment();
-            fr.setFragmentManager(fm);
-            fm.beginTransaction()
-                    .add(R.id.frame_layout,fr)
-                    .addToBackStack(null)
-                    .commit();
-//            MainLogoFragment fr = new MainLogoFragment();
-//            fr.setFragmentManager(fm);
-//            fr.setContext(getBaseContext());
-//            fm.beginTransaction()
-//                    .add(R.id.frame_layout,fr)
-//                    .commit();
-
-//        if(fragment == null){
-//            fragment = new CategoriesFragment();
-//            fm.beginTransaction()
-//                    .add(R.id.frame_layout,fragment)
-//                    .commit();
-//        }
-//
-//        fragment.setOnClickRecyclerListener(new CategoriesFragment.OnClickRecyclerListener(){
-//            @Override
-//            public void onClicked(Bundle bundle) {
-//                changeFragmentPackExc(bundle);
-//            }
-//        });
-
+        fr = new ConstructorFragment();
+        fr.setFragmentManager(fm);
+        fm.beginTransaction()
+                .add(R.id.frame_layout, fr)
+                .addToBackStack(null)
+                .commit();
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -188,38 +159,39 @@ public class CategoriesActivity extends AppCompatActivity  {
         Log.i("Myapp",""+(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED));
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},23);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},23);
         }else{
             bindLocationManager();
         }
     }
 
-    private void bindLocationManager(){
 
+    private void bindLocationManager(){
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         mFusedLocationProviderClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
                     String str = decodeCoordinat(location);
-                    if(str.equalsIgnoreCase("Не задан")){
-                        ChooseCityDialogFragment dF =
-                                ChooseCityDialogFragment.newInstance(
-                                        new ChooseCityDialogFragment.OnCityChangedListener() {
-                                            @Override
-                                            public void onChange(String city) {
-                                                GlobalPreferences.setPrefUserCity(getBaseContext(),city);
-                                                leftMenu.updateCity();
-                                            }
-                                        }, GlobalPreferences.getPrefUserCity(getBaseContext()), true);
-                        Toast.makeText(getBaseContext(),"Город был неопределен, выберите город вручную!",Toast.LENGTH_LONG)
-                                .show();
-                    }
-                    GlobalPreferences.setPrefUserCity(getBaseContext(),str);
-                    leftMenu.updateCity();
+//                    if(str.equalsIgnoreCase("Не задан")){
+//                        CityDialogFragment dF = CityDialogFragment.newInstance(
+//                                        new CityDialogFragment.OnCityChangedListener() {
+//                                            @Override
+//                                            public void onChange(String city) {
+//                                                GlobalPreferences.setPrefUserCity(getApplicationContext(),city);
+//                                                setUpdateCity();
+//                                            }
+//                                        }, GlobalPreferences.getPrefUserCity(getApplicationContext()));
+//                        dF.show(getSupportFragmentManager(),"dF");
+//                        Toast.makeText(getBaseContext(),"Город был неопределен, выберите город вручную!",Toast.LENGTH_LONG)
+//                                .show();
+//                    }
+                    GlobalPreferences.setPrefUserCity(getApplicationContext(),str);
+                    setUpdateCity();
                 }
         });
     }
+
     private String decodeCoordinat(Location location){
         String city = GlobalPreferences.getPrefUserCity(getBaseContext());
         if(null!=location) {
@@ -248,115 +220,30 @@ public class CategoriesActivity extends AppCompatActivity  {
         }
     }
 
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
-        if(event.getKeyCode() == KeyEvent.KEYCODE_BACK){
-            return true;
-        }
-        return super.dispatchKeyEvent(event);
-    }
-
-    //    public void changeFragmentPackExc(Bundle bundle){
-//        if(null == fr) {
-//            fr = new PackExcursionFragment();
-//        }
-//        fr.setArguments(bundle);
-//        fr.setOnClickListener(new PackExcursionFragment.OnClickRecyclerListener(){
-//            @Override
-//            public void onClicked(Bundle bundle) {
-//                changeFragmentInfExc(bundle);
-//            }
-//        });
-//        fm.beginTransaction()
-//                .replace(R.id.frame_layout,fr)
-//                .addToBackStack(null)
-//                .commit();
-//
-//    }
-//
-//    public void changeFragmentInfExc(Bundle bundle){
-//        iE = new InformExcursionFragment();
-//        iE.setOnClickRegListener(new InformExcursionFragment.OnClickRegListener() {
-//            @Override
-//            public void onClickedRegButt() {
-//                changeFragmentRegistr();
-//            }
-//        });
-//        iE.setOnSuccessAuthListener(new InformExcursionFragment.OnSuccessAuth() {
-//            @Override
-//            public void onSuccess() {
-//                restartMenu();
-//            }
-//        });
-//        iE.setmBookListener(new InformExcursionFragment.OnBookTourListener() {
-//            @Override
-//            public void onBooked() {
-//                setUpdateBadge();
-//            }
-//        });
-//        iE.setArguments(bundle);
-//        fm.beginTransaction()
-//                .replace(R.id.frame_layout,iE)
-//                .addToBackStack(null)
-//                .commit();
-//
-//    }
-//
-//    public void changeFragmentRegistr(){
-//        if(null == rF){
-//            rF = new RegistrFragment();
-//        }
-//
-//        rF.setOnClickRegistrListener(new RegistrFragment.OnClickCancelListener() {
-//            @Override
-//            public void onClicked(boolean isLogUp) {
-//                fm.popBackStack();
-//                if(isLogUp) {
-//                    iE.setShowView(true);
-//                    restartMenu();
-//                    leftMenu.updateNewOrder();
+//    @Override
+//    public boolean dispatchKeyEvent(KeyEvent event) {
+//        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN && fm.getBackStackEntryCount() == 1) {
+//            ++fl;
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    fl = 0;
 //                }
-//            }
-//        });
-//
-//        fm.beginTransaction()
-//                .replace(R.id.frame_layout,rF)
-//                .addToBackStack(null)
-//                .commit();
-//    }
-//
-//
-
-//    private class MyLocationListener implements LocationListener{
-//        @Override
-//        public void onLocationChanged(Location location) {
-//            String city = "";
-//            Geocoder gcd = new Geocoder(getBaseContext(), Locale.getDefault());
-//            List<Address> addresses;
-//            try {
-//                addresses = gcd.getFromLocation(location.getLatitude(),location.getLongitude(),1);
-//                if(addresses.size() > 0){
-//                    city = addresses.get(0).getLocality();
-//                }
-//                locationManager.removeUpdates(locationListener);
-//            }catch (IOException e){
-//                e.printStackTrace();
-//            }
-//            Toast.makeText(getBaseContext(),city,Toast.LENGTH_SHORT).show();
+//            },3000);
+//            Toast.makeText(getApplicationContext(), "Если хотите выйти нажмите кнопку назад еще раз!",Toast.LENGTH_LONG).show();
+//            if(fl == 2) finishAffinity();
+//            return true;
+//        }else{
+//            return super.dispatchKeyEvent(event);
 //        }
-//
-//        @Override
-//        public void onStatusChanged(String s, int i, Bundle bundle) {}
-//
-//        @Override
-//        public void onProviderEnabled(String s) {}
-//
-//        @Override
-//        public void onProviderDisabled(String s) {}
 //    }
 
     public void setUpdateBadge(){
         leftMenu.updateNewOrder();
     }
+    public void setUpdateCity(){
+        leftMenu.updateCity();
+    }
+    public void updateAllMenu(){leftMenu.build(this);}
 
 }

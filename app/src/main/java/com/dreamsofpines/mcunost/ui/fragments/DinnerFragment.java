@@ -8,8 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.dreamsofpines.mcunost.R;
+import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
+import com.dreamsofpines.mcunost.ui.customView.SimpleCounter;
+import com.dreamsofpines.mcunost.ui.customView.helpers.DinHelper;
 
 import nl.dionsegijn.steppertouch.StepperTouch;
 
@@ -20,8 +24,10 @@ import nl.dionsegijn.steppertouch.StepperTouch;
 public class DinnerFragment extends Fragment {
 
     private View view;
-    private StepperTouch br,lu,din;
-    private Button cancel, accept;
+    private SimpleCounter br,lu,din;
+    private Button cancel, accept,help;
+    private TextView title;
+    private DinHelper dinHelp;
 
     public static OnClickListener listener;
     public interface OnClickListener{
@@ -40,31 +46,47 @@ public class DinnerFragment extends Fragment {
         bindView();
         setListeners();
         Bundle bundle = getArguments();
-        br.stepper.setValue(bundle.getInt("br")-1);
-        br.stepper.setMin(0);
-        br.stepper.setMax(bundle.getInt("day"));
-        lu.stepper.setValue(bundle.getInt("lu"));
-        lu.stepper.setMin(0);
-        lu.stepper.setMax(bundle.getInt("day"));
-        din.stepper.setValue(bundle.getInt("din"));
-        lu.stepper.setMin(0);
-        lu.stepper.setMax(bundle.getInt("day"));
+        br.setValue(bundle.getInt("br"));
+        br.setMinValue(0);
+        br.setMaxValue(bundle.getInt("day"));
+        lu.setValue(bundle.getInt("lu"));
+        lu.setMinValue(0);
+        lu.setMaxValue(bundle.getInt("day"));
+        din.setValue(bundle.getInt("din"));
+        din.setMinValue(0);
+        din.setMaxValue(bundle.getInt("day"));
+
+        help = (Button) getActivity().findViewById(R.id.button_help);
+        help.setVisibility(View.VISIBLE);
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dinHelp.show();
+            }
+        });
+        if(GlobalPreferences.getPrefHelpDin(getContext())!=1){
+            dinHelp.show();
+            GlobalPreferences.setPrefHelpDin(getContext(),1);
+        }
+        title.setText("Обед");
         return view;
     }
 
     private void bindView(){
-        br = (StepperTouch) view.findViewById(R.id.stepperTouchBreakfast);
-        lu = (StepperTouch) view.findViewById(R.id.stepperTouchLunch);
-        din = (StepperTouch) view.findViewById(R.id.stepperTouchDinner);
-        accept = (Button) view.findViewById(R.id.quantity_dinner_accept);
-        cancel = (Button) view.findViewById(R.id.quantity_dinner_cancel);
+        br      = (SimpleCounter) view.findViewById(R.id.stepperTouchBreakfast);
+        lu      = (SimpleCounter) view.findViewById(R.id.stepperTouchLunch);
+        din     = (SimpleCounter) view.findViewById(R.id.stepperTouchDinner);
+        accept  = (Button) view.findViewById(R.id.quantity_dinner_accept);
+        cancel  = (Button) view.findViewById(R.id.quantity_dinner_cancel);
+        title   = (TextView) getActivity().findViewById(R.id.title_tour);
+        dinHelp = (DinHelper) view.findViewById(R.id.din_help);
     }
 
     private void setListeners(){
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onClick(true, br.stepper.getValue(),lu.stepper.getValue(),din.stepper.getValue());
+                listener.onClick(true, br.getValue(),lu.getValue(),din.getValue());
             }
         });
 

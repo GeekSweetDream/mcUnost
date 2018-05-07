@@ -60,6 +60,9 @@ public class SettingFragment extends Fragment {
 
         tittle = (TextView) getActivity().findViewById(R.id.title_tour);
         tittle.setText("Настройки");
+        Button help = (Button) getActivity().findViewById(R.id.button_help);
+        help.setVisibility(View.GONE);
+
         btnSave = (Button) view.findViewById(R.id.butt_save_setting);
 
         nameBase = GlobalPreferences.getPrefUserName(getActivity());

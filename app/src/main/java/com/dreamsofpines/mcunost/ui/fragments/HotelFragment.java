@@ -1,5 +1,6 @@
 package com.dreamsofpines.mcunost.ui.fragments;
 
+import android.animation.ObjectAnimator;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,11 +19,8 @@ import android.widget.Toast;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.network.api.RequestSender;
-import com.dreamsofpines.mcunost.data.storage.help.menu.Hotel;
-import com.dreamsofpines.mcunost.data.storage.help.menu.Order;
+import com.dreamsofpines.mcunost.data.storage.models.Hotel;
 import com.dreamsofpines.mcunost.ui.adapters.recyclerHotel.HotelAdapter;
-import com.dreamsofpines.mcunost.ui.adapters.recyclerOrder.OrderAdapter;
-import com.dreamsofpines.mcunost.ui.dialog.ShortInfoOrderDialog;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
@@ -31,9 +29,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.R.attr.order;
-import static com.dreamsofpines.mcunost.R.id.status_bar;
 
 /**
  * Created by ThePupsick on 24.02.2018.
@@ -44,9 +39,10 @@ public class HotelFragment extends Fragment {
     private View view, err;
     private RecyclerView rec;
     private HotelAdapter mAdapter;
-    private Button accept,cancel,resend;
+    private Button cancel,resend,accept;
     private List<Hotel> hotelList;
     private Animation jumpOn;
+    private String idCity;
     private AVLoadingIndicatorView avl;
     private int pos;
 
@@ -68,14 +64,16 @@ public class HotelFragment extends Fragment {
         setListeners();
         accept.setVisibility(View.GONE);
         cancel.setVisibility(View.GONE);
-
         avl.show();
         err.setVisibility(View.GONE);
         jumpOn = AnimationUtils.loadAnimation(getContext(),R.anim.jump_from_down_without_alpha);
+        TextView title = (TextView) getActivity().findViewById(R.id.title_tour);
+        title.setText("Отели");
+        Button help = (Button) getActivity().findViewById(R.id.button_help);
+        help.setVisibility(View.GONE);
+
         HotelTask hotelTask = new HotelTask();
         hotelTask.execute(getArguments());
-        TextView title = (TextView) getActivity().findViewById(R.id.title_tour);
-        title.setText("Отель");
         return view;
     }
 
@@ -92,7 +90,23 @@ public class HotelFragment extends Fragment {
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onClick(true,hotelList.get(pos).getId(),hotelList.get(pos).getName());
+                int count = 0;
+                Hotel hotel = null;
+                for(Hotel h:hotelList) {
+                    if(h.isChecked()) {
+                        hotel = h;
+                        ++count;
+                    }
+                }
+                if(count<=1) {
+                    if (hotel != null) {
+                        listener.onClick(true, hotel.getId(), hotel.getName());
+                    } else {
+                        listener.onClick(false, null, null);
+                    }
+                }else{
+                    Toast.makeText(getContext(),"Выберите только один отель!",Toast.LENGTH_LONG).show();
+                }
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -114,21 +128,14 @@ public class HotelFragment extends Fragment {
     private void updateUI(){
         if(null == rec.getLayoutManager()) {
             LinearLayoutManager lr = new LinearLayoutManager(getActivity());
-//            lr.setReverseLayout(true);
-//            lr.setStackFromEnd(true);
             rec.setLayoutManager(lr);
         }
         mAdapter = new HotelAdapter();
         mAdapter.setContext(getContext());
         mAdapter.setOnClickBoxListener(new HotelAdapter.OnClickBoxListener() {
             @Override
-            public void onClicked(View itemView, int position) {
-                for (Hotel hotel:hotelList){
-                    hotel.setChecked(false);
-                }
-                hotelList.get(position).setChecked(true);
-                pos = position;
-                mAdapter.notifyDataSetChanged();
+            public void onClicked(boolean add, int position) {
+                    hotelList.get(position).setChecked(add);
             }
         });
         rec.setAdapter(mAdapter);
@@ -142,7 +149,7 @@ public class HotelFragment extends Fragment {
         protected Boolean doInBackground(Bundle... bundles) {
             Boolean success = true;
             hotelList = new ArrayList<>();
-            String response = RequestSender.GetCity("1");
+            String response = RequestSender.GetHotel(bundles[0].getString("idCity"));
             try {
                 JSONObject js = new JSONObject(response);
                 String resultResponce = js.getString("result");
@@ -155,7 +162,7 @@ public class HotelFragment extends Fragment {
                                 hotelJs.getString("id"),
                                 hotelJs.getString("name"),
                                 "");
-                        if(bundles[0] != null && hotel.getId().equalsIgnoreCase(bundles[0].getString("id"))) {
+                        if(hotel.getId().equalsIgnoreCase(bundles[0].getString("id"))) {
                             hotel.setChecked(true);
                             pos = i;
                         }
@@ -189,13 +196,12 @@ public class HotelFragment extends Fragment {
                 if(hotelList.size()==0) {
                     rec.setVisibility(View.GONE);
                     cancel.setVisibility(View.VISIBLE);
-//                    empty.setVisibility(View.VISIBLE);
                 }else{
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(rec,"alpha",0,1);
+                    animator.setDuration(700);
+                    animator.start();
                     accept.setVisibility(View.VISIBLE);
                     cancel.setVisibility(View.VISIBLE);
-//                    status_bar.setVisibility(View.VISIBLE);
-//                    setListenerView();
-//                    ch1.setChecked(true);
                     rec.setVisibility(View.VISIBLE);
                 }
                 avl.hide();

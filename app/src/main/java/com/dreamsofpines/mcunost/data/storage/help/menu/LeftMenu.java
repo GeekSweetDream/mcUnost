@@ -5,16 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.network.api.Constans;
-import com.dreamsofpines.mcunost.data.storage.pattern.EventManager;
 import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
 import com.dreamsofpines.mcunost.ui.dialog.AuthDialogFragment;
 import com.dreamsofpines.mcunost.ui.dialog.ChooseCityDialogFragment;
+import com.dreamsofpines.mcunost.ui.dialog.CityDialogFragment;
 import com.dreamsofpines.mcunost.ui.dialog.PhoneOrderDialog;
 import com.dreamsofpines.mcunost.ui.fragments.ChatFragment;
 import com.dreamsofpines.mcunost.ui.fragments.ChatsRecyclerFragment;
@@ -38,11 +40,11 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
  * Created by ThePupsick on 31.07.17.
  */
 
-public class LeftMenu implements ChooseCityDialogFragment.OnCityChangedListener,AuthDialogFragment.OnClickedReg,
-        AuthDialogFragment.OnSuccessAuth,EventManager.EventListener{
+public class LeftMenu implements CityDialogFragment.OnCityChangedListener,AuthDialogFragment.OnClickedReg,
+        AuthDialogFragment.OnSuccessAuth{
 
     private PrimaryDrawerItem tour, item1, userCity,item3,
-            myorder, chat, setting, logInOut;
+            myorder,/* chat ,*/ setting, logInOut;
     private Drawer result;
     private Activity activity;
     private ContactFragment contact;
@@ -62,9 +64,6 @@ public class LeftMenu implements ChooseCityDialogFragment.OnCityChangedListener,
 
     @Override
     public void onClickedReg() {}
-
-    @Override
-    public void update(String type) { updateMess();}
 
     public interface OnCityChanged{ void onChanged(String city);}
 
@@ -88,11 +87,9 @@ public class LeftMenu implements ChooseCityDialogFragment.OnCityChangedListener,
     }
 
 
-    public LeftMenu(final Activity activity, final FragmentManager fm, Context context) {
+    public LeftMenu(final Activity activity, final FragmentManager fm, final Context context) {
         this.activity = activity;
         this.mContext = context;
-//        GlobalPreferences.events = new EventManager("update");
-//        GlobalPreferences.events.subscribe("update",this);
         tour = new PrimaryDrawerItem()
                 .withIdentifier(0)
                 .withName("Туры")
@@ -126,8 +123,8 @@ public class LeftMenu implements ChooseCityDialogFragment.OnCityChangedListener,
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        ChooseCityDialogFragment dF = ChooseCityDialogFragment.newInstance(LeftMenu.this,
-                                GlobalPreferences.getPrefUserCity(mContext),true);
+                        CityDialogFragment dF = CityDialogFragment.newInstance(LeftMenu.this,
+                                GlobalPreferences.getPrefUserCity(activity));
                         dF.show(fm,"123");
                         return false;
                     }
@@ -176,31 +173,32 @@ public class LeftMenu implements ChooseCityDialogFragment.OnCityChangedListener,
                         return false;
                     }
                 });
-        chat = new PrimaryDrawerItem()
-                .withName("Сообщения")
-                .withIcon(R.mipmap.ic_email_black_36dp)
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        ChatsRecyclerFragment chatsRecyclerFragment = new ChatsRecyclerFragment();
-                        chatsRecyclerFragment.setOnClickRecyclerListener(new ChatsRecyclerFragment.OnClickRecyclerListener() {
-                            @Override
-                            public void onClicked(Bundle bundle) {
-                                ChatFragment chatFragment = new ChatFragment();
-                                chatFragment.setArguments(bundle);
-                                fm.beginTransaction()
-                                        .replace(R.id.frame_layout,chatFragment)
-                                        .addToBackStack(null)
-                                        .commit();
-                            }
-                        });
-                        fm.beginTransaction()
-                                .replace(R.id.frame_layout,chatsRecyclerFragment)
-                                .addToBackStack(null)
-                                .commit();
-                        return false;
-                    }
-                });
+//        chat = new PrimaryDrawerItem()
+//                .withName("Сообщения")
+//                .withIcon(R.mipmap.ic_email_black_36dp)
+//                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+//                    @Override
+//                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+////                        ChatsRecyclerFragment chatsRecyclerFragment = new ChatsRecyclerFragment();
+////                        chatsRecyclerFragment.setOnClickRecyclerListener(new ChatsRecyclerFragment.OnClickRecyclerListener() {
+////                            @Override
+////                            public void onClicked(Bundle bundle) {
+////                                ChatFragment chatFragment = new ChatFragment();
+////                                chatFragment.setArguments(bundle);
+////                                fm.beginTransaction()
+////                                        .replace(R.id.frame_layout,chatFragment)
+////                                        .addToBackStack(null)
+////                                        .commit();
+////                            }
+////                        });
+////                        fm.beginTransaction()
+////                                .replace(R.id.frame_layout,chatsRecyclerFragment)
+////                                .addToBackStack(null)
+////                                .commit();
+//                        Toast.makeText(context,"Раздел находится в разработке",Toast.LENGTH_SHORT).show();
+//                        return false;
+//                    }
+//                });
         setting = new PrimaryDrawerItem()
                 .withName("Настройки")
                 .withIcon(R.mipmap.ic_settings_black_36dp)
@@ -278,7 +276,7 @@ public class LeftMenu implements ChooseCityDialogFragment.OnCityChangedListener,
                 .build();
 
         logInOut.withName(getStrLog());
-        chat.withEnabled(userAuthed);
+//        chat.withEnabled(userAuthed);
         myorder.withEnabled(userAuthed);
         setting.withEnabled(userAuthed);
         if(GlobalPreferences.getPrefQuantityNew(mContext)!=0 && userAuthed) {
@@ -292,7 +290,7 @@ public class LeftMenu implements ChooseCityDialogFragment.OnCityChangedListener,
                 .withAccountHeader(accountHeader)
                 .withFooter(footer)
                 .withFooterClickable(true)
-                .addDrawerItems(tour, myorder, chat, item1,item3,
+                .addDrawerItems(tour, myorder, /*chat,*/ item1,item3,
                         new DividerDrawerItem(),
                         setting,
                         new DividerDrawerItem(),
@@ -301,32 +299,33 @@ public class LeftMenu implements ChooseCityDialogFragment.OnCityChangedListener,
                         logInOut,
                         new DividerDrawerItem(),
                         new SecondaryDrawerItem()
-                                .withName("Наши телефоны")
+                                .withName("Наш телефон")
                                 .withSelectable(false)
                                 .withTextColor(activity.getResources().getColor(R.color.md_blue_grey_500)),
                         new PrimaryDrawerItem()
                                 .withIdentifier(4)
-                                .withName("8(495)349-56-91 (Москва)")
+                                .withName("8(999) 840-70-28 (Москва)")
                                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                                     @Override
                                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:84953495691"));
+                                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:89998407028"));
                                         activity.startActivity(intent);
                                         return false;
                                     }
                                 }),
                         new PrimaryDrawerItem()
-                                .withIdentifier(5)
-                                .withName("8(812)656-86-72 (Санкт-Петербург)")
+                                .withIdentifier(4)
+                                .withName("8(999) 245-81-52 (Cанкт-Петербург)")
                                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                                     @Override
                                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:88126568672"));
+                                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:89992458152"));
                                         activity.startActivity(intent);
                                         return false;
                                     }
                                 })
-                )
+
+                                )
                 .build();
     }
 
@@ -345,18 +344,22 @@ public class LeftMenu implements ChooseCityDialogFragment.OnCityChangedListener,
         if(result!=null) {
             int count = GlobalPreferences.getPrefQuantityNewMess(mContext);
             if(count>0) {
-                chat.withBadge("" + count)
-                        .withBadgeStyle(new BadgeStyle()
-                                .withColorRes(R.color.md_red_400)
-                                .withTextColorRes(R.color.md_white_1000));
+//                chat.withBadge("" + count)
+//                        .withBadgeStyle(new BadgeStyle()
+//                                .withColorRes(R.color.md_red_400)
+//                                .withTextColorRes(R.color.md_white_1000));
             }else{
-                chat.withBadge("").withBadgeStyle(new BadgeStyle().withColorRes(R.color.transparent));
+//                chat.withBadge("").withBadgeStyle(new BadgeStyle().withColorRes(R.color.transparent));
             }
-            result.updateItem(chat);
+//            result.updateItem(chat);
         }
 
     }
 
+
+    private void changeFragment(Fragment fragment){
+
+    }
 
     public void updateDeleteOrder(){
         if(result!=null){
@@ -368,7 +371,6 @@ public class LeftMenu implements ChooseCityDialogFragment.OnCityChangedListener,
 
     public void updateCity(){
         if (result!=null){
-            Log.i("asdf123","asd123");
             userCity.withName("Ваш город: "+ GlobalPreferences.getPrefUserCity(mContext));
             result.updateItem(userCity);
         }
