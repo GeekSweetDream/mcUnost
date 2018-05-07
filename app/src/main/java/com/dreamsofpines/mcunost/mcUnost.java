@@ -6,7 +6,7 @@ import android.app.Application;
 
 public class mcUnost extends Application {
 
-    public final static String API_key = 	"af101859-b3d2-42d3-bdfd-e2a7c942e479";
+    public final static String API_key = 	"****";
 
 
     @Override

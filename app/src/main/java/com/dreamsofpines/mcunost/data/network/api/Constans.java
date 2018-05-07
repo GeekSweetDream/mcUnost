@@ -30,7 +30,6 @@ public class Constans {
 
     public static class URL{
         private static final String HOST = "http://vfproject.ru:49173/";
-//        private static final String HOST = "http://192.168.0.32:8080/";
 
         public static class TOUR{
             private static final String TAG_TOUR = "tour/";
