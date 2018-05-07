@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <ImageSwitcher
+        android:id="@+id/main_switcher"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ImageSwitcher>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/md_black_1000"
+        android:alpha="0.4"/>
+    <Button
+        android:id="@+id/rel_main_logo"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:background="@mipmap/border_transparent"
+        android:text="Сконструировать тур"
+        android:textStyle="bold"
+        android:textColor="@color/md_white_1000"
+        android:textSize="18dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Молодежный Центр\n ЮНОСТЬ"
+        android:textColor="@color/md_white_1000"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:layout_marginTop="30dp"/>
+
+</RelativeLayout>

@@ -1,33 +1,22 @@
 package com.dreamsofpines.mcunost.ui.fragments;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.media.VolumeProviderCompat;
 import android.support.v7.widget.AppCompatEditText;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dreamsofpines.mcunost.R;
-import com.dreamsofpines.mcunost.data.database.MyDataBase;
-import com.dreamsofpines.mcunost.data.network.api.Constans;
-import com.dreamsofpines.mcunost.data.network.api.RequestSender;
-import com.dreamsofpines.mcunost.data.storage.help.menu.Order;
+import com.dreamsofpines.mcunost.data.storage.models.Order;
 import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
 import com.dreamsofpines.mcunost.ui.dialog.TotalDialogFragment;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -35,16 +24,13 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import org.json.JSONObject;
 
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
-
-import static android.R.attr.editable;
 
 /**
  * Created by ThePupsick on 14.08.17.
  */
 
-public class CalculatorInformFragment extends Fragment implements DatePickerDialog.OnDateSetListener,TotalDialogFragment.OnClickButton{
+public class  CalculatorInformFragment extends Fragment implements DatePickerDialog.OnDateSetListener,TotalDialogFragment.OnClickButton{
 
     private Button mButtonCancel,mButtonOk;
     private AppCompatEditText dateEdit,countSchool,countTeacher;
@@ -57,6 +43,11 @@ public class CalculatorInformFragment extends Fragment implements DatePickerDial
 
     public static OnClickCancel mListener;
     public static OnClickOk sOnClickOk;
+
+    @Override
+    public void OnClick(boolean accepted, Order order) {
+
+    }
 
 
     public interface  OnClickCancel{
@@ -72,12 +63,11 @@ public class CalculatorInformFragment extends Fragment implements DatePickerDial
         mListener = listener;
     }
 
-    @Override
-    public void OnClick(boolean accepted) {
-        if(accepted){
-            checkRegistration(mOrder);
-        }
-    }
+//    public void OnClick(boolean accepted) {
+//        if(accepted){
+//            checkRegistration(mOrder);
+//        }
+//    }
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
@@ -158,7 +148,7 @@ public class CalculatorInformFragment extends Fragment implements DatePickerDial
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()){
-                    case MotionEvent.ACTION_DOWN:
+                    case MotionEvent.ACTION_UP:
                         dpd.show(getFragmentManager(),"DatePickerDialog");
                 }
                 return false;
@@ -187,12 +177,12 @@ public class CalculatorInformFragment extends Fragment implements DatePickerDial
                 if(allFill){
                     JSONObject js = createJson(countTeacher.getText().toString(),
                             countSchool.getText().toString(),bundle.getString("idPack"));
-                    tD = TotalDialogFragment.newInstance(CalculatorInformFragment.this,countSchool.getText().toString(),
-                            countTeacher.getText().toString(),dateEdit.getText().toString());
-                    tD.show(getFragmentManager(),null);
+//                    tD = TotalDialogFragment.newInstance(CalculatorInformFragment.this,countSchool.getText().toString(),
+//                            countTeacher.getText().toString(),dateEdit.getText().toString());
+//                    tD.show(getFragmentManager(),null);
                     if(js!=null) {
-                        CalculateTask calculateTask = new CalculateTask();
-                        calculateTask.execute(js);
+//                        CalculateTask calculateTask = new CalculateTask();
+//                        calculateTask.execute(js);
                     }else{
                         Toast.makeText(getContext(),"Что-то пошло не так, попробуйте позднее! =)",Toast.LENGTH_LONG)
                                 .show();
@@ -242,49 +232,14 @@ public class CalculatorInformFragment extends Fragment implements DatePickerDial
     }
 
 
-    private void successAnswer(String cost){
-        if(tD!=null){
-            tD.setOrder(cost);
-        }
-        Order ord = new Order(bundle.getString("pack_exc"),dateEdit.getText().toString(),cost,
-                countSchool.getText().toString(),countTeacher.getText().toString());
-        mOrder = ord;
-    }
-
-
-
-    private class CalculateTask extends AsyncTask<JSONObject,Void,Boolean>{
-
-        private String cost;
-
-        @Override
-        protected Boolean doInBackground(JSONObject... jsonObjects) {
-            Boolean success = true;
-            String response = RequestSender.POST(getContext(), Constans.URL.CALCULATOR.CALCULATE,jsonObjects[0],false);
-            try{
-                JSONObject js = new JSONObject(response);
-                if(js.getString("result").equalsIgnoreCase("success")) {
-                    cost = js.getString("data");
-                }else{
-                    success = false;
-                }
-            }catch (Exception e ){
-                Log.i("CalculatorFragment","Error parsing answer! Error text: " + e.getMessage());
-                success = false;
-            }
-            return success;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean success) {
-            if(success){
-                successAnswer(cost);
-            }else{
-                Toast.makeText(getContext(),"Ooops! Что-то пошло не так, попробуйте позднее! =)",Toast.LENGTH_LONG)
-                        .show();
-            }
-        }
-    }
+//    private void successAnswer(String cost){
+//        if(tD!=null){
+//            tD.setOrder(cost);
+//        }
+//        Order ord = new Order(bundle.getString("pack_exc"),dateEdit.getText().toString(),cost,
+//                countSchool.getText().toString(),countTeacher.getText().toString());
+//        mOrder = ord;
+//    }
 
 
 

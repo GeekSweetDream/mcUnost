@@ -1,6 +1,6 @@
 package com.dreamsofpines.mcunost.ui.fragments;
 
-import android.app.ProgressDialog;
+import android.animation.ObjectAnimator;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,17 +14,13 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.network.api.Constans;
 import com.dreamsofpines.mcunost.data.network.api.RequestSender;
-import com.dreamsofpines.mcunost.data.database.MyDataBase;
-import com.dreamsofpines.mcunost.data.storage.help.menu.InformExcursion;
-import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
+import com.dreamsofpines.mcunost.data.storage.models.InformExcursion;
 import com.dreamsofpines.mcunost.ui.adapters.recyclerCategory.ViewAdapter;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -34,39 +30,58 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by ThePupsick on 04.08.17.
- */
 
 public class CategoriesFragment extends Fragment {
 
+    private View view;
     private RecyclerView categoryView;
     private ViewAdapter mAdapter;
-    private MyDataBase db;
     private View errorMessage;
     private Button resend;
-    private Animation jumpOn, jumpOff;
+    private Animation jumpOn;
     private AVLoadingIndicatorView avi;
     private List<InformExcursion> excursions, mCategory;
-    public static OnClickRecyclerListener mListener;
+    private OnClickRecyclerListener mListener;
+    private TextView title;
+    private String city;
 
     public interface OnClickRecyclerListener{
         void onClicked(Bundle bundle);
     }
 
-    public static void setOnClickRecyclerListener(OnClickRecyclerListener listener){
-        CategoriesFragment.mListener = listener;
+    public void setOnClickRecyclerListener(OnClickRecyclerListener listener){
+        this.mListener = listener;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = (View) inflater.inflate(R.layout.fragment_categories,container,false);
-        categoryView = (RecyclerView) view.findViewById(R.id.category_recycler_view);
+        view = (View) inflater.inflate(R.layout.fragment_categories,container,false);
+
+        bindView();
+        setListeners();
+
         categoryView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        avi = (AVLoadingIndicatorView) view.findViewById(R.id.category_indicator);
-        errorMessage = (View) view.findViewById(R.id.error_message);
+        avi.show();
         jumpOn = AnimationUtils.loadAnimation(getContext(),R.anim.jump_from_down_without_alpha);
-        resend = (Button) errorMessage.findViewById(R.id.category_resend_butt);
+        title.setText("Направление");
+        Button help = (Button) getActivity().findViewById(R.id.button_help);
+        help.setVisibility(View.GONE);
+        city = getArguments().getString("city");
+
+        CategoryTask categoryTask = new CategoryTask();
+        categoryTask.execute();
+        return view;
+    }
+
+    private void bindView(){
+        categoryView = (RecyclerView) view.findViewById(R.id.category_recycler_view);
+        avi          = (AVLoadingIndicatorView) view.findViewById(R.id.category_indicator);
+        errorMessage = (View) view.findViewById(R.id.error_message);
+        resend       = (Button) errorMessage.findViewById(R.id.category_resend_butt);
+        title        = (TextView) getActivity().findViewById(R.id.title_tour);
+    }
+
+    private void setListeners(){
         resend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,15 +90,10 @@ public class CategoriesFragment extends Fragment {
                 categoryTask.execute();
             }
         });
-        avi.show();
-        CategoryTask categoryTask = new CategoryTask();
-        categoryTask.execute();
-        TextView title = (TextView) getActivity().findViewById(R.id.title_tour);
-        title.setText("Направление");
-        return view;
+
     }
 
-    private void updateUI(final List<InformExcursion> excursions){
+    private void updateUI(){
         mCategory = findExcurWithCity();
         mAdapter = new ViewAdapter(mCategory,getContext());
         mAdapter.setOnItemListener(new ViewAdapter.OnItemClickListener(){
@@ -103,17 +113,11 @@ public class CategoriesFragment extends Fragment {
     private List<InformExcursion> findExcurWithCity(){
         mCategory = new ArrayList<>();
         for (InformExcursion inf: excursions ) {
-            if(!inf.getTittle().equalsIgnoreCase(GlobalPreferences.getPrefUserCity(getContext()))) {
+            if(!inf.getTittle().equalsIgnoreCase(city)) {
                 mCategory.add(inf);
             }
         }
         return mCategory;
-    }
-
-    public void updateAdapter(){
-        mCategory = findExcurWithCity();
-        mAdapter.updateCity(mCategory);
-        mAdapter.notifyDataSetChanged();
     }
 
     private class CategoryTask extends AsyncTask<Void, Void, Boolean>{
@@ -124,13 +128,12 @@ public class CategoriesFragment extends Fragment {
         protected Boolean doInBackground(Void... voids) {
             Boolean success = true;
             categoryList = new ArrayList<>();
-            String response = RequestSender.GET(Constans.URL.TOUR.GET_CATEGORY_TOUR);
+            String response = RequestSender.GET(Constans.URL.TOUR.GET_CITY);
             try {
                 JSONObject js = new JSONObject(response);
                 String resultResponce = js.getString("result");
                 if (resultResponce.equalsIgnoreCase("success")) {
                     JSONArray categoryJsonArray = js.getJSONArray("data");
-                    Log.i("Myapp", "Count responce json category " + categoryJsonArray.length());
                     int length = categoryJsonArray.length();
                     for(int i = 0; i < length; ++i) {
                         JSONObject category = categoryJsonArray.getJSONObject(i);
@@ -163,9 +166,13 @@ public class CategoriesFragment extends Fragment {
                     errorMessage.setVisibility(View.GONE);
                 }
                 avi.hide();
+                ObjectAnimator animator = ObjectAnimator.ofFloat(categoryView,"alpha",0,1);
+                animator.setDuration(700);
+                animator.start();
                 categoryView.setVisibility(View.VISIBLE);
+                categoryView.setClickable(true);
                 excursions = categoryList;
-                updateUI(categoryList);
+                updateUI();
             }
         }
     }

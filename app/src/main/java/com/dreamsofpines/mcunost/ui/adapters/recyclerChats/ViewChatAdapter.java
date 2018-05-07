@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dreamsofpines.mcunost.R;
-import com.dreamsofpines.mcunost.data.storage.help.menu.ChatDialog;
+import com.dreamsofpines.mcunost.data.storage.models.ChatDialog;
 
 import java.util.List;
 

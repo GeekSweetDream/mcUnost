@@ -3,12 +3,10 @@ package com.dreamsofpines.mcunost.ui.adapters.recyclerChat;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
@@ -22,7 +20,7 @@ import android.widget.Toast;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.network.api.RequestSender;
-import com.dreamsofpines.mcunost.data.storage.help.menu.Message;
+import com.dreamsofpines.mcunost.data.storage.models.Message;
 
 
 import java.io.File;

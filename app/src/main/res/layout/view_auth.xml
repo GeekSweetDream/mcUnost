@@ -12,8 +12,7 @@
             android:id="@+id/auth_email"
             android:theme="@style/MyColorGreyHint"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/title_registr">
+            android:layout_height="wrap_content">
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/auth_email_edit"
                 android:layout_width="match_parent"

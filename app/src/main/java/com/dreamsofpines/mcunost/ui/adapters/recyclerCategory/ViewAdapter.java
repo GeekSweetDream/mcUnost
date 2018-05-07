@@ -1,6 +1,5 @@
 package com.dreamsofpines.mcunost.ui.adapters.recyclerCategory;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,10 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dreamsofpines.mcunost.R;
-import com.dreamsofpines.mcunost.data.storage.help.menu.InformExcursion;
-import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
+import com.dreamsofpines.mcunost.data.storage.models.InformExcursion;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static android.media.CamcorderProfile.get;

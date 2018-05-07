@@ -132,6 +132,8 @@ public class AuthDialogFragment extends android.support.v4.app.DialogFragment{
                 if(strEmail.equalsIgnoreCase("") || strPhone.equalsIgnoreCase("")){
                     Toast.makeText(getContext(), "Не все поля были заполнены",Toast.LENGTH_LONG).show();
                 }else {
+                    bAuth.setAlpha(0.5f);
+                    bAuth.setClickable(false);
                     AuthTask authTask = new AuthTask();
                     authTask.execute(strEmail,strPhone);
 
@@ -192,7 +194,6 @@ public class AuthDialogFragment extends android.support.v4.app.DialogFragment{
                         i can't get information
 
                      */
-
                     errrorMsg = answer.getString("mess");
                 }
 
@@ -214,6 +215,8 @@ public class AuthDialogFragment extends android.support.v4.app.DialogFragment{
             }else {
                 Toast.makeText(getContext(), errrorMsg, Toast.LENGTH_LONG).show();
             }
+            bAuth.setAlpha(1f);
+            bAuth.setClickable(true);
         }
     }
 

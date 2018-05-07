@@ -17,8 +17,7 @@ import android.widget.Toast;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.network.api.RequestSender;
-import com.dreamsofpines.mcunost.data.storage.help.menu.ChatDialog;
-import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
+import com.dreamsofpines.mcunost.data.storage.models.ChatDialog;
 import com.dreamsofpines.mcunost.ui.adapters.recyclerChats.ViewChatAdapter;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -29,9 +28,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.zip.GZIPInputStream;
-
-import static com.dreamsofpines.mcunost.R.id.category_resend_butt;
 
 
 /**

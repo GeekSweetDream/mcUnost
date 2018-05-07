@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content">
-    <RelativeLayout
-        android:layout_width="300dp"
-        android:layout_height="460dp"
-        android:layout_centerInParent="true"
-        android:background="@color/md_white_1000">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+                android:background="@color/md_white_1000"
+                android:clickable="true">
+    <LinearLayout
+        android:id="@+id/lin_short"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/md_white_1000"
+        android:visibility="visible"
+        android:orientation="vertical">
         <RelativeLayout
             android:id="@+id/title_bar_info_order"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="@color/colorBlueToolbar">
+            android:layout_height="50dp"
+            android:background="@color/md_orange_400">
             <TextView
                 android:id="@+id/title_txt_info_order"
                 android:layout_width="match_parent"
@@ -37,6 +41,7 @@
                 android:textSize="20dp"
                 android:textAlignment="center"
                 android:text="В обработке"
+                android:textStyle="bold"
                 android:textColor="@color/colorBlueToolbar"/>
             <ImageView
                 android:layout_width="match_parent"
@@ -64,6 +69,7 @@
                     android:layout_height="wrap_content"
                     android:text="№ заказа:"
                     android:textStyle="bold"
+                    android:alpha="0.6"
                     android:textColor="@color/colorBlueToolbar"
                     android:textSize="20dp"/>
                 <TextView
@@ -72,6 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
                     android:textColor="@color/colorBlueToolbar"
+                    android:textStyle="bold"
                     android:textSize="16dp"
                     android:text=""/>
             </LinearLayout>
@@ -86,6 +93,7 @@
                     android:layout_height="wrap_content"
                     android:text="Даты:"
                     android:textStyle="bold"
+                    android:alpha="0.6"
                     android:textColor="@color/colorBlueToolbar"
                     android:textSize="20dp"/>
                 <TextView
@@ -93,6 +101,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
+                    android:textStyle="bold"
                     android:textColor="@color/colorBlueToolbar"
                     android:textSize="16dp"
                     android:text=""/>
@@ -107,6 +116,7 @@
                     android:layout_height="wrap_content"
                     android:text="Цена:"
                     android:textStyle="bold"
+                    android:alpha="0.6"
                     android:textColor="@color/colorBlueToolbar"
                     android:textSize="20dp"/>
                 <TextView
@@ -114,6 +124,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
+                    android:textStyle="bold"
                     android:textColor="@color/colorBlueToolbar"
                     android:textSize="20dp"
                     android:text="2132"/>
@@ -128,12 +139,14 @@
                     android:layout_height="wrap_content"
                     android:text="Школьников:"
                     android:textStyle="bold"
+                    android:alpha="0.6"
                     android:textColor="@color/colorBlueToolbar"
                     android:textSize="20dp"/>
                 <TextView
                     android:id="@+id/quantity_sc_info_order"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:layout_marginLeft="6dp"
                     android:textColor="@color/colorBlueToolbar"
                     android:textSize="20dp"
@@ -150,6 +163,7 @@
                     android:layout_height="wrap_content"
                     android:text="Преподавателей:"
                     android:textStyle="bold"
+                    android:alpha="0.6"
                     android:textColor="@color/colorBlueToolbar"
                     android:textSize="20dp"/>
                 <TextView
@@ -157,10 +171,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
+                    android:textStyle="bold"
                     android:textColor="@color/colorBlueToolbar"
                     android:textSize="20dp"
                     android:text="2132"/>
             </LinearLayout>
+            <Button
+                android:id="@+id/but_more_desc"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/transparent"
+                android:text="Подробнее"
+                android:gravity="center"
+                android:textColor="@color/md_orange_600"
+                android:textStyle="bold"
+                android:textSize="15dp"/>
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -176,6 +202,7 @@
                     android:layout_height="wrap_content"
                     android:text="Менеджер:"
                     android:textStyle="bold"
+                    android:alpha="0.6"
                     android:textColor="@color/colorBlueToolbar"
                     android:textSize="20dp"/>
                 <TextView
@@ -183,6 +210,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
+                    android:textStyle="bold"
                     android:textColor="@color/colorBlueToolbar"
                     android:textSize="20dp"
                     android:text="Неизвестно"/>
@@ -196,6 +224,7 @@
                     android:layout_height="wrap_content"
                     android:text="Тел.:"
                     android:textStyle="bold"
+                    android:alpha="0.6"
                     android:textColor="@color/colorBlueToolbar"
                     android:textSize="20dp"/>
                 <TextView
@@ -203,6 +232,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
+                    android:textStyle="bold"
                     android:textColor="@color/colorBlueToolbar"
                     android:textSize="20dp"
                     android:text="Неизвестно"/>
@@ -214,18 +244,206 @@
             android:layout_height="40dp"
             android:layout_centerHorizontal="true"
             android:text="Чат с менеджером"
+            android:alpha="0.5"
             android:background="@color/md_orange_400"
-            android:layout_below="@id/info_txt_order"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_gravity="center"
             android:layout_marginTop="13dp"/>
         <Button
             android:id="@+id/butt_close_info_order"
             android:layout_width="200dp"
             android:layout_height="40dp"
             android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
             android:background="@color/transparent"
-            android:layout_below="@id/butt_chat_info_order"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
             android:text="Закрыть"
             android:textColor="@color/colorBlueToolbar"/>
-    </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_below="@id/butt_close_info_order"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/lin_more"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/md_orange_400">
+
+            <Button
+                android:id="@+id/back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@mipmap/ic_arrow_back_white_48dp"/>
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="1dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Стоимость тура"
+                android:textColor="@color/md_white_1000"
+                android:textSize="22dp"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.5"
+                        android:text="Отель:"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/hotel_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="Москва"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.5"
+                        android:text="Проезд:"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/travel_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="Поезд"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.5"
+                        android:text="Питание:"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/din_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="0-Завтрак\n0-Обед\n0-Ужин"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.5"
+                        android:text="Транспорт:"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/bus_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="0-Первый и последний день\n0-4 часовой автобус\n0-Полный день"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.5"
+                        android:text="Экскурсии:"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/exc_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="Поезд"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
 </RelativeLayout>

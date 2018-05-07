@@ -1,27 +1,24 @@
 package com.dreamsofpines.mcunost.ui.adapters.recyclerOrder;
 
 import android.app.Activity;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dreamsofpines.mcunost.R;
-import com.dreamsofpines.mcunost.data.storage.help.menu.Order;
+import com.dreamsofpines.mcunost.data.storage.models.Order;
 
 /**
  * Created by ThePupsick on 20.08.17.
  */
 
 public class OrderHolder extends RecyclerView.ViewHolder {
-    private TextView date, cost, status,title;
+    private TextView date, cost, status,title,id;
     private Button mButton;
     public OrderHolder(final View itemView) {
         super(itemView);
+        id = (TextView) itemView.findViewById(R.id.num_my_order);
         title = (TextView) itemView.findViewById(R.id.title_my_order);
         date = (TextView) itemView.findViewById(R.id.date_my_order);
         cost = (TextView) itemView.findViewById(R.id.cost_my_order);
@@ -37,9 +34,10 @@ public class OrderHolder extends RecyclerView.ViewHolder {
         });
     }
     public void bindHolder(final Order order, Activity activity){
+        id.setText(order.getId());
         title.setText(order.getTour());
-        date.setText(order.getDate());
-        cost.setText(order.getCost()+" \u20BD");
+        date.setText(order.getDateCreate());
+        cost.setText(order.getCost()+"P");
         String st = order.getStatus();
         if(st.equalsIgnoreCase("в обработке")){
             status.setTextColor(activity.getResources().getColor(R.color.md_orange_400));

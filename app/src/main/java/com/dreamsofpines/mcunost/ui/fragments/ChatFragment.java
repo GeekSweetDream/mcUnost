@@ -10,11 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.network.api.RequestSender;
-import com.dreamsofpines.mcunost.data.storage.help.menu.Message;
+import com.dreamsofpines.mcunost.data.storage.models.Message;
 import com.dreamsofpines.mcunost.ui.adapters.recyclerChat.ChatAdapter;
 
 import org.json.JSONArray;
@@ -39,7 +40,9 @@ public class ChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat,container,false);
         TextView title = (TextView) getActivity().findViewById(R.id.title_tour);
-        title.setText("Чат");
+        title.setText("Сообщения");
+        Button help = (Button) getActivity().findViewById(R.id.button_help);
+        help.setVisibility(View.GONE);
         rec = (RecyclerView) view.findViewById(R.id.recycler_chat);
         mBundle = getArguments();
         idOrder = mBundle.getInt("idOrder");

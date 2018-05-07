@@ -61,8 +61,14 @@ public class PhoneOrderDialog extends DialogFragment {
         phone = (AppCompatEditText) view.findViewById(R.id.phone_phone_order_edit);
         cancel = (Button) view.findViewById(R.id.butt_phone_order_cancel);
         book = (Button) view.findViewById(R.id.butt_phone_order);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         name.clearFocus();
         phone.clearFocus();
+
     }
 
     private void setListener(){

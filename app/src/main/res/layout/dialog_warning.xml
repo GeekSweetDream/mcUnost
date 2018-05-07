@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="350dp"
+              android:layout_height="wrap_content"
+              android:background="@color/md_white_1000">
+    <RelativeLayout
+        android:id="@+id/title_phone_order"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorBlueToolbar">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Предупреждение"
+            android:textSize="20dp"
+            android:textColor="@color/md_white_1000"
+            android:layout_centerInParent="true"
+            android:textStyle="bold"/>
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Вы выбрали кол-во экскурсий больше рекомендуемого!\nЕсть вероятность, что мы не сможем уместить их в график "
+        android:textColor="@color/colorBlueToolbar"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:alpha="0.6"/>
+
+    <LinearLayout
+        android:layout_width="385dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/title_phone_order"
+        android:gravity="right">
+        <Button
+            android:id="@+id/butt_cancel"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:gravity="right|center"
+            android:layout_below="@id/butt_phone_order"
+            android:background="@color/transparent"
+            android:text="Отмена"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:textColor="@color/md_blue_600"/>
+        <Button
+            android:id="@+id/butt_ok"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_below="@id/phone_phone_order_inp"
+            android:layout_centerHorizontal="true"
+            android:background="@color/transparent"
+            android:text="ок"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:textColor="@color/md_blue_600"/>
+
+    </LinearLayout>
+
+</LinearLayout>

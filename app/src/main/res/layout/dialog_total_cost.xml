@@ -5,7 +5,14 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/md_white_1000">
+    android:background="@color/md_white_1000"
+    android:clickable="true">
+    <LinearLayout
+        android:id="@+id/lin_small"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:orientation="vertical">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -25,139 +32,339 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
-                <TextView
-                    android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Дата:"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorBlueToolbar"
-                    android:textSize="20dp"/>
-                <TextView
-                    android:id="@+id/dialog_total_date"
-                    android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Дата:"
+                        android:textStyle="bold"
+                        android:alpha="0.5"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="20dp"/>
+                    <TextView
+                        android:id="@+id/dialog_total_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="123"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="10dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="123"
-                    android:textColor="@color/colorBlueToolbar"
-                    android:textSize="18dp"
-                    android:layout_marginLeft="10dp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Учеников:"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textStyle="bold"
+                        android:alpha="0.5"
+                        android:textSize="20dp"/>
+                    <TextView
+                        android:id="@+id/dialog_total_quan_pupil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="123"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Учеников:"
-                    android:textColor="@color/colorBlueToolbar"
-                    android:textStyle="bold"
-                    android:textSize="20dp"/>
-                <TextView
-                    android:id="@+id/dialog_total_quan_pupil"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="123"
-                    android:textColor="@color/colorBlueToolbar"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="18dp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Преподавателей:"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorBlueToolbar"
-                    android:textSize="20dp"/>
-                <TextView
-                    android:id="@+id/dialog_total_quan_teacher"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="123"
-                    android:textColor="@color/colorBlueToolbar"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="18dp"/>
-            </LinearLayout>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/md_orange_400"
-                android:layout_marginTop="10dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Итоговая цена:"
-                android:textColor="@color/md_grey_500"
-                android:textSize="18dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"/>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <com.wang.avi.AVLoadingIndicatorView
-                    android:id="@+id/total_indicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:visibility="visible"
-                    app:indicatorName="BallPulseIndicator"
-                    app:indicatorColor="@color/md_blue_400"/>
-                <TextView
-                    android:id="@+id/dialog_total_cost"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="COST"
-                    android:textColor="@color/colorBlueToolbar"
-                    android:textStyle="bold"
-                    android:textSize="28dp"
-                    android:layout_centerHorizontal="true"
-                    android:visibility="gone"/>
-            </RelativeLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="(*Цена указана за одного человека)"
-                android:textColor="@color/colorBlueToolbar"
-                android:textStyle="bold"/>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="15dp">
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Преподавателей:"
+                        android:textStyle="bold"
+                        android:alpha="0.5"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="20dp"/>
+                    <TextView
+                        android:id="@+id/dialog_total_quan_teacher"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="123"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18dp"/>
+                </LinearLayout>
                 <Button
-                    android:id="@+id/dialog_total_cancel_butt"
-                    android:layout_width="100dp"
-                    android:layout_height="40dp"
-                    android:text="Отменить"
-                    android:background="@color/md_red_600"/>
-                <Button
-                    android:id="@+id/dialog_total_ok_butt"
+                    android:id="@+id/but_more_desc"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_toRightOf="@id/dialog_total_cancel_butt"
-                    android:text="Заказать"
-                    android:layout_marginLeft="10dp"
-                    android:background="@color/md_green_400"/>
-            </RelativeLayout>
+                    android:layout_marginRight="10dp"
+                    android:background="@color/transparent"
+                    android:text="Подробнее"
+                    android:gravity="center"
+                    android:textColor="@color/md_orange_600"
+                    android:textStyle="bold"
+                    android:textSize="15dp"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/md_orange_400"
+                    android:layout_marginTop="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Итоговая цена:"
+                    android:textColor="@color/md_grey_500"
+                    android:textSize="18dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.wang.avi.AVLoadingIndicatorView
+                        android:id="@+id/total_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:visibility="visible"
+                        app:indicatorName="BallPulseIndicator"
+                        app:indicatorColor="@color/md_blue_400"/>
+                    <TextView
+                        android:id="@+id/dialog_total_cost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="COST"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textStyle="bold"
+                        android:textSize="28dp"
+                        android:layout_centerHorizontal="true"
+                        android:visibility="gone"/>
+                </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(*Цена указана за одного человека)"
+                    android:textColor="@color/colorBlueToolbar"
+                    android:textStyle="bold"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15dp">
+                        <Button
+                            android:id="@+id/dialog_total_cancel_butt"
+                            android:layout_width="100dp"
+                            android:layout_height="40dp"
+                            android:text="Отменить"
+                            android:background="@color/md_red_600"/>
+                        <Button
+                            android:id="@+id/dialog_total_ok_butt"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_toRightOf="@id/dialog_total_cancel_butt"
+                            android:text="Заказать"
+                            android:layout_marginLeft="10dp"
+                            android:background="@color/md_green_400"/>
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lin_more"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/md_orange_400">
+
+            <Button
+                android:id="@+id/back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@mipmap/ic_arrow_back_white_48dp"/>
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="1dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Стоимость тура"
+                android:textColor="@color/md_white_1000"
+                android:textSize="22dp"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="20dp"/>
-        </LinearLayout>
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.5"
+                        android:text="Отель:"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/hotel_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="Москва"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.5"
+                        android:text="Проезд:"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/travel_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="Поезд"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.5"
+                        android:text="Питание:"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/din_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="0-Завтрак\n0-Обед\n0-Ужин"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.5"
+                        android:text="Транспорт:"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/bus_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="0-Первый и последний день\n0-4 часовой автобус\n0-Полный день"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.5"
+                        android:text="Экскурсии:"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/exc_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="Поезд"
+                        android:textColor="@color/colorBlueToolbar"
+                        android:textSize="18dp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
 </LinearLayout>

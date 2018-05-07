@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_small_help_bus"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.8"
+            android:background="@color/md_black_1000"/>
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:text="Добро пожаловать в раздел транспорт!\nВ данном разделе вы можете добавить в ваш тур автобусы для более удобного передвижения по городу"
+            android:textColor="@color/md_white_1000"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:elevation="10dp"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_bus_help_bus"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.8"
+            android:background="@color/md_black_1000"/>
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:text= "Добро пожаловать в раздел транспорт!\nВ данном разделе вы можете добавить в ваш тур автобусы для более удобного передвижения по городу"
+            android:textColor="@color/md_white_1000"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:elevation="10dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_bus2_help_bus"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.8"
+            android:background="@color/md_black_1000"/>
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:text= "Вы может отказаться от автобусов, или добавить дополнительные в нужные вам дни!\nНа выбор предоставляем вам автобусы на 4 часа и на полный день!"
+            android:textColor="@color/md_white_1000"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:elevation="10dp"/>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

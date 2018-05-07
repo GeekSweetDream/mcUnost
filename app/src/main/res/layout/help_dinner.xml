@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_small_help_din"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.8"
+            android:background="@color/md_black_1000"/>
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:text="Добро пожаловать в раздел питания!\nВ данном разделе вы можете выбрать количество и вид питания, которое будет входить в ваш тур"
+            android:textColor="@color/md_white_1000"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:elevation="10dp"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_din_help_din"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.8"
+            android:background="@color/md_black_1000"/>
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:text= "Питание ограничено длительностью вашего тура "
+            android:textColor="@color/md_white_1000"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:elevation="10dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_din2_help_din"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.8"
+            android:background="@color/md_black_1000"/>
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:text= "Если продолжительность тура больше одного дня, то в тур будет включен завтрак, при этом в день приезда завтрак не будет учитываться, но вы можете его добавить!"
+            android:textColor="@color/md_white_1000"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:elevation="10dp"/>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

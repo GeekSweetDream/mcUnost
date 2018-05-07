@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="80dp"
+                android:background="@color/transparent"
+                android:layout_marginTop="10dp"
+              android:clickable="true">
+    <com.dreamsofpines.mcunost.ui.customView.MyImageView
+        android:id="@+id/back"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:siSquare="false"
+        app:siShape="@drawable/rect"
+        android:src="@color/colorBlueToolbar"/>
+    <TextView
+        android:id="@+id/hotel_txt"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:text="Hotel resort(4 звезды)"
+        android:gravity="center"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textColor="@color/md_white_1000"/>
+
+
+</RelativeLayout>

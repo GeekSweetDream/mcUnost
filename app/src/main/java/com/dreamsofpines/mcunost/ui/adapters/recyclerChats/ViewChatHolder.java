@@ -6,8 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dreamsofpines.mcunost.R;
-import com.dreamsofpines.mcunost.data.storage.help.menu.ChatDialog;
-import com.dreamsofpines.mcunost.ui.adapters.recyclerCategory.ViewAdapter;
+import com.dreamsofpines.mcunost.data.storage.models.ChatDialog;
 
 /**
  * Created by ThePupsick on 17.01.2018.

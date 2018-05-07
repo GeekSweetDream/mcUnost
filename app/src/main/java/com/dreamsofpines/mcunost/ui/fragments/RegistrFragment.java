@@ -53,8 +53,10 @@ public class RegistrFragment extends Fragment {
         bindView(view);
         setListenerView();
 
-        tittle.setText("Регистрация");
-
+        TextView title = (TextView) getActivity().findViewById(R.id.title_tour);
+        title.setText("Регистрация");
+        Button help = (Button) getActivity().findViewById(R.id.button_help);
+        help.setVisibility(View.GONE);
         return view;
     }
 
@@ -64,7 +66,6 @@ public class RegistrFragment extends Fragment {
         number = (AppCompatEditText) view.findViewById(R.id.registr_number_edit);
         mRegistr = (Button) view.findViewById(R.id.fr_butt_registr);
         mCancel = (Button) view.findViewById(R.id.fr_butt_registr_cancel);
-        tittle = (TextView) getActivity().findViewById(R.id.title_tour);
     }
 
     private void setListenerView() {

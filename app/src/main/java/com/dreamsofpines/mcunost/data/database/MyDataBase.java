@@ -5,11 +5,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.dreamsofpines.mcunost.data.storage.help.menu.InformExcursion;
-import com.dreamsofpines.mcunost.data.storage.help.menu.Order;
-import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
+import com.dreamsofpines.mcunost.data.storage.models.InformExcursion;
+import com.dreamsofpines.mcunost.data.storage.models.Order;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.util.ArrayList;

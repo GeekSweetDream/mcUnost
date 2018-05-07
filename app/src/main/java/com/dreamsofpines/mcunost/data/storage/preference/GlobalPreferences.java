@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.widget.ProgressBar;
 
-import com.dreamsofpines.mcunost.data.storage.pattern.EventManager;
 
 /**
  * Created by ThePupsick on 31.07.17.
@@ -13,6 +12,9 @@ import com.dreamsofpines.mcunost.data.storage.pattern.EventManager;
 
 public class GlobalPreferences {
 
+    private static final String PREF_HELP_MAIN = "helpMain";
+    private static final String PREF_HELP_DIN = "helpDin";
+    private static final String PREF_HELP_BUS = "helpBus";
     private static final String PREF_ADD_USER = "addUser";
     private static final String PREF_USER_NAME = "userName";
     private static final String PREF_USER_NUMBER = "userNumber";
@@ -22,7 +24,6 @@ public class GlobalPreferences {
     private static final String PREF_QUANTITY_NEW_MESS = "messNew";
     private static final String PREF_QUANTITY_NEW = "quantityNew";
 
-    public static EventManager events;
 
     public static void setPrefIdUser(Context context,String id) {
         PreferenceManager.getDefaultSharedPreferences(context)
@@ -127,9 +128,6 @@ public class GlobalPreferences {
                 .edit()
                 .putInt(PREF_QUANTITY_NEW_MESS,++count)
                 .apply();
-        if(events != null) {
-            events.notify("update");
-        }
     }
 
     public static void setMinusOneQuantityNewMess(Context context){
@@ -138,10 +136,44 @@ public class GlobalPreferences {
                 .edit()
                 .putInt(PREF_QUANTITY_NEW_MESS,--count)
                 .apply();
-        if(events != null) {
-            events.notify("update");
-        }
     }
+
+    public static int getPrefHelpMain(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getInt(PREF_HELP_MAIN,0);
+    }
+
+    public static int getPrefHelpDin(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getInt(PREF_HELP_DIN,0);
+    }
+
+    public static int getPrefHelpBus(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getInt(PREF_HELP_BUS,0);
+    }
+
+    public static void setPrefHelpMain(Context context,int a){
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putInt(PREF_HELP_MAIN,a)
+                .apply();
+    }
+
+    public static void setPrefHelpDin(Context context,int a){
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putInt(PREF_HELP_DIN,a)
+                .apply();
+    }
+
+    public static void setPrefHelpBus(Context context,int a){
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putInt(PREF_HELP_BUS,a)
+                .apply();
+    }
+
 
 
 }

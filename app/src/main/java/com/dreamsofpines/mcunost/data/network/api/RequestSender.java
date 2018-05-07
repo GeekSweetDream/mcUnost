@@ -5,11 +5,9 @@ import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
 
-import com.dreamsofpines.mcunost.data.storage.help.menu.InformExcursion;
 import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
 
 import org.apache.commons.io.IOUtils;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
@@ -17,21 +15,16 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,6 +68,30 @@ public class RequestSender{
             response = template.getForObject(Constans.URL.TOUR.GET_PACK_EXCUR, String.class,idRegion,idCategory);
         }catch (RestClientException e){
             Log.i("RequestSender","Error GET_PACK_EXCUR send! Error message: "+e.getMessage());
+        }
+        return response;
+    }
+
+    public static String GetHotel(String idCity){
+        RestTemplate template = new RestTemplate();
+        template.getMessageConverters().add(new StringHttpMessageConverter());
+        String response = "";
+        try {
+            response = template.getForObject(Constans.URL.TOUR.GET_HOTEL, String.class,idCity);
+        }catch (RestClientException e){
+            Log.i("RequestSender","Error GET_HOTEL send! Error message: "+e.getMessage());
+        }
+        return response;
+    }
+
+    public static String GetExcursion(String idCity){
+        RestTemplate template = new RestTemplate();
+        template.getMessageConverters().add(new StringHttpMessageConverter());
+        String response = "";
+        try {
+            response = template.getForObject(Constans.URL.TOUR.GET_EXCURSION, String.class,idCity);
+        }catch (RestClientException e){
+            Log.i("RequestSender","Error GET_HOTEL send! Error message: "+e.getMessage());
         }
         return response;
     }
