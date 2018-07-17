@@ -3,35 +3,13 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:background="@color/transparent"
-                android:layout_marginTop="4dp">
-    <com.dreamsofpines.mcunost.ui.customView.MyImageView
-        android:id="@+id/back"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        app:siSquare="false"
-        app:siShape="@drawable/rect"
-        android:src="@color/colorBlueToolbar"/>
-    <TextView
+                android:layout_height="wrap_content"
+                android:background="@color/transparent">
+    <com.dreamsofpines.mcunost.ui.customView.ViewTextWithCheckbox
         android:id="@+id/txt_exc_name"
-        android:layout_width="220dp"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:gravity="center"
-        android:text="Обзорная экскурсивв"
-        android:textSize="18dp"
-        android:textColor="@color/md_white_1000"
-        android:textStyle="bold"/>
-    <!--<ImageView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="2dp"-->
-        <!--android:background="@color/md_white_1000"-->
-        <!--android:alpha="0.6"-->
-        <!--android:layout_below="@id/txt_exc_name"-->
-        <!--android:layout_marginTop="5dp"-->
-        <!--android:layout_marginRight="50dp"-->
-        <!--android:layout_centerHorizontal="true"/>-->
+        android:layout_marginRight="10dp"
+        app:title="Экскурсия"/>
 </RelativeLayout>

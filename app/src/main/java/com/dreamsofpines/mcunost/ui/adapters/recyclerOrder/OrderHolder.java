@@ -50,4 +50,5 @@ public class OrderHolder extends RecyclerView.ViewHolder {
         }
         status.setText(st);
     }
+
 }

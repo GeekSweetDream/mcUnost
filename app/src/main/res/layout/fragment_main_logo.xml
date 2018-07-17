@@ -12,27 +12,44 @@
         android:layout_height="match_parent"
         android:background="@color/md_black_1000"
         android:alpha="0.4"/>
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="40dp"
+        android:background="@color/md_white_1000"
+        android:elevation="2dp"/>
+    <com.dreamsofpines.mcunost.ui.customView.HelloView
+        android:id="@+id/hello_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
     <Button
         android:id="@+id/rel_main_logo"
         android:layout_width="300dp"
-        android:layout_height="80dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:background="@mipmap/border_transparent"
-        android:text="Сконструировать тур"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/bordergreen"
+        android:text="Начать"
         android:textStyle="bold"
         android:textColor="@color/md_white_1000"
         android:textSize="18dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
         android:layout_centerHorizontal="true"
-        android:text="Молодежный Центр\n ЮНОСТЬ"
-        android:textColor="@color/md_white_1000"
+        android:layout_above="@id/rel_main_logo"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/border_blue"
+        android:text="Вход"
         android:textStyle="bold"
-        android:textSize="30dp"
-        android:gravity="center"
-        android:layout_marginTop="30dp"/>
-
+        android:textColor="@color/md_white_1000"
+        android:textSize="18dp"/>
+    <com.dreamsofpines.mcunost.ui.customView.ViewLoginRegistration
+        android:id="@+id/login_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="3dp"/>
 </RelativeLayout>

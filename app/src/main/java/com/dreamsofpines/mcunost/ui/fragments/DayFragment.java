@@ -1,25 +1,22 @@
 package com.dreamsofpines.mcunost.ui.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.dreamsofpines.mcunost.R;
-import com.dreamsofpines.mcunost.ui.dialog.ShortInfoOrderDialog;
+import com.dreamsofpines.mcunost.data.storage.models.Hotel;
+import com.dreamsofpines.mcunost.ui.customView.ViewFragmentPattern;
+import com.dreamsofpines.mcunost.ui.customView.ViewTextWithCheckbox;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
-import static com.yandex.metrica.impl.q.a.b;
-import static com.yandex.metrica.impl.q.a.s;
 
 /**
  * Created by ThePupsick on 21.02.2018.
@@ -28,13 +25,16 @@ import static com.yandex.metrica.impl.q.a.s;
 public class DayFragment extends Fragment {
 
     private View view;
-    private List<RelativeLayout> btn;
-    private Button cancel;
+    private View field;
+    private ViewFragmentPattern fragment;
+    private float x,y;
+    private int curPos;
+    private List<ViewTextWithCheckbox> list;
 
     public static OnClickListener listener;
 
     public interface OnClickListener{
-        void onClick(boolean accept,String str);
+        void onClick(int day);
     }
 
     public void setListener(OnClickListener listener){
@@ -44,85 +44,75 @@ public class DayFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = (View) inflater.inflate(R.layout.fragment_day,container,false);
-        Bundle bundle = getArguments();
-        int d = bundle.getInt("day");
-        btn = new ArrayList<>();
+        view  = (View) inflater.inflate(R.layout.fragment_quantity_dinner,container,false);
+        field = (View) inflater.inflate(R.layout.fragment_day,container,false);
+
+        list = new ArrayList<>();
+
         bindView();
+        getInfrormationFromBundle();
         setListener();
-        for(int i = 0; i < btn.size();++i){
-            btn.get(i).setBackgroundResource(R.mipmap.but_bl);
-        }
-        btn.get(d-1).setBackgroundResource(R.mipmap.but_or);
-        TextView title = (TextView) getActivity().findViewById(R.id.title_tour);
-        title.setText("Дней");
-        Button help = (Button) getActivity().findViewById(R.id.button_help);
-        help.setVisibility(View.GONE);
-
-
+        settingFragment();
+        onPressBackListener(view);
+        list.get(curPos).setCheckBox(true);
         return view;
     }
 
-
-    void bindView(){
-        btn.add((RelativeLayout) view.findViewById(R.id.rlbtn1));
-        btn.add((RelativeLayout) view.findViewById(R.id.rlbtn2));
-        btn.add((RelativeLayout) view.findViewById(R.id.rlbtn3));
-        btn.add((RelativeLayout) view.findViewById(R.id.rlbtn4));
-        btn.add((RelativeLayout) view.findViewById(R.id.rlbtn5));
-        btn.add((RelativeLayout) view.findViewById(R.id.rlbtn6));
-        btn.add((RelativeLayout) view.findViewById(R.id.rlbtn7));
-        cancel = (Button) view.findViewById(R.id.rlbtn8);
+    private void getInfrormationFromBundle(){
+        Bundle bundle = getArguments();
+        curPos = bundle.getInt("day")-1;
+        x = bundle.getFloat("x");
+        y = bundle.getFloat("y");
     }
 
+    private void settingFragment(){
+        fragment.setTitleInToolbar("Кол-во дней: ");
+        fragment.setViewInLayout(field);
+        fragment.setPositionX(x);
+        fragment.setPositionY(y);
+        fragment.setTextInToolbar(curPos==0?""+(curPos+1):(curPos+1)+"/"+curPos);
+        fragment.setIconInToolbar("icon_calendar");
+        fragment.setOnBackgroundClickListener(()->{
+            fragment.hide();
+            listener.onClick(curPos+1);
+        });
+        new Handler().postDelayed(()->fragment.show(),200);
+    }
+
+    private void onPressBackListener(View view){
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener((view1, i,keyEvent)->{
+            if( i == KeyEvent.KEYCODE_BACK && keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                fragment.hide();
+                listener.onClick(curPos+1);
+                return true;
+            }
+            return false;
+        });
+    }
+
+    void bindView(){
+        list.add((ViewTextWithCheckbox) field.findViewById(R.id.day1));
+        list.add((ViewTextWithCheckbox) field.findViewById(R.id.day2));
+        list.add((ViewTextWithCheckbox) field.findViewById(R.id.day3));
+        list.add((ViewTextWithCheckbox) field.findViewById(R.id.day4));
+        list.add((ViewTextWithCheckbox) field.findViewById(R.id.day5));
+        list.add((ViewTextWithCheckbox) field.findViewById(R.id.day6));
+        list.add((ViewTextWithCheckbox) field.findViewById(R.id.day7));
+        fragment = (ViewFragmentPattern) view.findViewById(R.id.fragment);
+    }
+
+    private ViewTextWithCheckbox.OnClickCheckBoxListener mCheckBoxListener = (View view,boolean on)->{
+        list.get(curPos).setCheckBox(false);
+        curPos = ((ViewTextWithCheckbox)view).getTitle().charAt(0)-'0'-1;
+        list.get(curPos).setCheckBox(true);
+        fragment.setTextInToolbar(curPos==0?""+(curPos+1):(curPos+1)+"/"+curPos);
+    };
+
     void setListener(){
-        btn.get(0).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onClick(true,getString(R.string.day1));
-            }
-        });
-        btn.get(1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onClick(true,getString(R.string.day2));
-            }
-        });
-        btn.get(2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onClick(true,getString(R.string.day3));
-            }
-        });
-        btn.get(3).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onClick(true,getString(R.string.day4));
-            }
-        });
-        btn.get(4).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onClick(true,getString(R.string.day5));
-            }
-        });
-        btn.get(5).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onClick(true,getString(R.string.day6));
-            }
-        });
-        btn.get(6).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onClick(true,getString(R.string.day7));
-            }
-        });
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onClick(false,null);
-            }
-        });
+        for (ViewTextWithCheckbox item: list) {
+            item.setOnClickCheckBoxListener(mCheckBoxListener);
+        }
     }
 }

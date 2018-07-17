@@ -1,21 +1,17 @@
 package com.dreamsofpines.mcunost.ui.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.dreamsofpines.mcunost.R;
-import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
 import com.dreamsofpines.mcunost.ui.customView.SimpleCounter;
-import com.dreamsofpines.mcunost.ui.customView.helpers.DinHelper;
-
-import nl.dionsegijn.steppertouch.StepperTouch;
+import com.dreamsofpines.mcunost.ui.customView.ViewFragmentPattern;
 
 /**
  * Created by ThePupsick on 23.02.2018.
@@ -24,80 +20,96 @@ import nl.dionsegijn.steppertouch.StepperTouch;
 public class DinnerFragment extends Fragment {
 
     private View view;
+    private View field;
     private SimpleCounter br,lu,din;
-    private Button cancel, accept,help;
-    private TextView title;
-    private DinHelper dinHelp;
+    private ViewFragmentPattern fragment;
+    private float x,y;
+    private int brCount, luCount, dinCount, maxDay;
 
     public static OnClickListener listener;
     public interface OnClickListener{
-        void onClick(boolean accept,int countBr, int coutnLun, int countDin);
+        void onClick(int countBr, int coutnLun, int countDin);
     }
 
     public void setOnClickListener(OnClickListener listener){
         this.listener = listener;
     }
 
+    private SimpleCounter.onClickListener mOnClickListener =  (boolean plus)->{
+        fragment.setTextInToolbar(getCountEatString());
+    };
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = (View) inflater.inflate(R.layout.fragment_quantity_dinner,container,false);
+        field = (View) inflater.inflate(R.layout.view_dinner_field,container,false);
         bindView();
-        setListeners();
-        Bundle bundle = getArguments();
-        br.setValue(bundle.getInt("br"));
-        br.setMinValue(0);
-        br.setMaxValue(bundle.getInt("day"));
-        lu.setValue(bundle.getInt("lu"));
-        lu.setMinValue(0);
-        lu.setMaxValue(bundle.getInt("day"));
-        din.setValue(bundle.getInt("din"));
-        din.setMinValue(0);
-        din.setMaxValue(bundle.getInt("day"));
+        getInformationFromBundle();
+        settingFragment();
+        onPressBackListener();
 
-        help = (Button) getActivity().findViewById(R.id.button_help);
-        help.setVisibility(View.VISIBLE);
-        help.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dinHelp.show();
-            }
-        });
-        if(GlobalPreferences.getPrefHelpDin(getContext())!=1){
-            dinHelp.show();
-            GlobalPreferences.setPrefHelpDin(getContext(),1);
-        }
-        title.setText("Обед");
+        setValueInCounters(br,brCount);
+        setValueInCounters(lu,luCount);
+        setValueInCounters(din,dinCount);
+
         return view;
     }
 
-    private void bindView(){
-        br      = (SimpleCounter) view.findViewById(R.id.stepperTouchBreakfast);
-        lu      = (SimpleCounter) view.findViewById(R.id.stepperTouchLunch);
-        din     = (SimpleCounter) view.findViewById(R.id.stepperTouchDinner);
-        accept  = (Button) view.findViewById(R.id.quantity_dinner_accept);
-        cancel  = (Button) view.findViewById(R.id.quantity_dinner_cancel);
-        title   = (TextView) getActivity().findViewById(R.id.title_tour);
-        dinHelp = (DinHelper) view.findViewById(R.id.din_help);
+    private void setValueInCounters(SimpleCounter counter, int value){
+        counter.setValue(value);
+        counter.setMinValue(0);
+        counter.setMaxValue(maxDay);
+        counter.setOnClickListener(mOnClickListener);
     }
 
-    private void setListeners(){
-        accept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onClick(true, br.getValue(),lu.getValue(),din.getValue());
+    private void getInformationFromBundle(){
+        Bundle bundle = getArguments();
+        x = bundle.getFloat("x");
+        y = bundle.getFloat("y");
+        brCount = bundle.getInt("br");
+        luCount = bundle.getInt("lu");
+        dinCount = bundle.getInt("din");
+        maxDay = bundle.getInt("day");
+    }
+
+    private void onPressBackListener(){
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener((view, i,keyEvent)->{
+            if( i == KeyEvent.KEYCODE_BACK && keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                fragment.hide();
+                listener.onClick(br.getValue(),lu.getValue(),din.getValue());
+                return true;
             }
+            return false;
         });
+    }
 
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onClick(false,0,0,0);
-            }
+    private void settingFragment(){
+        fragment.setViewInLayout(field);
+        fragment.setPositionX(x);
+        fragment.setPositionY(y);
+        fragment.setTitleInToolbar("Питание:");
+        fragment.setTextInToolbar(getCountEatString());
+        fragment.setIconInToolbar("icon_din");
+        fragment.setOnBackgroundClickListener(()->{
+            fragment.hide();
+            listener.onClick(br.getValue(),lu.getValue(),din.getValue());
         });
+        new Handler().postDelayed(()-> fragment.show(),200);
+    }
 
+    private String getCountEatString(){
+        return brCount+"/"+luCount +"/"+dinCount;
+    }
 
+    private void bindView(){
+        br      = (SimpleCounter) field.findViewById(R.id.stepperTouchBreakfast);
+        lu      = (SimpleCounter) field.findViewById(R.id.stepperTouchLunch);
+        din     = (SimpleCounter) field.findViewById(R.id.stepperTouchDinner);
+        fragment = (ViewFragmentPattern) view.findViewById(R.id.fragment);
     }
 
 }

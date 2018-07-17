@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.storage.help.menu.LeftMenu;
+import com.dreamsofpines.mcunost.data.storage.models.SaleItem;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by ThePupsick on 07.08.17.
@@ -19,42 +22,38 @@ import com.dreamsofpines.mcunost.data.storage.help.menu.LeftMenu;
 
 public class StockFragment extends Fragment {
 
-    private String stockOne = "\n«ПРИГЛАСИ ДРУГА!»\n" +
-            "\n" +
-            "Молодежному центру ЮНОСТЬ нужны такие руководители групп, как Вы!\n" +
-            "\n" +
-            "Пригласите до 10 новых руководителей и получите 6000 рублей за каждого, когда он совершит первую поездку!\n" +
-            "\n" +
-            " Начните приглашать новых руководителей групп!\n" +
-            "\n" +
-            " Правила и условия:\n" +
-            "\n" +
-            "1. Порекомендуйте нашу компанию совершенно новому руководителю группы.\n" +
-            "2. Как только поездка будет совершена этим руководителем, Вы получите 6000 рублей на счет Вашей виртуальной дисконтной карты.\n" +
-            "3. Данные о пополнении Вашего счета или использовании денежных средств с него поступают Вам в виде смс-сообщений от отправителя YUNOST.\n" +
-            "4. Вы можете также запросить данные о состоянии Вашего счета, позвонив по любому телефону компании.\n" +
-            "5. Срок действия акции – до 1 июля 2017 года.\n\n";
-    private String stockTwo = "\"СЧАСТЛИВЫЙ БОНУС\"\n" +
-            "\n" +
-            "Теперь за каждую совершенную поездку Вы получаете бонус!\n" +
-            "\n" +
-            "Информацию о конкретном начислении Вы получите в виде смс-сообщения.\n" +
-            "\n" +
-            "Счастливых Вам поездок!\n";
+
+    private View view;
+    private TextView title;
+    private TextView text;
+
+    private SaleItem saleItem;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_stock,container,false);
-
-        TextView textView = (TextView) view.findViewById(R.id.txt_stock);
-        textView.setText(stockOne+stockTwo);
-
-        textView = (TextView) getActivity().findViewById(R.id.title_tour);
-        textView.setText("Акции");
-        Button help = (Button) getActivity().findViewById(R.id.button_help);
-        help.setVisibility(View.GONE);
-
+        view = inflater.inflate(R.layout.activity_stock,container,false);
+        bindView();
+        init();
         return view;
+    }
+
+    private void bindView(){
+        title = (TextView) view.findViewById(R.id.title_sale_txt);
+        text = (TextView) view.findViewById(R.id.text_sale_txt);
+    }
+
+    private void init(){
+        title.setText(saleItem.getTitle());
+        text.setText(saleItem.getText());
+    }
+
+    public SaleItem getSaleItem() {
+        return saleItem;
+    }
+
+    public void setSaleItem(SaleItem saleItem) {
+        this.saleItem = saleItem;
     }
 }

@@ -1,5 +1,6 @@
 package com.dreamsofpines.mcunost.Parser;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.dreamsofpines.mcunost.data.network.api.Constans;
@@ -106,9 +107,13 @@ public class StringParser {
         return Pattern.matches("^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$",str);
     }
 
-    public static boolean isValidEmail(String str){
-        Log.i("Myapp","Email: "+Pattern.matches("^([a-z0-9_-]+.)*[a-z0-9_-]+@[a-z0-9_-]+(.[a-z0-9_-]+)*.[a-z]{2,6}$",str));
-        return Pattern.matches("^([a-z0-9_-]+.)*[a-z0-9_-]+@[a-z0-9_-]+(.[a-z0-9_-]+)*.[a-z]{2,6}$",str);
+//    public static boolean isValidEmail(String str){
+//        Log.i("Myapp","Email: "+Pattern.matches("^([a-z0-9_-]+.)*[a-z0-9_-]+@[a-z0-9_-]+(.[a-z0-9_-]+)*.[a-z]{2,6}$",str));
+//        return Pattern.matches("^([a-z0-9_-]+.)*[a-z0-9_-]+@[a-z0-9_-]+(.[a-z0-9_-]+)*.[a-z]{2,6}$",str);
+//    }
+
+    public final static boolean isValidEmail(String target) {
+        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
     public static int convertCityInToInteger(String city){

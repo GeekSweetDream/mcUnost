@@ -65,11 +65,8 @@ public class SimpleCounter extends RelativeLayout  {
             }
         });
 
-        plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        plus.setOnClickListener((v)-> {
                 incrementValue();
-            }
         });
 
         plus.setOnTouchListener(new OnTouchListener() {

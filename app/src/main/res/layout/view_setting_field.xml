@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/md_white_1000">
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Имя:"
+            android:textColor="@color/md_grey_400"
+            android:textSize="18dp"/>
+        <EditText
+            android:id="@+id/edit_text"
+
+            android:textColor="@color/md_black_1000"
+            android:textColorLink="@color/md_black_1000"
+            android:textColorHighlight="@color/transparent"
+            android:gravity="right"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+</LinearLayout>

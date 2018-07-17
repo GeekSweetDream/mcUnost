@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:yourapp="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/navigation_lenta"
+        android:icon="@mipmap/icon_lenta"
+        android:title=""
+        />
+
+    <item
+        android:id="@+id/navigation_chat"
+        android:icon="@mipmap/icon_mess"
+        android:title="" />
+
+    <item
+        android:id="@+id/navigation_create_order"
+        android:icon="@mipmap/icon_const"
+        android:title="" />
+    <item
+        android:id="@+id/navigation_orders"
+        android:icon="@mipmap/icon_orders"
+        android:title="" />
+    <item
+        android:id="@+id/navigation_setting"
+        android:icon="@mipmap/icon_setting"
+        android:title="" />
 </menu>

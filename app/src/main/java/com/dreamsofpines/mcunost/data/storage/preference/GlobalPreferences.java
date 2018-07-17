@@ -1,9 +1,9 @@
 package com.dreamsofpines.mcunost.data.storage.preference;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.widget.ProgressBar;
+
+import com.dreamsofpines.mcunost.data.utils.ImageUtils;
 
 
 /**
@@ -23,6 +23,7 @@ public class GlobalPreferences {
     private static final String PREF_ID_USER = "idUser";
     private static final String PREF_QUANTITY_NEW_MESS = "messNew";
     private static final String PREF_QUANTITY_NEW = "quantityNew";
+    private static final String PREF_STATE_AVATAR = "stateAvatar";
 
 
     public static void setPrefIdUser(Context context,String id) {
@@ -173,6 +174,19 @@ public class GlobalPreferences {
                 .putInt(PREF_HELP_BUS,a)
                 .apply();
     }
+
+    public static void setPrefStateAvatar(Context context, int state){
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putInt(PREF_STATE_AVATAR,state % ImageUtils.QUANTITY_AVATARS)
+                .apply();
+    }
+
+    public static int getPrefStateAvatar(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getInt(PREF_STATE_AVATAR,0);
+    }
+
 
 
 

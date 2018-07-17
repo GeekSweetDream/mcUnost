@@ -9,4 +9,5 @@
     <color name="colorDarkGrey">#7E7E77</color>
     <color name="transparent">#00000000</color>
     <color name="colorBlueToolbar">#213571</color>
+    <color name="colorMessage">#E2E5ff</color>
 </resources>

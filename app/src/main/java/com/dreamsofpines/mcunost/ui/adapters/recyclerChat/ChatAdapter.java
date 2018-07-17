@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.network.api.RequestSender;
-import com.dreamsofpines.mcunost.data.storage.models.Message;
+import com.dreamsofpines.mcunost.data.storage.models.MessageTextItem;
 
 
 import java.io.File;
@@ -34,7 +34,7 @@ import java.util.List;
 public class ChatAdapter extends RecyclerView.Adapter {
 
 
-    List<Message> mMessages;
+    List<MessageTextItem> mMessageTextItems;
 
     private Context mContext;
 
@@ -64,31 +64,31 @@ public class ChatAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final int itemType = getItemViewType(position);
         if(itemType == ITEM_TEXT_VIEW){
-            ((ViewTextHolder) holder).bindView(mMessages.get(position).getMess(),mMessages.get(position).getStringDate());
+//            ((ViewTextHolder) holder).bindView(mMessageTextItems.get(position).getMess(), mMessageTextItems.get(position).getStringDate());
         }else if(itemType == ITEM_DOCUMENT_VIEW){
-            ((ViewDocHolder) holder).bindView(mMessages.get(position).getMess(),mMessages.get(position).getStringDate());
+//            ((ViewDocHolder) holder).bindView(mMessageTextItems.get(position).getMess(), mMessageTextItems.get(position).getStringDate());
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(mMessages.get(position).isDoc()){
-            return ITEM_DOCUMENT_VIEW;
-        }
+//        if(mMessageTextItems.get(position).isDoc()){
+//            return ITEM_DOCUMENT_VIEW;
+//        }
         return ITEM_TEXT_VIEW;
     }
 
     @Override
     public int getItemCount() {
-        return mMessages.size();
+        return mMessageTextItems.size();
     }
 
-    public List<Message> getMessages() {
-        return mMessages;
+    public List<MessageTextItem> getMessageTextItems() {
+        return mMessageTextItems;
     }
 
-    public void setMessages(List<Message> messages) {
-        mMessages = messages;
+    public void setMessageTextItems(List<MessageTextItem> messageTextItems) {
+        mMessageTextItems = messageTextItems;
     }
 
     public Context getContext() {

@@ -3,12 +3,14 @@ package com.dreamsofpines.mcunost.ui.fragments;
 import android.animation.ObjectAnimator;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.network.api.RequestSender;
 import com.dreamsofpines.mcunost.data.storage.models.Excursion;
 import com.dreamsofpines.mcunost.ui.adapters.recyclerExcursion.ExcursionAdapter;
+import com.dreamsofpines.mcunost.ui.customView.ViewFragmentPattern;
 import com.dreamsofpines.mcunost.ui.dialog.WarningDialog;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -42,23 +45,22 @@ import static android.media.CamcorderProfile.get;
 
 public class ExcursionFragment extends Fragment {
 
-    private View view,err;
-    private Button accept, cancel, resend;
+    private View view,field;
+    private ViewFragmentPattern fragment;
     private RecyclerView rec;
-    private List<Excursion> all, add;
+    private List<Excursion> all;
     private ExcursionAdapter mAdapter;
-    private Animation jumpOn;
-    private TextView txtChoose;
     private AVLoadingIndicatorView avl;
-    private NestedScrollView nestedScroll;
     private String idCity;
 
+    private float x,y;
     private int maxExc, curExc;
+    private boolean isEmptyExcurList;
 
     private OnClickListener listener;
 
     public interface OnClickListener{
-        void onClick(boolean accept, List<Excursion>list);
+        void onClick(List<Excursion>list);
     }
 
     public void setOnClickListener(OnClickListener listener){
@@ -68,81 +70,67 @@ public class ExcursionFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = (View) inflater.inflate(R.layout.fragment_excursion_rec,container,false);
+        view = (View) inflater.inflate(R.layout.fragment_quantity_dinner,container,false);
+        field = (View) inflater.inflate(R.layout.fragment_excursion_rec,container,false);
         bindView();
+        getInfoFromBundle();
         setListeners();
+        setListenerBack();
+        settingFragment();
+
         Bundle bundle = getArguments();
-        maxExc = bundle.getInt("maxday");
-        curExc = bundle.getInt("size") == 0? maxExc : bundle.getInt("size");
-        idCity = bundle.getString("idcity");
-        jumpOn = AnimationUtils.loadAnimation(getContext(),R.anim.jump_from_down_without_alpha);
-        accept.setVisibility(View.GONE);
-        cancel.setVisibility(View.GONE);
-        nestedScroll.setVisibility(View.GONE);
         avl.show();
-        txtChoose.setText(curExc +"/"+maxExc*2);
-        TextView title = (TextView) getActivity().findViewById(R.id.title_tour);
-        title.setText("Экскурсии");
-        Button help = (Button) getActivity().findViewById(R.id.button_help);
-        help.setVisibility(View.GONE);
 
         ExcurTask excurTask = new ExcurTask();
         excurTask.execute(bundle);
         return view;
     }
 
-    private void bindView(){
-        accept       = (Button) view.findViewById(R.id.exc_accept);
-        cancel       = (Button) view.findViewById(R.id.exc_cancel);
-        rec          = (RecyclerView) view.findViewById(R.id.exc_rec);
-        err          = (View) view.findViewById(R.id.error_message);
-        resend       = (Button) err.findViewById(R.id.category_resend_butt);
-        avl          = (AVLoadingIndicatorView) view.findViewById(R.id.exc_indicator);
-        nestedScroll = (NestedScrollView) view.findViewById(R.id.exc_nested);
-        txtChoose    = (TextView) view.findViewById(R.id.txt_exc_choose);
+    private void getInfoFromBundle(){
+        Bundle bundle = getArguments();
+        x = bundle.getFloat("x");
+        y = bundle.getFloat("y");
+        maxExc = bundle.getInt("maxday");
+        curExc = bundle.getInt("size") == 0? maxExc : bundle.getInt("size");
+        isEmptyExcurList = bundle.getInt("size") == 0;
+        idCity = bundle.getString("idcity");
+    }
 
+    private void settingFragment(){
+        fragment.setViewInLayout(field);
+        fragment.setPositionX(x);
+        fragment.setPositionY(y);
+        fragment.setTitleInToolbar("Экскурсии:");
+        fragment.setTextInToolbar( curExc + "/" + maxExc*2);
+        fragment.setIconInToolbar("icon_exc");
+        fragment.setOnBackgroundClickListener(()->{
+            fragment.hide();
+            listener.onClick(getAdd());
+        });
+        new Handler().postDelayed(()-> fragment.show(),200);
+    }
+
+    private void setListenerBack(){
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener((view, i,keyEvent)->{
+            if( i == KeyEvent.KEYCODE_BACK && keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                fragment.hide();
+                listener.onClick(getAdd());
+                return true;
+            }
+            return false;
+        });
+    }
+
+
+    private void bindView(){
+        rec          = (RecyclerView) field.findViewById(R.id.exc_rec);
+        avl          = (AVLoadingIndicatorView) field.findViewById(R.id.exc_indicator);
+        fragment     = (ViewFragmentPattern) view.findViewById(R.id.fragment);
     }
 
     private void setListeners(){
-        accept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                add = new ArrayList<>();
-                for (Excursion exc : all) {
-                    if (exc.isChecked()) add.add(exc);
-                }
-                if(curExc > maxExc*2) {
-                    WarningDialog wD = WarningDialog.newInstance();
-                    wD.setOkPressListener(new WarningDialog.okListner() {
-                        @Override
-                        public void okPress() {
-                            listener.onClick(true, add);
-                        }
-                    });
-                    wD.show(getFragmentManager(),"wD");
-                }else{
-                    listener.onClick(true, add);
-                }
-            }
-        });
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onClick(false,null);
-            }
-        });
-        resend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                err.setVisibility(View.GONE);
-                accept.setVisibility(View.GONE);
-                cancel.setVisibility(View.GONE);
-                nestedScroll.setVisibility(View.GONE);
-                avl.show();
-                ExcurTask excurTask = new ExcurTask();
-                excurTask.execute(getArguments());
-            }
-        });
 
     }
     private void updateUI(){
@@ -153,22 +141,24 @@ public class ExcursionFragment extends Fragment {
         }
         mAdapter = new ExcursionAdapter();
         mAdapter.setContext(getContext());
-        mAdapter.setOnClickSwitchListener(new ExcursionAdapter.OnClickSwitchListener() {
-            @Override
-            public void onClicked(boolean add, int position) {
-                if(add) {
-                    curExc++;
-                }else{
-                    curExc--;
-                }
+        mAdapter.setOnClickSwitchListener((boolean add, int position) ->{
+                curExc += (add? 1 : -1);
                 all.get(position).setChecked(add);
-                txtChoose.setText(curExc +"/"+maxExc*2);
-            }
+                fragment.setTextInToolbar(curExc+"/"+maxExc*2);
         });
         rec.setAdapter(mAdapter);
         mAdapter.setExcursionList(all);
-//        mAdapter.notifyDataSetChanged();
+        fragment.setTextInToolbar(curExc+"/"+maxExc*2);
     }
+
+    private List<Excursion> getAdd(){
+        List<Excursion> add = new ArrayList<>();
+        for (Excursion exc:all){
+            if(exc.isChecked()) add.add(exc);
+        }
+        return add;
+    }
+
 
     private class ExcurTask extends AsyncTask<Bundle,Void,Boolean> {
 
@@ -192,9 +182,11 @@ public class ExcursionFragment extends Fragment {
                                 excJs.getInt("ratio"));
                         all.add(exc);
                     }
-                    if(bundles[0].getInt("size")==0){
+                    if(isEmptyExcurList){
+                        curExc = 0;
                         for(int i = 0; i < maxExc && (i < all.size());++i) {
                             all.get(i).setChecked(true);
+                            ++curExc;
                         }
                     }else{
                         for(int i = 0; i<bundles[0].getInt("size");++i){
@@ -225,28 +217,16 @@ public class ExcursionFragment extends Fragment {
             if(success) {
                 updateUI();
                 if(all.size()==0) {
-                    cancel.setVisibility(View.VISIBLE);
                 }else{
                     sort(all);
-                    ObjectAnimator animator = ObjectAnimator.ofFloat(nestedScroll,"alpha",0,1);
-                    animator.setDuration(700);
-                    animator.start();
-                    nestedScroll.setVisibility(View.VISIBLE);
-                    accept.setVisibility(View.VISIBLE);
-                    cancel.setVisibility(View.VISIBLE);
                     if(all.size()<maxExc){
                         curExc = all.size();
                     }
                     rec.setVisibility(View.VISIBLE);
                 }
                 avl.hide();
-                err.setVisibility(View.GONE);
             }else{
                 avl.show();
-                err.setAnimation(jumpOn);
-                err.setClickable(true);
-                err.setVisibility(View.VISIBLE);
-                cancel.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(),"Oops! Проблемы с соединением, попробуйте позже! :)",Toast.LENGTH_LONG)
                         .show();
             }

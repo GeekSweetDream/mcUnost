@@ -9,6 +9,15 @@ import java.util.List;
 public class InformExcursion {
     private String tittle, description, shortDesc,city,count, day, nameImage,
             id, inTour, addService;
+    private boolean check = false;
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
 
     public InformExcursion(String day) {
         this.tittle = "Day";

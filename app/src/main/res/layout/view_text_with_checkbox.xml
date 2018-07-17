@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:background="@color/md_white_1000"
+              android:layout_height="55dp">
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.90"
+        android:gravity="left|center"
+        android:layout_gravity="center"
+        android:text="Поле"
+        android:textColor="@color/md_black_1000"
+        android:textSize="23dp"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="right|center_vertical"
+
+        android:layout_weight="0.20">
+        <net.igenius.customcheckbox.CustomCheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:color_checked="@color/md_orange_500"/>
+    </LinearLayout>
+
+
+</LinearLayout>

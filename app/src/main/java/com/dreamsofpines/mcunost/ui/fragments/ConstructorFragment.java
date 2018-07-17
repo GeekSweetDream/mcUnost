@@ -72,7 +72,15 @@ public class ConstructorFragment extends Fragment implements DatePickerDialog.On
     private ImageView mImageView;
     private TextView title;
 
+    private static ConstructorFragment sConstructorFragment;
 
+    public static ConstructorFragment getInstance(FragmentManager fm){
+        if(sConstructorFragment == null){
+            sConstructorFragment = new ConstructorFragment();
+        }
+        sConstructorFragment.setFragmentManager(fm);
+        return sConstructorFragment;
+    }
 
     @Nullable
     @Override
@@ -128,12 +136,12 @@ public class ConstructorFragment extends Fragment implements DatePickerDialog.On
         showCountDin();
         showBus();
 
-        setHelpButton();
+//        setHelpButton();
         if(GlobalPreferences.getPrefHelpMain(getContext())!=1){
             mMainHelper.show();
             GlobalPreferences.setPrefHelpMain(getContext(),1);
         }
-        title.setText("Конструктор");
+//        title.setText("Конструктор");
 
         return view;
     }
@@ -230,6 +238,7 @@ public class ConstructorFragment extends Fragment implements DatePickerDialog.On
         layout.setAlpha((float) (isActive?1:0.5));
     }
 
+
     private void setListener(){
         linRoute.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -250,10 +259,10 @@ public class ConstructorFragment extends Fragment implements DatePickerDialog.On
                             linRoute.setBackgroundResource(R.color.transparent);
                             fm.popBackStack();
                             title.setText("Конструктор");
-                            setHelpButton();
+//                            setHelpButton();
                         }
                     });
-                    setHelpButton();
+//                    setHelpButton();
                 }
 
                 Bundle bundle = new Bundle();
@@ -262,7 +271,7 @@ public class ConstructorFragment extends Fragment implements DatePickerDialog.On
                 fm.beginTransaction()
                         .setCustomAnimations(R.anim.slide_left_2_obj,R.anim.slide_right_2_obj,
                                 R.anim.slide_left_2_obj,R.anim.slide_right_2_obj)
-                        .add(R.id.frame_layout,cF)
+                        .add(R.id.frame_main,cF)
                         .addToBackStack(null)
                         .commit();
             }
@@ -285,36 +294,36 @@ public class ConstructorFragment extends Fragment implements DatePickerDialog.On
             public void onClick(final View view) {
                if(dF==null) {
                    dF = new DayFragment();
-                   dF.setListener(new DayFragment.OnClickListener() {
-                       @Override
-                       public void onClick(boolean accept, String str) {
-                           if (accept) {
-                               countD = Integer.parseInt(str.split(" ")[0]);
-                               countBr = countD - 1;
-                               countLu = countD == 1 ? 1 : 0;
-                               countDin = 0;
-                               countBusMore = 0;
-                               countBus4hour = 0;
-                               showBus();
-                               busAdd = true;
-                               addTrain = true;
-                               showCountDin();
-                               txtDateBeg.setText("Выбрать");
-                               txtDateEnd.setVisibility(View.GONE);
-                               txtDay.setText(str);
-                               txtExc.setText("Выбрать");
-                               linRoute.setBackgroundResource(R.color.transparent);
-                               linCalendar.setBackgroundResource(R.color.transparent);
-                               linHotel.setBackgroundResource(R.color.transparent);
-                               linExcur.setBackgroundResource(R.color.transparent);
-                               mExcursionList = null;
-                               setActiveOrDisactive(linHotel, countD > 1);
-                           }
-                           fm.popBackStack();
-                           title.setText("Конструктор");
-                           setHelpButton();
-                       }
-                   });
+//                   dF.setListener(new DayFragment.OnClickListener() {
+//                       @Override
+//                       public void onClick(boolean accept, String str) {
+//                           if (accept) {
+//                               countD = Integer.parseInt(str.split(" ")[0]);
+//                               countBr = countD - 1;
+//                               countLu = countD == 1 ? 1 : 0;
+//                               countDin = 0;
+//                               countBusMore = 0;
+//                               countBus4hour = 0;
+//                               showBus();
+//                               busAdd = true;
+//                               addTrain = true;
+//                               showCountDin();
+//                               txtDateBeg.setText("Выбрать");
+//                               txtDateEnd.setVisibility(View.GONE);
+//                               txtDay.setText(str);
+//                               txtExc.setText("Выбрать");
+//                               linRoute.setBackgroundResource(R.color.transparent);
+//                               linCalendar.setBackgroundResource(R.color.transparent);
+//                               linHotel.setBackgroundResource(R.color.transparent);
+//                               linExcur.setBackgroundResource(R.color.transparent);
+//                               mExcursionList = null;
+//                               setActiveOrDisactive(linHotel, countD > 1);
+//                           }
+//                           fm.popBackStack();
+//                           title.setText("Конструктор");
+//                           setHelpButton();
+//                       }
+//                   });
                }
                Bundle bundle = new Bundle();
                 bundle.putInt("day",countD);
@@ -335,13 +344,13 @@ public class ConstructorFragment extends Fragment implements DatePickerDialog.On
                     qGF = new QuantityGroupFragment();
                     qGF.setListener(new QuantityGroupFragment.OnClickListener() {
                         @Override
-                        public void OnClick(boolean accept, int countT, int countC) {
-                            if (accept) {
+                        public void OnClick( int countT, int countC) {
+//                            if (accept) {
                                 setCountT(countT);
                                 setCountC(countC);
                                 txtTeacher.setText(countT + " преподавателей");
                                 txtGroup.setText(countC + " группа");
-                            }
+//                            }
                             fm.popBackStack();
                             title.setText("Конструктор");
                             setHelpButton();
@@ -366,21 +375,21 @@ public class ConstructorFragment extends Fragment implements DatePickerDialog.On
             public void onClick(final View view) {
                 if(dinF == null) {
                     dinF = new DinnerFragment();
-                    dinF.setOnClickListener(new DinnerFragment.OnClickListener() {
-                        @Override
-                        public void onClick(boolean accept, int countBr, int coutnLun, int countDin) {
-                            if (accept) {
-                                setCountBr(countBr);
-                                setCountLu(coutnLun);
-                                setCountDin(countDin);
-                                linDinner.setBackgroundResource(R.color.transparent);
-                                showCountDin();
-                            }
-                            fm.popBackStack();
-                            title.setText("Конструктор");
-                            setHelpButton();
-                        }
-                    });
+//                    dinF.setOnClickListener(new DinnerFragment.OnClickListener() {
+//                        @Override
+//                        public void onClick(boolean accept, int countBr, int coutnLun, int countDin) {
+//                            if (accept) {
+//                                setCountBr(countBr);
+//                                setCountLu(coutnLun);
+//                                setCountDin(countDin);
+//                                linDinner.setBackgroundResource(R.color.transparent);
+//                                showCountDin();
+//                            }
+//                            fm.popBackStack();
+//                            title.setText("Конструктор");
+//                            setHelpButton();
+//                        }
+//                    });
                 }
                 Bundle bundle = new Bundle();
                 bundle.putInt("br", countBr);
@@ -403,20 +412,20 @@ public class ConstructorFragment extends Fragment implements DatePickerDialog.On
             @Override
             public void onClick(final View view) {
                 bF = new BusFragment();
-                bF.setListener(new BusFragment.OnClickListener() {
-                        @Override
-                        public void onClick(boolean accept, boolean mainBus, int moreBus,int more4Bus) {
-                            if (accept) {
-                                setBusAdd(mainBus);
-                                setCountBusMore(moreBus);
-                                setCountBus4hour(more4Bus);
-                                showBus();
-                            }
-                            fm.popBackStack();
-                            title.setText("Конструктор");
-                            setHelpButton();
-                        }
-                    });
+//                bF.setListener(new BusFragment.OnClickListener() {
+//                        @Override
+//                        public void onClick(boolean accept, boolean mainBus, int moreBus,int more4Bus) {
+//                            if (accept) {
+//                                setBusAdd(mainBus); 
+//                                setCountBusMore(moreBus);
+//                                setCountBus4hour(more4Bus);
+//                                showBus();
+//                            }
+//                            fm.popBackStack();
+//                            title.setText("Конструктор");
+//                            setHelpButton();
+//                        }
+//                    });
                 Bundle bundle = new Bundle();
                 bundle.putInt("countbus", countBusMore);
                 bundle.putInt("count4Bus",countBus4hour);
@@ -436,22 +445,21 @@ public class ConstructorFragment extends Fragment implements DatePickerDialog.On
             @Override
             public void onClick(final View view) {
                 if(!txtRoute.getText().toString().equalsIgnoreCase("Выбрать")) {
-
                     hF = new HotelFragment();
-                    hF.setOnClickListener(new HotelFragment.OnClickListener() {
-                        @Override
-                        public void onClick(boolean accept, String idHotel, String hotel) {
-                            if (accept) {
-                                setIdHotel(idHotel);
-                                setNameHotel(hotel);
-                                txtHotel.setText(hotel);
-                                linHotel.setBackgroundResource(R.color.transparent);
-                            }
-                            fm.popBackStack();
-                            title.setText("Конструктор");
-                            setHelpButton();
-                        }
-                    });
+//                    hF.setOnClickListener(new HotelFragment.OnClickListener() {
+//                        @Override
+//                        public void onClick(boolean accept, String idHotel, String hotel) {
+//                            if (accept) {
+//                                setIdHotel(idHotel);
+//                                setNameHotel(hotel);
+//                                txtHotel.setText(hotel);
+//                                linHotel.setBackgroundResource(R.color.transparent);
+//                            }
+//                            fm.popBackStack();
+//                            title.setText("Конструктор");
+//                            setHelpButton();
+//                        }
+//                    });
                     Bundle bundle = new Bundle();
                     bundle.putString("idCity",idCity);
                     if (!nameHotel.equalsIgnoreCase("Нет")) {
@@ -479,11 +487,11 @@ public class ConstructorFragment extends Fragment implements DatePickerDialog.On
                     twF = new TravelWayFragment();
                     twF.setOnClickListener(new TravelWayFragment.OnClickListener() {
                         @Override
-                        public void onClick(boolean accept, int choose) {
-                            if (accept) {
+                        public void onClick(int choose) {
+//                            if (accept) {
                                 addTrain = choose == 0;
                                 txtTravel.setText(choose == 0 ? "Поезд" : "Самолет");
-                            }
+//                            }
                             fm.popBackStack();
                             title.setText("Конструктор");
                             setHelpButton();
@@ -508,23 +516,23 @@ public class ConstructorFragment extends Fragment implements DatePickerDialog.On
             public void onClick(View view) {
                 if(!txtRoute.getText().toString().equalsIgnoreCase("Выбрать")) {
                     excF = new ExcursionFragment();
-                    excF.setOnClickListener(new ExcursionFragment.OnClickListener() {
-                        @Override
-                        public void onClick(boolean accept, List<Excursion> list) {
-                            if (accept) {
-                                mExcursionList = list;
-                                txtExc.setText("Выбрать");
-                                if (mExcursionList.size() > 0) {
-                                    txtExc.setText("Выбрано " + mExcursionList.size());
-                                }
-                                linExcur.setBackgroundResource(R.color.transparent);
-
-                            }
-                            fm.popBackStack();
-                            title.setText("Конструктор");
-                            setHelpButton();
-                        }
-                    });
+//                    excF.setOnClickListener(new ExcursionFragment.OnClickListener() {
+//                        @Override
+//                        public void onClick(boolean accept, List<Excursion> list) {
+//                            if (accept) {
+//                                mExcursionList = list;
+//                                txtExc.setText("Выбрать");
+//                                if (mExcursionList.size() > 0) {
+//                                    txtExc.setText("Выбрано " + mExcursionList.size());
+//                                }
+//                                linExcur.setBackgroundResource(R.color.transparent);
+//
+//                            }
+//                            fm.popBackStack();
+//                            title.setText("Конструктор");
+//                            setHelpButton();
+//                        }
+//                    });
                     Bundle bundle = new Bundle();
                     bundle.putInt("maxday", countD);
                     bundle.putString("idcity", idCity);

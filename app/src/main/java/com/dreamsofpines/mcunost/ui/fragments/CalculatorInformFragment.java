@@ -44,6 +44,8 @@ public class  CalculatorInformFragment extends Fragment implements DatePickerDia
     public static OnClickCancel mListener;
     public static OnClickOk sOnClickOk;
 
+
+
     @Override
     public void OnClick(boolean accepted, Order order) {
 

@@ -11,17 +11,17 @@ import android.widget.Button;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ViewSwitcher;
 
 import com.dreamsofpines.mcunost.R;
-import com.dreamsofpines.mcunost.ui.fragments.ConstructorFragment;
-import com.squareup.picasso.Picasso;
+import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
+import com.dreamsofpines.mcunost.ui.customView.ViewLoginRegistration;
 
 public class LogoActivity extends AppCompatActivity {
 
-    private Button mButton;
-    private ImageView img1,img2,img3;
+    private Button mButtonEnter;
+    private Button mButtonLogin;
     private ImageSwitcher mImageSwitcher;
+    private ViewLoginRegistration mViewLoginRegistration;
     private boolean finish;
     private int position;
     private int[] idResImg = {R.drawable.main,R.drawable.moscow,R.drawable.kazan};
@@ -31,57 +31,66 @@ public class LogoActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme_NoActionBar_FullScreen);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_main_logo);
-        mButton = (Button) findViewById(R.id.rel_main_logo);
-//        img1 = (ImageView) findViewById(R.id.img_main_logo1);
-//        img2 = (ImageView) findViewById(R.id.img_main_logo2);
-//        img3 = (ImageView) findViewById(R.id.img_main_logo3);
-        mImageSwitcher = (ImageSwitcher) findViewById(R.id.main_switcher);
-//        Picasso.with(getBaseContext()).load("file:///android_asset/main.jpg").into(img1);
-//        Picasso.with(getBaseContext()).load("file:///android_asset/moscow.jpg").into(img2);
-//        Picasso.with(getBaseContext()).load("file:///android_asset/kazan.jpg").into(img3);
-        Animation inAnimation = new AlphaAnimation(0, 1);
-        inAnimation.setDuration(2000);
-        Animation outAnimation = new AlphaAnimation(1, 0);
-        outAnimation.setDuration(2000);
-        mImageSwitcher.setInAnimation(inAnimation);
-        mImageSwitcher.setOutAnimation(outAnimation);
-        mImageSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
-            @Override
-            public View makeView() {
-                ImageView imageView = new ImageView(getApplicationContext());
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setLayoutParams(new
-                        ImageSwitcher.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-                imageView.setBackgroundColor(0xFF000000);
-                return imageView;
-            }
-        });
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish = true;
-                Intent intent = new Intent(LogoActivity.this, CategoriesActivity.class);
-                startActivity(intent);
-            }
-        });
+        bindView();
+        setListeners();
+        settingImageSwitcher();
+        GlobalPreferences.setPrefAddUser(getApplicationContext(),0);
+        mButtonLogin.setVisibility(GlobalPreferences.getPrefAddUser(getApplicationContext()) == 1 ?
+                View.GONE : View.VISIBLE);
+        mButtonLogin.setVisibility(View.VISIBLE);
         finish = false;
         position = 0;
         mImageSwitcher.setImageResource(idResImg[position]);
         changePicture();
     }
 
+    private void bindView(){
+        mButtonEnter = (Button) findViewById(R.id.rel_main_logo);
+        mImageSwitcher = (ImageSwitcher) findViewById(R.id.main_switcher);
+        mViewLoginRegistration = (ViewLoginRegistration) findViewById(R.id.login_view);
+        mButtonLogin = (Button) findViewById(R.id.login_btn);
+    }
+
+    private void settingImageSwitcher(){
+        mImageSwitcher.setInAnimation(getAlphaAnimation(0,1));
+        mImageSwitcher.setOutAnimation(getAlphaAnimation(1,0));
+        mImageSwitcher.setFactory(()->{
+            ImageView imageView = new ImageView(getApplicationContext());
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setLayoutParams(new
+                    ImageSwitcher.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            imageView.setBackgroundColor(0xFF000000);
+            return imageView;
+        });
+    }
+
+    private void setListeners(){
+        mButtonEnter.setOnClickListener((view)->{
+            finish = true;
+            Intent intent = new Intent(LogoActivity.this, MainActivityWithTabs.class);
+            startActivity(intent);
+        });
+
+        mButtonLogin.setOnClickListener((view)->{
+            mViewLoginRegistration.setFragmentManager(getSupportFragmentManager());
+            mViewLoginRegistration.show();
+        });
+
+    }
+
+    private Animation getAlphaAnimation(int before, int after){
+        Animation animation = new AlphaAnimation(before, after);
+        animation.setDuration(2000);
+        return animation;
+    }
 
     private void changePicture(){
         if(!finish) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
+            new Handler().postDelayed(()->{
                     setPositionNext();
                     mImageSwitcher.setImageResource(idResImg[position]);
-                    changePicture();
-                }
-            },7000);
+                    changePicture();},5000);
         }
     }
 

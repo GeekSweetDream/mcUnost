@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp">
+    <RelativeLayout
+        android:id="@+id/avatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp">
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:elevation="5dp"/>
+        <TextView
+            android:id="@+id/mess"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/bordergreen"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/md_white_1000"
+            android:text="3"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:elevation="5dp"/>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Здравствуйте"
+        android:textSize="24dp"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/avatar"
+        android:textColor="@color/md_white_1000"/>
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/title"
+        android:background="@color/md_white_1000"
+        android:alpha="0.7"
+        android:layout_toLeftOf="@id/avatar"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_toLeftOf="@id/avatar"
+        android:gravity="center"
+        android:text="Евтушенко Елена"
+        android:textSize="15dp"
+        android:layout_below="@id/line"/>
+
+
+</RelativeLayout>
