@@ -85,12 +85,12 @@ public class ToolbarCalendar extends Toolbar {
 
         Calendar month = (Calendar) userChangerDate.clone();
 
-
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.gravity=Gravity.CENTER_VERTICAL;
+        params.gravity = Gravity.CENTER_VERTICAL;
 
         month.set(Calendar.DAY_OF_MONTH,0);
+
         for(int i = 0; i < daysInMonth; ++i){
             linearLayout.addView(createDayView(context,i,month),i,params);
             month.add(Calendar.DAY_OF_MONTH,1);
@@ -111,11 +111,11 @@ public class ToolbarCalendar extends Toolbar {
         DayView dayView = new DayView(context);
         dayView.setDayName(CalendarUtils.getDayName(month.get(Calendar.DAY_OF_WEEK)-1));
         dayView.setDayNumber(number+1);
-        if(isCurentDate(number,month)) dayView.setCurrentDay(true);
+        if(isCurrentDate(number,month)) dayView.setCurrentDay(true);
         return dayView;
     }
 
-    private boolean isCurentDate(int number,Calendar month){
+    private boolean isCurrentDate(int number, Calendar month){
         return (number == currentDate.get(Calendar.DAY_OF_MONTH)-1) &&
                 (currentDate.get(Calendar.MONTH)==month.get(Calendar.MONTH));
     }
@@ -128,7 +128,7 @@ public class ToolbarCalendar extends Toolbar {
     public boolean compareTwoDate(DayView dayView){
         if(list==null) return false;
         return list.contains(new GregorianCalendar(userChangerDate.get(Calendar.YEAR),
-                userChangerDate.get(Calendar.MONTH),dayView.getDayNumber()));
+                userChangerDate.get(Calendar.MONTH)+1,dayView.getDayNumber()));
     }
 
     public void scrollToCurrentDate(){

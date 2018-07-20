@@ -70,7 +70,7 @@ public class CategoriesActivity extends AppCompatActivity  {
     private LocationRequest mLocationRequest;
     private InformExcursionFragment iE;
     private RegistrFragment rF;
-    private FirebaseAnalytics mFirebaseAnalytics;
+
     private ConstructorFragment fr;
     private int fl = 0;
 
@@ -94,7 +94,7 @@ public class CategoriesActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_categories);
         bindView();
         fl = 0;
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         leftMenu  = new LeftMenu(this,fm,getBaseContext());
         leftMenu.build(this);
         leftMenu.setOnCityChangedListener(new LeftMenu.OnCityChanged() {

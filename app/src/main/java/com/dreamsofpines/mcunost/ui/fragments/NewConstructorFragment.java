@@ -13,10 +13,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.dreamsofpines.mcunost.R;
-import com.dreamsofpines.mcunost.data.storage.mBarItem;
 import com.dreamsofpines.mcunost.data.storage.models.Excursion;
 import com.dreamsofpines.mcunost.data.storage.models.Order;
-import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
 import com.dreamsofpines.mcunost.data.utils.ScreenUtils;
 import com.dreamsofpines.mcunost.ui.customView.ViewItemConstructor;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -103,18 +101,17 @@ public class NewConstructorFragment extends Fragment{
                     bundle.putInt("br", 0);
                     bundle.putInt("lu", 1);
                     bundle.putInt("din",0);
-
                 }else {
                     bundle.putInt("br", order.getCountBr() == null ?
-                            Integer.valueOf(order.getCountDay())-1:
+                            Integer.valueOf(order.getCountDay()):
                             Integer.valueOf(order.getCountBr()));
                     bundle.putInt("lu", order.getCountLu() == null ?
                             Integer.valueOf(order.getCountDay()):
                             Integer.valueOf(order.getCountLu()));
                     bundle.putInt("din", order.getCountDin() == null ? 0 :
                             Integer.valueOf(order.getCountDin()));
-                    bundle.putInt("day", Integer.valueOf(order.getCountDay()));
                 }
+                bundle.putInt("day", Integer.valueOf(order.getCountDay()));
                 addPosition(bundle, dinItem);
                 dF.setArguments(bundle);
                 dF.setOnClickListener(((countBr, countLun, countDin) -> {
@@ -251,10 +248,11 @@ public class NewConstructorFragment extends Fragment{
                 bundle.putBoolean("addMainBus", (order.getCountBusMeet() == null)
                         || (Integer.valueOf(order.getCountBusMeet()) > 0));
                 bF.setArguments(bundle);
-                bF.setListener(((mainBus, addBusDays) -> {
+                bF.setListener(((mainBus, addBusDays,allDayBus) -> {
                     transItem.setText("Выбран");
                     order.setAddBusDays(addBusDays);
-                    order.setCountBusMeet(String.valueOf(mainBus?(order.getCountDay().equals("1")?1:2):0)); // Если кол-во дней 1, то встречающий автобус один
+                    order.setCountAllDayBus(order.getCountDay().equals("1")? "1" : String.valueOf(allDayBus));
+                    order.setCountBusMeet(order.getCountDay().equals("1")?"0":"1");
                     waitAndClose(transItem, fm);
                 }));
                 loadFragment(fm, bF, "bus");
@@ -316,9 +314,14 @@ public class NewConstructorFragment extends Fragment{
             loadFragment(fm,cF,"CityFrom");
         });
         btnOrder.setOnClickListener((view)->{
-            OrderInformationFragment ordF = OrderInformationFragment.getInstance(order,fm);
-            currentOrderInforamtionFr = ordF;
-            showBookinOrder(ordF);
+            if(allFill()) {
+                OrderInformationFragment ordF = OrderInformationFragment.getInstance(order, fm);
+                currentOrderInforamtionFr = ordF;
+                showBookingOrder(ordF);
+            }else{
+                Toast.makeText(getContext(),"Заполните, пожалуйста, все поля",Toast.LENGTH_LONG)
+                        .show();
+            }
         });
     }
 
@@ -365,20 +368,18 @@ public class NewConstructorFragment extends Fragment{
     }
 
     private DatePickerDialog.OnDateSetListener mOnDateSetListener = (DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) ->{
-//            linCalendar.setBackgroundResource(R.color.transparent);
         dateItem.setVisibility(View.VISIBLE);
         Calendar calendar=Calendar.getInstance();
+        calendar.set(Calendar.YEAR,year);
         calendar.set(Calendar.MONTH,monthOfYear);
+        calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
         Calendar cl = Calendar.getInstance();
         cl.set(Calendar.YEAR,year);
         cl.set(Calendar.MONTH,monthOfYear);
-        cl.set(Calendar.DAY_OF_MONTH,dayOfMonth); //Integer.valueOf(order.getCountDay())-1
+        cl.set(Calendar.DAY_OF_MONTH,dayOfMonth+Integer.valueOf(order.getCountDay())-1);
         dateItem.setText(dayOfMonth+" "+calendar.getDisplayName(Calendar.MONTH,Calendar.SHORT, Locale.getDefault())+" "+year);
-        order.setDate(dateItem.getText());
-//            txtDateEnd.setText(cl.get(Calendar.DAY_OF_MONTH) + " "+cl.getDisplayName(Calendar.MONTH,Calendar.SHORT,Locale.getDefault())+ " "+
-//                    cl.get(Calendar.YEAR));
-//            txtDateEnd.setVisibility(View.VISIBLE);
-        order.setDate(dateItem.getText());
+        order.setDateTravelTourBegin(calendar.getTime());
+        order.setDateTravelTourEnd(cl.getTime());
     };
 
 
@@ -412,11 +413,7 @@ public class NewConstructorFragment extends Fragment{
     }
 
 
-    private void changeDate(){
-        // Изменить конец даты путешествия
-    }
-
-    private void showBookinOrder(Fragment fragment){
+    private void showBookingOrder(Fragment fragment){
         if(fm.findFragmentByTag("order") == null) {
             fm.beginTransaction()
                     .add(R.id.frame_main, fragment,"order")
@@ -443,6 +440,20 @@ public class NewConstructorFragment extends Fragment{
         });
     }
 
+    private boolean allFill(){
+
+        return  !travItem.getText().equals("Выбрать") &&
+                !dinItem.getText().equals("Выбрать") &&
+                !groupItem.getText().equals("Выбрать") &&
+                !cityToItem.getText().equals("Выбрать") &&
+                !dateItem.getText().equals("Выбрать") &&
+                !dayItem.getText().equals("Выбрать") &&
+                 (dayItem.getText().equals("1") || !hotelItem.getText().equals("Выбрать") )&&
+                !transItem.getText().equals("Выбрать") &&
+                !excurItem.getText().equals("Выбрать") &&
+                !cityFromItem.getText().equals("Выбрать");
+    }
+
 
     @Override
     public void onHiddenChanged(boolean hidden) {
@@ -450,11 +461,13 @@ public class NewConstructorFragment extends Fragment{
             if(current!=null) current.setVisibility(View.VISIBLE);
             current = null;
             if(currentOrderInforamtionFr != null) {
+                currentOrderInforamtionFr = OrderInformationFragment.getInstance(order,fm);
                 fm.beginTransaction()
                         .show(currentOrderInforamtionFr)
                         .commit();
             }
         }else{
+
             if(currentOrderInforamtionFr != null) {
                 fm.beginTransaction()
                         .hide(currentOrderInforamtionFr)

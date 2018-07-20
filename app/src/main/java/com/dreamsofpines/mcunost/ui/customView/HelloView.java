@@ -55,10 +55,16 @@ public class HelloView extends RelativeLayout {
         name.setText(GlobalPreferences.getPrefUserName(context));
         Picasso.with(context).load("file:///android_asset/" +
                 ImageUtils.getNameAvatars(GlobalPreferences.getPrefStateAvatar(context))).into(avatar);
+        setQuantityNotification(0);
     }
 
     public void setQuantityNotification(int quantity){
-        if(state == 0) quantityNotification.setText(String.valueOf(quantity));
+        if(quantity == 0){
+            quantityNotification.setVisibility(GONE);
+        }else{
+            quantityNotification.setVisibility(VISIBLE);
+            quantityNotification.setText(String.valueOf(quantity));
+        }
     }
 
 }

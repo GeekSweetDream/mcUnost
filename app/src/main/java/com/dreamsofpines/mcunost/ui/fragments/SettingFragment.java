@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,8 +21,10 @@ import com.dreamsofpines.mcunost.data.network.api.Constans;
 import com.dreamsofpines.mcunost.data.network.api.RequestSender;
 import com.dreamsofpines.mcunost.data.storage.mBarItem;
 import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
+import com.dreamsofpines.mcunost.ui.customView.LoadingView;
 import com.dreamsofpines.mcunost.ui.customView.SettingFieldView;
 import com.dreamsofpines.mcunost.ui.customView.ToolbarSetting;
+import com.dreamsofpines.mcunost.ui.customView.ViewLoginRegistration;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import org.json.JSONException;
@@ -36,22 +39,26 @@ import static android.R.attr.name;
 public class SettingFragment extends Fragment  {
 
     private View view;
-    private TextView tittle;
     private Button btnSave;
     private Button btnExit;
     private LinearLayout lin;
     private ToolbarSetting mToolbarSetting;
+    private LoadingView loadView;
+    private ViewLoginRegistration registr;
+    private FragmentManager fm;
     public changeInformationListener mListener;
+
 
     private SettingFieldView nameh,email,number,city;
     private boolean[] arrChange = {false,false,false,false};
 
     private static SettingFragment sSettingFragment;
 
-    public static SettingFragment getInstance(){
+    public static SettingFragment getInstance(FragmentManager fm){
         if(sSettingFragment == null){
             sSettingFragment = new SettingFragment();
         }
+        sSettingFragment.setFm(fm);
         return sSettingFragment;
     }
 
@@ -72,7 +79,6 @@ public class SettingFragment extends Fragment  {
         bindView();
         setListener();
         init();
-
 //        tittle.setText("Настройки");
 //        Button help = (Button) getActivity().findViewById(R.id.button_help);
 //        help.setVisibility(View.GONE);
@@ -111,6 +117,7 @@ public class SettingFragment extends Fragment  {
         return view;
     }
 
+
     private void bindView(){
         nameh = (SettingFieldView) view.findViewById(R.id.name_field);
         email = (SettingFieldView) view.findViewById(R.id.email_field);
@@ -118,36 +125,35 @@ public class SettingFragment extends Fragment  {
         city = (SettingFieldView) view.findViewById(R.id.city_field);
         btnSave = (Button) view.findViewById(R.id.btn_save);
         btnExit = (Button) view.findViewById(R.id.btn_exit);
+        loadView = (LoadingView) view.findViewById(R.id.load_view);
         mToolbarSetting = (ToolbarSetting) view.findViewById(R.id.toolbar);
+        registr = (ViewLoginRegistration) view.findViewById(R.id.registr);
         lin = (LinearLayout) view.findViewById(R.id.block_registr);
     }
 
     private void setListener(){
         btnSave.setOnClickListener((view1)->{
-            btnSave.setVisibility(View.GONE);
-            Toast.makeText(getContext(),"Данные успешно сохранены",Toast.LENGTH_LONG).show();
+            UpdateUserInfoTask updateTask = new UpdateUserInfoTask();
+            updateTask.execute(createJsonUserObject());
+            loadView.show();
         });
         nameh.setListener((change -> {
             arrChange[0] = change;
-            setVisbleBtnSave(isChangeFields());
+            setVisibleBtnSave(isChangeFields());
         }));
         number.setListener((change -> {
             arrChange[1] = change;
-            setVisbleBtnSave(isChangeFields());
+            setVisibleBtnSave(isChangeFields());
         }));
         email.setListener((change -> {
             arrChange[2] = change;
-            setVisbleBtnSave(isChangeFields());
+            setVisibleBtnSave(isChangeFields());
         }));
         city.setListener((change -> {
             arrChange[3] = change;
-            setVisbleBtnSave(isChangeFields());
+            setVisibleBtnSave(isChangeFields());
         }));
-        btnExit.setOnClickListener((view1 -> {
-            GlobalPreferences.setPrefAddUser(getContext(),0);
-            init();
-            btnExit.setVisibility(View.GONE);
-        }));
+        btnExit.setOnClickListener(click);
 
     }
 
@@ -168,18 +174,18 @@ public class SettingFragment extends Fragment  {
         return arrChange[0] || arrChange[1] || arrChange[2] || arrChange[3];
     }
 
-    private void setVisbleBtnSave(boolean visble){
-        btnSave.setVisibility(visble?View.VISIBLE:View.GONE);
+    private void setVisibleBtnSave(boolean visible){
+        btnSave.setVisibility(visible?View.VISIBLE:View.GONE);
     }
 
 
     private void saveInfo(){
-//        GlobalPreferences.setPrefUserName(getContext(),name.getText().toString());
-//        GlobalPreferences.setPrefUserEmail(getContext(),email.getText().toString());
-//        GlobalPreferences.setPrefUserNumber(getContext(),phone.getText().toString());
-//        Toast.makeText(getContext(),"Данные успешно обновлены",Toast.LENGTH_SHORT)
-//                .show();
-//        mListener.onChange();
+        GlobalPreferences.setPrefUserName(getContext(),nameh.getTextFromField());
+        GlobalPreferences.setPrefUserEmail(getContext(),email.getTextFromField());
+        GlobalPreferences.setPrefUserNumber(getContext(),number.getTextFromField());
+        init();
+        Toast.makeText(getContext(),"Данные успешно обновлены",Toast.LENGTH_SHORT)
+                .show();
     }
 
 
@@ -188,10 +194,9 @@ public class SettingFragment extends Fragment  {
         JSONObject js = new JSONObject();
         try {
             js.put("id",GlobalPreferences.getPrefIdUser(getContext()));
-//            js.put("email",email.getText().toString());
-//            js.put("phone",phone.getText().toString());
-//            js.put("name",name.getText().toString());
-            mListener.onChange();
+            js.put("email",email.getTextFromField());
+            js.put("phone",number.getTextFromField());
+            js.put("name",nameh.getTextFromField());
         }catch (JSONException e){
             Log.i("Setting","Create json user error! Error message: "+e.getMessage());
             return null;
@@ -225,8 +230,10 @@ public class SettingFragment extends Fragment  {
 
         @Override
         protected void onPostExecute(Boolean success) {
+            loadView.hide();
             if(success){
                 saveInfo();
+                btnSave.setVisibility(View.GONE);
             }else{
                 Toast.makeText(getContext(),errorMsg,Toast.LENGTH_SHORT)
                         .show();
@@ -234,5 +241,25 @@ public class SettingFragment extends Fragment  {
         }
     }
 
+    public void setFm(FragmentManager fm) {
+        this.fm = fm;
+    }
+
+    private View.OnClickListener click = (view)->{
+        if(GlobalPreferences.getPrefAddUser(getContext()) == 1) {
+            GlobalPreferences.setPrefAddUser(getContext(), 0);
+            init();
+            btnExit.setText("Вход");
+        }else{
+            registr.setFragmentManager(fm);
+            registr.setSuccessRegisterListener((success ->{
+                if(success) {
+                    init();
+                    btnExit.setText("Выход");
+                }
+            }));
+            registr.show();
+        }
+    };
 
 }

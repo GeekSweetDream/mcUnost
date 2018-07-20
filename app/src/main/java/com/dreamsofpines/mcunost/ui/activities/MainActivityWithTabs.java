@@ -21,6 +21,7 @@ import com.dreamsofpines.mcunost.ui.fragments.LentaFragment;
 import com.dreamsofpines.mcunost.ui.fragments.NewConstructorFragment;
 import com.dreamsofpines.mcunost.ui.fragments.OrdersFragment;
 import com.dreamsofpines.mcunost.ui.fragments.SettingFragment;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 public class MainActivityWithTabs extends AppCompatActivity{
@@ -28,6 +29,7 @@ public class MainActivityWithTabs extends AppCompatActivity{
 
     private FragmentManager mFragmentManager = getSupportFragmentManager();
     private Fragment prevFragment = ChatsFragment.getInstance();
+    private FirebaseAnalytics mFirebaseAnalytics;
 
 
     private BottomNavigationViewEx.OnNavigationItemSelectedListener  mOnNavigationItemSelectedListener =
@@ -52,7 +54,7 @@ public class MainActivityWithTabs extends AppCompatActivity{
                     return true;
                 }
                 case R.id.navigation_setting:{
-                    loadFragment("setting", SettingFragment.getInstance());
+                    loadFragment("setting", SettingFragment.getInstance(mFragmentManager));
                     return true;
                 }
                 default:{
@@ -67,7 +69,9 @@ public class MainActivityWithTabs extends AppCompatActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         setContentView(R.layout.activity_main_tabs);
+        addAllTabs();
         BottomNavigationViewEx bottomNavigationView = (BottomNavigationViewEx) findViewById(R.id.bottom_navigation_view);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -75,29 +79,30 @@ public class MainActivityWithTabs extends AppCompatActivity{
     }
 
     private void loadFragment(String tag,Fragment fragment){
+        mFragmentManager.beginTransaction()
+                .hide(prevFragment)
+                .show(fragment)
+                .commit();
+        while(mFragmentManager.popBackStackImmediate());
+        prevFragment = fragment;
+    }
 
+    private void addAllTabs(){
+        addTab(LentaFragment.getInstance(mFragmentManager),"lenta");
+        addTab(ChatsFragment.getInstance(),"chats");
+        addTab(NewConstructorFragment.getInstance(mFragmentManager),"constructor");
+        addTab(OrdersFragment.getInstance(mFragmentManager),"orders");
+        addTab(SettingFragment.getInstance(mFragmentManager),"setting");
 
+    }
+
+    private void addTab(Fragment fragment, String tag){
         if(mFragmentManager.findFragmentByTag(tag) == null) {
             mFragmentManager.beginTransaction()
                     .add(R.id.frame_main,fragment,tag)
                     .hide(fragment)
                     .commit();
         }
-
-//        if(isHaveOpenedFragment(tag)) {
-//            mFragmentManager.beginTransaction()
-//                    .hide(prevFragment)
-//                    .commit();
-//        }else{
-            mFragmentManager.beginTransaction()
-                    .hide(prevFragment)
-                    .show(fragment)
-                    .commit();
-//        }
-
-//        while(mFragmentManager.popBackStackImmediate());
-        prevFragment = fragment;
-//        showOpenedFragment(tag);
     }
 
     private boolean isHaveOpenedFragment(String tag){

@@ -20,6 +20,7 @@ public class ViewLoginRegistration extends FrameLayout {
     private LoginRegistrationFragment mLoginRegistrationFragment;
     private final String tag = "login";
     private boolean hide = false;
+    private LoginRegistrationFragment.OnClickAlphaListener successRegisterListener; // для того, чтобы пробросить наружу
 
     public ViewLoginRegistration(@NonNull Context context) {
         super(context);
@@ -44,9 +45,10 @@ public class ViewLoginRegistration extends FrameLayout {
     public void show(){
         if(mLoginRegistrationFragment == null){
             mLoginRegistrationFragment = new LoginRegistrationFragment();
-            mLoginRegistrationFragment.setListener(()-> {
+            mLoginRegistrationFragment.setListener((success)-> {
                 hide = true;
                 mFragmentManager.popBackStack();
+                if(successRegisterListener != null) successRegisterListener.onClick(success);
             });
         }
         mFragmentManager.addOnBackStackChangedListener(()-> setVisibility(hide?GONE:VISIBLE));
@@ -65,5 +67,7 @@ public class ViewLoginRegistration extends FrameLayout {
         mFragmentManager = fragmentManager;
     }
 
-
+    public void setSuccessRegisterListener(LoginRegistrationFragment.OnClickAlphaListener successRegisterListener) {
+        this.successRegisterListener = successRegisterListener;
+    }
 }

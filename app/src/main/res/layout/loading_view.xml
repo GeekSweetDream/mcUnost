@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true">
+
+    <ImageView
+        android:id="@+id/img_black"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/md_black_1000"
+        android:alpha="0.7"/>
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avl"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        app:indicatorColor="@color/md_orange_500"/>
+
+</RelativeLayout>

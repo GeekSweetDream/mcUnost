@@ -15,6 +15,7 @@ public class AdapterOrders extends RecyclerView.Adapter {
     public final int TITLE_TEXT = 0;
     public final int ORDER_ITEM = 1;
     public final int SALE_ITEM = 2;
+    public final int EMPTY_ITEM = 3;
 
     private AdapterDelegateManager<List<mItemRecyclerView>> mListAdapterDelegateManager;
     private List<mItemRecyclerView> items;
@@ -39,6 +40,7 @@ public class AdapterOrders extends RecyclerView.Adapter {
         mListAdapterDelegateManager.addDelegate(TITLE_TEXT,new TextItemDelegate(activity));
         mListAdapterDelegateManager.addDelegate(ORDER_ITEM,new OrdersItemDelegate(activity).setListener((position)->listener.onClick(position)));
         mListAdapterDelegateManager.addDelegate(SALE_ITEM,new SaleItemDelegate(activity).setListener((id -> listener.onClick(id))));
+        mListAdapterDelegateManager.addDelegate(EMPTY_ITEM,new EmptyDelegate(activity));
     }
 
     @Override

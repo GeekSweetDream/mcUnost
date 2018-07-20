@@ -36,7 +36,7 @@ public class OrderHolder extends RecyclerView.ViewHolder {
     public void bindHolder(final Order order, Activity activity){
         id.setText(order.getId());
         title.setText(order.getTour());
-        date.setText(order.getDateCreate());
+//        date.setText(order.getDateCreate());
         cost.setText(order.getCost()+"P");
         String st = order.getStatus();
         if(st.equalsIgnoreCase("в обработке")){

@@ -34,10 +34,8 @@ public class LogoActivity extends AppCompatActivity {
         bindView();
         setListeners();
         settingImageSwitcher();
-        GlobalPreferences.setPrefAddUser(getApplicationContext(),0);
         mButtonLogin.setVisibility(GlobalPreferences.getPrefAddUser(getApplicationContext()) == 1 ?
                 View.GONE : View.VISIBLE);
-        mButtonLogin.setVisibility(View.VISIBLE);
         finish = false;
         position = 0;
         mImageSwitcher.setImageResource(idResImg[position]);

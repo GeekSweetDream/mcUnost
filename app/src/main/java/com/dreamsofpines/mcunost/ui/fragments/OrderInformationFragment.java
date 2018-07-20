@@ -23,6 +23,7 @@ import com.dreamsofpines.mcunost.ui.customView.InformTextView;
 import com.dreamsofpines.mcunost.ui.customView.ViewLoginRegistration;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -59,9 +60,12 @@ public class OrderInformationFragment extends Fragment {
     }
 
     private View.OnClickListener btnListener = view1 -> {
-        if(GlobalPreferences.getPrefAddUser(getContext()) == 1){
+        if(GlobalPreferences.getPrefAddUser(getContext()) == 0){
             mViewLoginRegistration.setFragmentManager(fm);
             mViewLoginRegistration.show();
+        }else{
+            AddNewOrderTask addNewOrderTask = new AddNewOrderTask();
+            addNewOrderTask.execute(order.getJson());
         }
     };
 
@@ -84,10 +88,12 @@ public class OrderInformationFragment extends Fragment {
         cost.setVisibility(haveCost?View.VISIBLE:View.GONE);
         cost.setText(haveCost?order.getCost():"0");
         cityInf.setText(order.getTour());
-        dateInf.setText(order.getDate());
+        dateInf.setText(order.getStringDateBeginTour());
         pupilsInf.setText(order.getPupils());
         teacherInf.setText(order.getTeachers());
-//        hotelInf.setText(order.getHotel().equals("null")? "Нет" : order.getHotel());
+        hotelInf.setText((!(order.getHotel() == null) && !(order.getHotel().equals("null")))?
+                order.getHotel():
+                "Нет");
         travInf.setText(order.isAddTrain()?"Поезд":"Самолет");
         dinInf.setText(getDinnerString());
         transInf.setText(getBusString());
@@ -96,6 +102,7 @@ public class OrderInformationFragment extends Fragment {
         if(!haveCost) {
             avl.setVisibility(View.VISIBLE);
             avl.show();
+            orderBtn.setVisibility(View.GONE);
             CalculateTask calculateTask = new CalculateTask();
             calculateTask.execute(order.getJson());
         }
@@ -151,9 +158,7 @@ public class OrderInformationFragment extends Fragment {
 
     @Override
     public void onHiddenChanged(boolean hidden) {
-        if(!hidden){
-            init();
-        }
+        if(!hidden) init();
     }
 
     public FragmentManager getFm() {
@@ -190,14 +195,56 @@ public class OrderInformationFragment extends Fragment {
         protected void onPostExecute(Boolean success) {
             if(success){
                 cost.setText(costServer);
+                order.setCost(costServer);
+                orderBtn.setVisibility(View.VISIBLE);
                 avl.hide();
                 cost.setVisibility(View.VISIBLE);
             }else{
+                orderBtn.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(),"Ooops! Что-то пошло не так, попробуйте позднее! =)",Toast.LENGTH_LONG)
                         .show();
             }
         }
     }
+
+    private class AddNewOrderTask extends AsyncTask<JSONObject,Void,Boolean> {
+
+        private String errorMsg =  "Ooops! Проблемы сети, попробуйте позже! =)";
+
+        @Override
+        protected Boolean doInBackground(JSONObject... jsonObjects) {
+            boolean success;
+            JSONObject js = jsonObjects[0];
+            try {
+                js.put("idCustomer", GlobalPreferences.getPrefIdUser(getContext()));
+                js.put("idStatus", 1);
+                String answer = RequestSender.POST(getContext(), Constans.URL.ORDER.ADD_NEW_ORDER,js,true);
+                JSONObject answerJs = new JSONObject(answer);
+                success = answerJs.getString("result").equalsIgnoreCase("success");
+            }catch (JSONException e){
+                Log.i("NewConstructor","Create JSON Order! Error message: " + e.getMessage());
+                success = false;
+            }catch (NullPointerException e){
+                Log.i("NewConstructor","Empty answer! Error message: " + e.getMessage());
+                success = false;
+            }
+            return success;
+        }
+
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if (result){
+                Toast.makeText(getActivity(),"Гайс, у меня все найс", Toast.LENGTH_LONG)
+                        .show();
+            }else {
+                Toast.makeText(getActivity(),errorMsg, Toast.LENGTH_LONG)
+                        .show();
+            }
+        }
+    }
+
+
 
 
 }

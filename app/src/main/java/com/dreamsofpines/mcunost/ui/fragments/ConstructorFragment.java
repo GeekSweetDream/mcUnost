@@ -564,9 +564,9 @@ public class ConstructorFragment extends Fragment implements DatePickerDialog.On
                 if(isAllFill()){
 
                     List<Excursion> allExcursionList = mExcursionList;
-
-                    Order order = new Order(idCity,txtDateBeg.getText()+"-"+txtDateEnd.getText(),
-                            String.valueOf(countC),String.valueOf(countT),allExcursionList);
+                    Order order = new Order();
+//                    Order order = new Order(idCity,txtDateBeg.getText()+"-"+txtDateEnd.getText(),
+//                            String.valueOf(countC),String.valueOf(countT),allExcursionList);
                     order.setTour(txtRoute.getText().toString());
                     order.setAddTrain(addTrain);
                     order.setCountBr(countBr);

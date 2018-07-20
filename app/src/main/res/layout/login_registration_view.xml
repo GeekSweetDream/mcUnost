@@ -19,6 +19,8 @@
         android:layout_marginRight="30dp"
         android:layout_centerInParent="true"
         android:elevation="11dp"
+        android:focusable="auto"
+        android:clickable="true"
         android:orientation="vertical">
         <EditText
             android:id="@+id/email"
@@ -93,16 +95,9 @@
             android:visibility="gone"
             android:textColor="@color/md_white_1000"/>
     </LinearLayout>
-    <FrameLayout
-        android:id="@+id/loading_frame"
+    <com.dreamsofpines.mcunost.ui.customView.LoadingView
+        android:id="@+id/load_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
-        <com.wang.avi.AVLoadingIndicatorView
-            android:id="@+id/avl"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@color/md_blue_400"
-            android:layout_gravity="center"/>
-    </FrameLayout>
+        android:elevation="15dp"/>
 </RelativeLayout>

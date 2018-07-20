@@ -50,6 +50,7 @@ public class SettingFieldView extends LinearLayout {
     private EditText field;
     private String textBefore;
     private OnChangeTextListener listener;
+
     private TextWatcher mTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -96,7 +97,7 @@ public class SettingFieldView extends LinearLayout {
     }
 
     public String getTextFromField(){
-        return textBefore;
+        return field.getText().toString();
     }
 
 

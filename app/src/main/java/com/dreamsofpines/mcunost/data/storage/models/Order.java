@@ -8,6 +8,7 @@ import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -53,27 +54,34 @@ public class Order
             js.put("fromCity",fromCity);
             js.put("quantityTeacher", teachers);
             js.put("quantityChildren", pupils);
-            js.put("dateTravelTourBegin",dateTravelTourBegin);
-            js.put("dateTravelTourEnd",dateTravelTourEnd);
+            js.put("dateTravelTourBegin",dateTravelTourBegin.getTime());
+            js.put("dateTravelTourEnd",dateTravelTourEnd.getTime());
             js.put("countBr",countBr);
             js.put("countDin",countDin);
             js.put("countLu",countLu);
             js.put("countMeetBus",countBusMeet);
             js.put("countAllDayBus",countAllDayBus);
-            js.put("count4Bus",count4Bus);
             js.put("addTrain",addTrain?1:0);
             js.put("idCustomer", GlobalPreferences.getPrefIdUser(mContext));
             js.put("countDay",countDay);
             js.put("idHotel",idHotel);
             js.put("idStatus", 1);
-            js.put("addBusDay",addBusDays);
+            js.put("busDay",addBusDays);
         }catch (Exception e){
             Log.i("Order", "Error create json! Error text: "+e.getMessage());
         }
         return js;
     }
 
+    private String getStringDate(Date date){
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        return format.format(date);
+    }
 
+    public String getStringDateBeginTour(){
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        return format.format(dateTravelTourBegin);
+    }
     public Context getContext() {
         return mContext;
     }

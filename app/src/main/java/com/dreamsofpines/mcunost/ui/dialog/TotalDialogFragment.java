@@ -58,7 +58,7 @@ public class TotalDialogFragment extends DialogFragment {
         this.mListener = callback;
         this.pupil = order.getPupils();
         this.teacher = order.getTeachers();
-        this.date = order.getDate();
+//        this.date = order.getDate();
         this.mOrder = order;
     }
 

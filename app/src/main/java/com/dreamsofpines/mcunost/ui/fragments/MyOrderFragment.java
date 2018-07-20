@@ -244,17 +244,18 @@ public class MyOrderFragment extends Fragment implements ShortInfoOrderDialog.On
                             managerName = manager.getString("name");
                             managerPhone = manager.getString("phone");
                         }
-                        Order order = new Order(
-                                ordJs.getString("nameTour"),
-                                ordJs.getString("dateTravelTour"),
-                                ordJs.getString("cost"),
-                                ordJs.getString("quantityChildren"),
-                                ordJs.getString("quantityTeacher"),
-                                ordJs.getJSONObject("status").getString("status"),
-                                managerName,
-                                managerPhone);
+                        Order order = new Order();
+//                        Order order = new Order(
+//                                ordJs.getString("nameTour"),
+//                                ordJs.getString("dateTravelTour"),
+//                                ordJs.getString("cost"),
+//                                ordJs.getString("quantityChildren"),
+//                                ordJs.getString("quantityTeacher"),
+//                                ordJs.getJSONObject("status").getString("status"),
+//                                managerName,
+//                                managerPhone);
                         order.setId(ordJs.getString("id"));
-                        order.setDateCreate(translateDateInToString(ordJs.getLong("dateCreateOrder")));
+//                        order.setDateCreate(translateDateInToString(ordJs.getLong("dateCreateOrder")));
                         order.setIdHotel(ordJs.getString("idHotel"));
                         order.setCountBr(ordJs.getInt("countBr"));
                         order.setCountLu(ordJs.getInt("countLu"));

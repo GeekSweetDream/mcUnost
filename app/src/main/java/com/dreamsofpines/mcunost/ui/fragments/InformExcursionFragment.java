@@ -337,7 +337,7 @@ public class InformExcursionFragment extends Fragment implements AuthDialogFragm
                 jsOrder.put("cost", ord.getCost());
                 jsOrder.put("quantityChildren", ord.getPupils());
                 jsOrder.put("quantityTeacher", ord.getTeachers());
-                jsOrder.put("dateTravelTour",ord.getDate());
+//                jsOrder.put("dateTravelTour",ord.getDate());
                 jsOrder.put("idCustomer", GlobalPreferences.getPrefIdUser(getContext()));
                 jsOrder.put("idStatus", 1);
                 String answer = RequestSender.POST(getContext(),Constans.URL.ORDER.ADD_NEW_ORDER,jsOrder,true);

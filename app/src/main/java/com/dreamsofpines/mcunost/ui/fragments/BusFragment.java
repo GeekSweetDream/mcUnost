@@ -48,10 +48,11 @@ public class BusFragment extends Fragment {
     private float x,y;
     private boolean addMainBuss = true;
     private int addBusDays;
+    private int allDayBus;
     private static OnClickListener listener;
 
     public interface OnClickListener{
-        void onClick(boolean mainBus, int addBusDays);
+        void onClick(boolean mainBus, int addBusDays, int allDayBus);
     }
 
     public void setListener(OnClickListener listener){
@@ -64,6 +65,7 @@ public class BusFragment extends Fragment {
         view = (View) inflater.inflate(R.layout.fragment_quantity_dinner,container,false);
         field = (View) inflater.inflate(R.layout.fragment_bus,container,false);
         list = new ArrayList<>();
+        allDayBus = 0;
         bindView();
         getInformationFromBundle();
         onPressBackListener(view);
@@ -76,7 +78,6 @@ public class BusFragment extends Fragment {
                 list.get(i).setVisibility(View.VISIBLE);
             }
         }
-
         return view;
     }
 
@@ -95,7 +96,7 @@ public class BusFragment extends Fragment {
         view.setOnKeyListener((view1, i,keyEvent)->{
             if( i == KeyEvent.KEYCODE_BACK && keyEvent.getAction() == KeyEvent.ACTION_UP) {
                 fragment.hide();
-                listener.onClick(mainBus.isChecked(),saveBusDays());
+                listener.onClick(mainBus.isChecked(),saveBusDays(),allDayBus);
                 return true;
             }
             return false;
@@ -112,7 +113,7 @@ public class BusFragment extends Fragment {
         fragment.setIconInToolbar("icon_bus");
         fragment.setOnBackgroundClickListener(()->{
             fragment.hide();
-            listener.onClick(mainBus.isChecked(),saveBusDays());
+            listener.onClick(mainBus.isChecked(),saveBusDays(),allDayBus);
         });
         new Handler().postDelayed(()->fragment.show(),200);
     }
@@ -136,6 +137,7 @@ public class BusFragment extends Fragment {
             }
         }
     }
+
     private int saveBusDays(){
         addBusDays = 0;
         for (int i = 4; i >= 0; i--) {
@@ -143,6 +145,7 @@ public class BusFragment extends Fragment {
             if(list.get(i).getVisibility() == View.VISIBLE &&
                     list.get(i).isChecked()){
                 ++addBusDays;
+                ++allDayBus;
             }
         }
         return addBusDays;

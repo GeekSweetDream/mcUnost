@@ -248,9 +248,8 @@ public class RequestSender{
         HttpHeaders headers = new HttpHeaders();
         if(hasAuthHeader) {
             String email = GlobalPreferences.getPrefUserEmail(context);
-            String password = GlobalPreferences.getPrefUserEmail(context) + GlobalPreferences.getPrefUserNumber(context);
-            HttpAuthentication authHeader = new HttpBasicAuthentication(email, password);
-            headers.setAuthorization(authHeader);
+            String password = email + GlobalPreferences.getPrefUserNumber(context);
+            headers.setAuthorization(new HttpBasicAuthentication(email, password));
         }
         headers.add("Accept-Language","ru,en;q=0.8");
         headers.add("Content-Type","application/json; charset=utf-8");

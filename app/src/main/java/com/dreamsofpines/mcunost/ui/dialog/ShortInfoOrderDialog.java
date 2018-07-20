@@ -149,7 +149,7 @@ public class ShortInfoOrderDialog extends DialogFragment{
     }
 
     private void setText(){
-        date.setText(order.getDate());
+//        date.setText(order.getDate());
         cost.setText(order.getCost());
         student.setText(order.getPupils());
         lead.setText(order.getTeachers());

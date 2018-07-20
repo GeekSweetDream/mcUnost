@@ -24,6 +24,7 @@ import com.dreamsofpines.mcunost.data.network.api.Constans;
 import com.dreamsofpines.mcunost.data.network.api.RequestSender;
 import com.dreamsofpines.mcunost.data.network.service.MyFirebaseInstanceIDService;
 import com.dreamsofpines.mcunost.data.storage.preference.GlobalPreferences;
+import com.dreamsofpines.mcunost.ui.customView.LoadingView;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONException;
@@ -36,18 +37,16 @@ public class LoginRegistrationFragment extends Fragment {
     private LinearLayout mLinearLayout;
     private ViewGroup mViewGroup;
     private EditText email;
-    private EditText password;
     private EditText name;
     private EditText phone;
     private Button loginBtn;
     private Button registerBtn;
-    private FrameLayout loadingFrame;
-    private AVLoadingIndicatorView avl;
+    private LoadingView loadView;
     private int state = 0;
     private OnClickAlphaListener listener;
 
     public interface OnClickAlphaListener{
-        void onClick();
+        void onClick(boolean success);
     }
 
     @Nullable
@@ -77,7 +76,11 @@ public class LoginRegistrationFragment extends Fragment {
     private void setListeners(){
         registerBtn.setOnClickListener((view)->{
             if(state == 1){
-                //check input and post
+                if(allFill()) {
+                    loadView.show();
+                    AddUserTask addUserTask = new AddUserTask();
+                    addUserTask.execute(createJsonUser());
+                }
             }else{
                 state = 1;
                 show(1);
@@ -85,14 +88,12 @@ public class LoginRegistrationFragment extends Fragment {
         });
         alpha.setOnClickListener((view)->{
             hideKeyboard();
-            listener.onClick();
+            listener.onClick(false);
         });
         loginBtn.setOnClickListener((view)->{
             if(allFill()){
                 hideKeyboard();
-                loadingFrame.setVisibility(View.VISIBLE);
-                loadingFrame.setClickable(true);
-                avl.show();
+                loadView.show();
                 AuthTask authTask = new AuthTask();
                 authTask.execute(email.getText().toString().toLowerCase(),phone.getText().toString().toLowerCase());
             }
@@ -127,8 +128,7 @@ public class LoginRegistrationFragment extends Fragment {
         alpha    = (View)   view.findViewById(R.id.alpha);
         loginBtn = (Button) view.findViewById(R.id.btn_log);
         registerBtn = (Button) view.findViewById(R.id.btn_reg);
-        loadingFrame = (FrameLayout) view.findViewById(R.id.loading_frame);
-        avl = (AVLoadingIndicatorView) view.findViewById(R.id.avl);
+        loadView = (LoadingView) view.findViewById(R.id.load_view);
     }
 
 
@@ -164,6 +164,39 @@ public class LoginRegistrationFragment extends Fragment {
 
         return allFill;
     }
+
+
+    private JSONObject createJsonUser() {
+        JSONObject jsUser = new JSONObject();
+        try {
+            jsUser.put("name", name.getText().toString());
+            jsUser.put("phone", phone.getText().toString());
+            jsUser.put("email", email.getText().toString().toLowerCase());
+            jsUser.put("accountNonExpired", Constans.ACCOUNT.ACCESS);
+            jsUser.put("accountNonLocked",Constans.ACCOUNT.ACCESS);
+            jsUser.put("credentialsNonExpired",Constans.ACCOUNT.ACCESS);
+            jsUser.put("enabled",Constans.ACCOUNT.ACCESS);
+            jsUser.put("idRole", Constans.ROLE.USER);
+        } catch (JSONException e) {
+            Log.i("Myapp", "Create json user error! TextMessage: " + e.getMessage());
+        }
+        return jsUser;
+    }
+
+    private void registrSuccsess() {
+        GlobalPreferences.setPrefUserName(getActivity(), name.getText().toString());
+        GlobalPreferences.setPrefUserNumber(getActivity(), phone.getText().toString());
+        GlobalPreferences.setPrefUserEmail(getActivity(), email.getText().toString().toLowerCase());
+        GlobalPreferences.setPrefAddUser(getActivity(),Constans.AUTH.LOG_IN);
+        MyFirebaseInstanceIDService id = new MyFirebaseInstanceIDService();
+        id.onTokenRefresh(getContext());
+        listener.onClick(true);
+        Toast.makeText(getActivity(), "Вы успешно зарегестрированы!", Toast.LENGTH_LONG)
+                .show();
+    }
+
+
+
 
 
     private class AuthTask extends AsyncTask<String, Void, Boolean> {
@@ -202,19 +235,55 @@ public class LoginRegistrationFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Boolean success) {
-            loadingFrame.setVisibility(View.GONE);
-            loadingFrame.setClickable(false);
-            avl.hide();
+            loadView.hide();
             if(success){
                 Toast.makeText(getContext(), "Успешная авторизация", Toast.LENGTH_LONG).show();
                 MyFirebaseInstanceIDService id = new MyFirebaseInstanceIDService();
                 id.onTokenRefresh(getContext());
-                listener.onClick();
+                listener.onClick(true);
             }else {
                 Toast.makeText(getContext(), errrorMsg, Toast.LENGTH_LONG).show();
             }
         }
     }
+
+
+    private class AddUserTask extends AsyncTask<JSONObject, Void, Boolean> {
+        private String errorMsg = "Ooops! Что-то произошло! Попробуйте позднее! :)";
+        @Override
+        protected Boolean doInBackground(JSONObject... jsonObjects) {
+            boolean success = true;
+            String answer = RequestSender.POST(getContext(),Constans.URL.USER.ADD_NEW_USER, jsonObjects[0],false);
+            try{
+                JSONObject js = new JSONObject(answer);
+                if(js.getString("result").equalsIgnoreCase("success")){
+                    GlobalPreferences.setPrefIdUser(getContext(),js.getString("data"));
+                }else{
+                    errorMsg = js.getString("mess");
+                    success = false;
+                }
+            }catch (Exception e){
+                Log.i("Registr","JsonExeption from parsing json registr user! Error message: "+e.getMessage());
+                success = false;
+            }
+            return success;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean succsess) {
+            loadView.hide();
+            if(succsess) {
+                registrSuccsess();
+            }else{
+                Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_LONG)
+                        .show();
+            }
+        }
+    }
+
+
+
+
 
 
 }

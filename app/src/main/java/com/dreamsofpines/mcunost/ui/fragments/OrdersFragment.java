@@ -2,6 +2,7 @@ package com.dreamsofpines.mcunost.ui.fragments;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.dreamsofpines.mcunost.R;
 import com.dreamsofpines.mcunost.data.network.api.RequestSender;
 import com.dreamsofpines.mcunost.data.storage.mBarItem;
+import com.dreamsofpines.mcunost.data.storage.models.EmptyItem;
 import com.dreamsofpines.mcunost.data.storage.models.Excursion;
 import com.dreamsofpines.mcunost.data.storage.models.Order;
 import com.dreamsofpines.mcunost.data.utils.ImageUtils;
@@ -39,14 +41,21 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
 
 public class OrdersFragment extends Fragment implements AppBarLayout.OnOffsetChangedListener{
 
+
     private static OrdersFragment sOrdersFragment;
+
+    private View view;
     private ToolbarCalendar mToolbarCalendar;
     private ImageView mProfileImage;
     private TextView name;
@@ -56,6 +65,7 @@ public class OrdersFragment extends Fragment implements AppBarLayout.OnOffsetCha
     private boolean mIsAvatarShown = true;
     private OnClickListener listener;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private Order openedOrder;
     private OrderInformationFragment currentOrderInforamtionFr;
     private List<mItemRecyclerView> sortedList;
     private FragmentManager fm;
@@ -83,20 +93,12 @@ public class OrdersFragment extends Fragment implements AppBarLayout.OnOffsetCha
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = (View) inflater.inflate(R.layout.fragment_orders,container,false);
+        view = (View) inflater.inflate(R.layout.fragment_orders,container,false);
         bindView(view);
         init();
-        onPressBackListener(view);
-
-//        new Handler().postDelayed(()->{
-//            Toast.makeText(getContext(),"Успешно",Toast.LENGTH_LONG).show();
-//            Calendar calendar = new GregorianCalendar(2018,4,3);
-//            HashSet<Calendar> hashSet = new HashSet<>();
-//            hashSet.add(calendar);
-//            mToolbarCalendar.setDateOrders(hashSet);
-//        },5000);
         GetOrderTask getOrderTask = new GetOrderTask();
         getOrderTask.execute();
+        onPressBackListener(view);
         return view;
     }
 
@@ -104,6 +106,8 @@ public class OrdersFragment extends Fragment implements AppBarLayout.OnOffsetCha
         Picasso.with(getContext()).load("file:///android_asset/"+
                 ImageUtils.getNameAvatars(GlobalPreferences.getPrefStateAvatar(getContext())))
                 .into(mProfileImage);
+        openedOrder = null;
+        currentOrderInforamtionFr = null;
         mSwipeRefreshLayout.setEnabled(false);
         mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.setOnRefreshListener(()->{
@@ -132,24 +136,30 @@ public class OrdersFragment extends Fragment implements AppBarLayout.OnOffsetCha
                         .hide(currentOrderInforamtionFr)
                         .commit();
                 currentOrderInforamtionFr = null;
+                openedOrder = null;
                 return true;
             }
             return false;
         });
     }
 
-    private void updateUI(){
-        sortedList = getSortedListWithTitle();
+    private void updateUI(boolean empty){
         AdapterOrders adapterOrders = new AdapterOrders(getActivity());
+        if(!empty){
+            sortedList = getSortedListWithTitle();
+            adapterOrders.setListener((position)->{
+                openedOrder = ((OrderItem)sortedList.get(position)).getOrder();
+                currentOrderInforamtionFr = OrderInformationFragment.getInstance(
+                        openedOrder, fm);
+                showSecondFragment(currentOrderInforamtionFr);
+            });
+        }else{
+            sortedList = new ArrayList<>();
+            EmptyItem emptyItem = new EmptyItem();
+            emptyItem.setText("Нет заказов");
+            sortedList.add(emptyItem);
+        }
         adapterOrders.setItems(sortedList);
-        adapterOrders.setListener((position)->{
-            OrderInformationFragment oF = OrderInformationFragment.getInstance(
-                    ((OrderItem)sortedList.get(position)).getOrder(), fm
-            );
-            FragmentQueueUtils.addValueOrders(oF);
-            currentOrderInforamtionFr = oF;
-            showSecondFragment(oF);
-        });
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(adapterOrders);
@@ -178,15 +188,19 @@ public class OrdersFragment extends Fragment implements AppBarLayout.OnOffsetCha
         List<mItemRecyclerView> list = new ArrayList<>();
 
         if (activeOrdList.size()!=0){
-            // сортировка
+            sortList(activeOrdList);
             addOrderInList(activeOrdList,list,"Активные");
         }
-
         if (passiveOrdList.size()!=0) {
-            // сортировка
+            sortList(activeOrdList);
             addOrderInList(passiveOrdList, list, "Завершенные");
         }
         return list;
+    }
+
+    private void sortList(List<Order> ord){
+        Collections.sort(ord,(order, t1) ->
+                order.getDateCreate().compareTo(t1.getDateCreate()));
     }
 
     private void addOrderInList(List<Order> orders, List<mItemRecyclerView> orderItems,String status){
@@ -196,7 +210,7 @@ public class OrdersFragment extends Fragment implements AppBarLayout.OnOffsetCha
             OrderItem orderItem = new OrderItem();
             orderItem.setCity(ord.getTour());
             orderItem.setCost(Integer.valueOf(ord.getCost()));
-            orderItem.setDate(ord.getDate());
+            orderItem.setDate(ord.getStringDateBeginTour());
             orderItem.setStatus(ord.getStatus());
             orderItem.setOrder(ord);
             orderItem.setPathImage(ImageUtils.getNameImageCity(ord.getTour()));
@@ -280,42 +294,7 @@ public class OrdersFragment extends Fragment implements AppBarLayout.OnOffsetCha
                     JSONArray ordersJsonArray = js.getJSONArray("data");
                     int length = ordersJsonArray.length();
                     for(int i = 0; i < length; ++i) {
-                        JSONObject ordJs = ordersJsonArray.getJSONObject(i);
-                        String managerName = "Неизвестно";
-                        String managerPhone = "Неизвестно";
-                        if(!ordJs.getString("manager").equalsIgnoreCase("null")) {
-                            JSONObject manager = ordJs.getJSONObject("manager");
-                            managerName = manager.getString("name");
-                            managerPhone = manager.getString("phone");
-                        }
-                        Order order = new Order(
-                                ordJs.getString("nameTour"),
-                                removeEndTravelDate(ordJs.getString("dateTravelTour")),
-                                ordJs.getString("cost"),
-                                ordJs.getString("quantityChildren"),
-                                ordJs.getString("quantityTeacher"),
-                                ordJs.getJSONObject("status").getString("status"),
-                                managerName,
-                                managerPhone);
-                        order.setId(ordJs.getString("id"));
-                        order.setDateCreate(translateDateInToString(ordJs.getLong("dateCreateOrder")));
-                        order.setIdHotel(ordJs.getString("idHotel"));
-                        order.setCountBr(ordJs.getInt("countBr"));
-                        order.setCountLu(ordJs.getInt("countLu"));
-                        order.setCountDin(ordJs.getInt("countDin"));
-                        order.setAddTrain(ordJs.getInt("addTrain")==1);
-                        order.setCount4Bus(ordJs.getString("count4Bus"));
-                        order.setCountBusMeet(ordJs.getString("countMeetBus"));
-                        order.setCountAllDayBus(ordJs.getString("countAllDayBus"));
-                        order.setHotel(ordJs.getString("nameHotel"));
-                        JSONArray jsArray = ordJs.getJSONArray("list");
-                        List<Excursion> list = new ArrayList<>();
-                        for(int j = 0; j < jsArray.length();++j){
-                            list.add(new Excursion(jsArray.getJSONObject(j).getString("id"),
-                                    jsArray.getJSONObject(j).getString("name"),true,1));
-                        }
-                        order.setExcursionList(list);
-                        ord.add(order);
+                        ord.add(createOrderFromJson(ordersJsonArray.getJSONObject(i)));
                     }
                 }else{
                     success = false;
@@ -332,42 +311,90 @@ public class OrdersFragment extends Fragment implements AppBarLayout.OnOffsetCha
             return success;
         }
 
-        private String translateDateInToString(long date){
-            return new SimpleDateFormat("dd.MM.yyyy").format(new Date(date));
-        }
-
-        private String removeEndTravelDate(String str){
-            return str.split("-")[0];
-        }
 
         @Override
         protected void onPostExecute(Boolean success) {
             if(success) {
                 mSwipeRefreshLayout.setEnabled(true);
                 mSwipeRefreshLayout.setRefreshing(false);
-                if(ord.size()==0) {
-                }else{
-                    updateUI();
-//                    Collections.sort(ord, new Comparator<Order>() {
-//                        @Override
-//                        public int compare(Order order, Order t1) {
-//                            return Integer.valueOf(order.getId()).compareTo(Integer.valueOf(t1.getId()));
-//                        }
-//                    });
-                }
-//                avl.hide();
-//                if(errorView.getVisibility() != View.GONE) {
-//                    errorView.setVisibility(View.GONE);
-//                }
-
+                updateUI(ord.size() == 0);
+                setDateOnCalendarToolbar(ord);
             }else{
-//                avl.show();
-//                errorView.setAnimation(anim);
-//                errorView.setVisibility(View.VISIBLE);
+                mSwipeRefreshLayout.setEnabled(true);
+                mSwipeRefreshLayout.setRefreshing(false);
                 Toast.makeText(getContext(),"Oops! Проблемы с соединением, попробуйте позже!",Toast.LENGTH_LONG)
                         .show();
             }
         }
+    }
+
+    private void setDateOnCalendarToolbar(List<Order> ord){
+        new Handler().postDelayed(()->{
+            HashSet<Calendar> hashSet = new HashSet<>();
+            for(Order order : ord) {
+                Date date = order.getDateTravelTourBegin();
+                Calendar calendar = new GregorianCalendar(getYear(date),getMonth(date),getDay(date));
+                hashSet.add(calendar);
+            }
+            mToolbarCalendar.setDateOrders(hashSet);
+        },1000);
+    }
+
+    private int getDay(Date date){
+        return Integer.valueOf(new SimpleDateFormat("dd").format(date));
+    }
+    private int getMonth(Date date){
+        return Integer.valueOf(new SimpleDateFormat("MM").format(date));
+    }
+    private int getYear(Date date){
+        return Integer.valueOf(new SimpleDateFormat("yyyy").format(date));
+    }
+
+    private Order createOrderFromJson(JSONObject ordJs){
+        Order order = new Order();
+        try {
+            String managerName = "Неизвестно";
+            String managerPhone = "Неизвестно";
+            if(!ordJs.getString("manager").equalsIgnoreCase("null")) {
+                JSONObject manager = ordJs.getJSONObject("manager");
+                managerName = manager.getString("name");
+                managerPhone = manager.getString("phone");
+            }
+            order.setTour(ordJs.getString("nameTour"));
+            order.setDateTravelTourBegin(new Date(ordJs.getLong("dateTravelTourBegin")));
+            order.setDateTravelTourEnd(new Date(ordJs.getLong("dateTravelTourEnd")));
+            order.setCost(ordJs.getString("cost"));
+            order.setPupils(ordJs.getString("quantityChildren"));
+            order.setTeachers(ordJs.getString("quantityTeacher"));
+            order.setStatus(ordJs.getJSONObject("status").getString("status"));
+            order.setManager(managerName);
+            order.setPhone(managerPhone);
+            order.setId(ordJs.getString("id"));
+            order.setDateCreate(new Date(ordJs.getLong("dateCreateOrder")));
+            order.setIdHotel(ordJs.getString("idHotel"));
+            order.setCountBr(ordJs.getInt("countBr"));
+            order.setCountLu(ordJs.getInt("countLu"));
+            order.setCountDin(ordJs.getInt("countDin"));
+            order.setAddTrain(ordJs.getInt("addTrain")==1);
+            order.setCount4Bus(ordJs.getString("count4Bus"));
+            order.setCountBusMeet(ordJs.getString("countMeetBus"));
+            order.setCountAllDayBus(ordJs.getString("countAllDayBus"));
+            order.setHotel(ordJs.getString("nameHotel"));
+            order.setExcursionList(getListExcursionFromJson(ordJs));
+        }catch (Exception e){
+            Toast.makeText(getContext(),"что-то сломалось",Toast.LENGTH_SHORT).show();
+        }
+        return order;
+    }
+
+    private List<Excursion> getListExcursionFromJson(JSONObject ordJs) throws JSONException{
+        JSONArray jsArray = ordJs.getJSONArray("list");
+        List<Excursion> list = new ArrayList<>();
+        for(int j = 0; j < jsArray.length();++j){
+            list.add(new Excursion(jsArray.getJSONObject(j).getString("id"),
+                    jsArray.getJSONObject(j).getString("name"),true,1));
+        }
+        return list;
     }
 
     @Override
@@ -376,10 +403,13 @@ public class OrdersFragment extends Fragment implements AppBarLayout.OnOffsetCha
             name.setText(GlobalPreferences.getPrefAddUser(getContext()) == 1?
                     GlobalPreferences.getPrefUserName(getContext())
                     :"Имя");
+
             Picasso.with(getContext()).load("file:///android_asset/"+
                     ImageUtils.getNameAvatars(GlobalPreferences.getPrefStateAvatar(getContext())))
                     .into(mProfileImage);
+
             if(currentOrderInforamtionFr != null) {
+                currentOrderInforamtionFr = OrderInformationFragment.getInstance(openedOrder,fm);
                 fm.beginTransaction()
                         .show(currentOrderInforamtionFr)
                         .commit();
